@@ -1,985 +1,1671 @@
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ganesh Dangi — Video Editor &amp; AI Content Creator</title>
-<meta name="description" content="Ganesh Dangi — Professional Video Editor & AI Content Creator. Documentaries, cinematic videos, social media content and AI-powered visual experiences." />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          ink: '#08080A',
-          char: '#0F0F12',
-          char2: '#16161A',
-          line: '#26262C',
-          flame: '#FF6A1A',
-          amber: '#FFA43B',
-          bone: '#EDE9E3',
-          mute: '#9A968F'
-        },
-        fontFamily: {
-          display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
-          sans: ['Inter', 'system-ui', 'sans-serif'],
-          mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ganesh Dangi — Professional Video Editor & AI Content Creator specializing in cinematic videos, documentaries, YouTube content, social media edits, motion graphics and AI-powered visual experiences." />
+  <meta name="theme-color" content="#07070A" />
+  <title>Ganesh Dangi | Professional Video Editor & AI Content Creator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#FF5E1E',
+              accent: '#FF7A00',
+              glow: 'rgba(255, 94, 30, 0.15)',
+              dark: '#07070A',
+              surface: '#101014',
+              card: '#16161C',
+              border: '#25252F'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif']
+          },
+          boxShadow: {
+            glow: '0 20px 80px rgba(255, 94, 30, 0.18)'
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          }
         }
       }
+    };
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --brand-orange: #FF5E1E;
+      --brand-accent: #FF7A00;
+      --brand-dark: #07070A;
+      --brand-surface: #101014;
+      --brand-card: #16161C;
+      --brand-border: #25252F;
+      --white-soft: rgba(255, 255, 255, 0.86);
     }
-  }
-</script>
-<style>
-  :root{ --flame:#FF6A1A; --amber:#FFA43B; }
-  *{ -webkit-tap-highlight-color: transparent; }
-  html{ scroll-behavior:smooth; }
-  body{
-    background:#08080A;
-    color:#EDE9E3;
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-  }
-  ::selection{ background:rgba(255,106,26,.3); color:#fff; }
 
-  /* ---------- Film grain ---------- */
-  .grain{
-    position:fixed; inset:-50%; z-index:60; pointer-events:none; opacity:.05;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
-    animation:grainShift 6s steps(6) infinite;
-  }
-  @keyframes grainShift{
-    0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}
-    60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,1%)}100%{transform:translate(0,0)}
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  /* ---------- Cursor spotlight ---------- */
-  .spot{
-    position:fixed; width:520px; height:520px; border-radius:50%; z-index:0; pointer-events:none;
-    background:radial-gradient(circle, rgba(255,106,26,.13) 0%, rgba(255,106,26,0) 65%);
-    transform:translate(-50%,-50%); opacity:0; transition:opacity .6s ease;
-    mix-blend-mode:screen;
-  }
-  @media (hover:hover) and (min-width:1024px){ .spot{opacity:1} }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  /* ---------- Reveal system ---------- */
-  .reveal{ opacity:0; transform:translateY(26px); transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); transition-delay:var(--d,0s); }
-  .reveal.in{ opacity:1; transform:none; }
-  .rev-mask{ opacity:0; transform:translateY(110%); transition:transform 1.05s cubic-bezier(.16,1,.3,1), opacity .6s ease; transition-delay:var(--d,0s); }
-  .in .rev-mask, .rev-mask.in{ opacity:1; transform:none; }
-  .line-mask{ display:block; overflow:hidden; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 94, 30, 0.12), transparent 34%),
+        radial-gradient(circle at 10% 80%, rgba(255, 94, 30, 0.06), transparent 30%),
+        linear-gradient(180deg, #07070A 0%, #0A0A0E 52%, #07070A 100%);
+    }
 
-  /* ---------- Frame curtain reveal ---------- */
-  .frame{ position:relative; overflow:hidden; background:#111114; }
-  .frame::after{
-    content:''; position:absolute; inset:0; background:#0d0d10; z-index:3;
-    transform:translateY(0); transition:transform 1.15s cubic-bezier(.76,0,.24,1); transition-delay:var(--d,0s);
-  }
-  .in .frame::after{ transform:translateY(-101%); }
-  .frame img{ transition:transform 1.2s cubic-bezier(.16,1,.3,1), filter .6s ease; }
-  .img-fallback{ background:linear-gradient(135deg,#1b1b20 0%,#0f0f12 60%,#2a1608 100%); }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.2;
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 78%);
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 78%);
+    }
 
-  /* ---------- Light sweep ---------- */
-  .sweep{ position:relative; overflow:hidden; }
-  .sweep::before{
-    content:''; position:absolute; top:0; left:-70%; width:55%; height:100%; z-index:4; pointer-events:none;
-    background:linear-gradient(100deg, transparent, rgba(255,255,255,.13), transparent);
-    transform:skewX(-16deg); transition:left .85s cubic-bezier(.16,1,.3,1);
-  }
-  .sweep:hover::before{ left:120%; }
+    body.modal-open {
+      overflow: hidden;
+    }
 
-  /* ---------- Nav ---------- */
-  .navlink{ position:relative; }
-  .navlink::after{
-    content:''; position:absolute; left:0; bottom:-6px; height:1px; width:100%;
-    background:var(--flame); transform:scaleX(0); transform-origin:right; transition:transform .5s cubic-bezier(.16,1,.3,1);
-  }
-  .navlink:hover::after{ transform:scaleX(1); transform-origin:left; }
+    img {
+      display: block;
+      max-width: 100%;
+    }
 
-  /* ---------- Buttons ---------- */
-  .btn-flame{
-    position:relative; overflow:hidden; isolation:isolate;
-    background:linear-gradient(120deg,#FF6A1A,#FF8A3D);
-    color:#0b0b0d; box-shadow:0 10px 34px -12px rgba(255,106,26,.75);
-    transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;
-  }
-  .btn-flame::after{
-    content:''; position:absolute; inset:0; z-index:-1; background:linear-gradient(120deg,#FFA43B,#FF6A1A);
-    opacity:0; transition:opacity .4s ease;
-  }
-  .btn-flame:hover::after{ opacity:1; }
-  .btn-flame:hover{ box-shadow:0 16px 44px -12px rgba(255,106,26,.9); }
-  .btn-ghost{
-    border:1px solid #2c2c33; color:#EDE9E3; background:rgba(255,255,255,.02);
-    transition:border-color .4s ease, background .4s ease, transform .35s cubic-bezier(.16,1,.3,1), color .3s ease;
-    backdrop-filter:blur(6px);
-  }
-  .btn-ghost:hover{ border-color:rgba(255,106,26,.65); background:rgba(255,106,26,.08); }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  /* ---------- Eyebrow marker ---------- */
-  .marker{ width:26px; height:1px; background:var(--flame); display:inline-block; transform-origin:left; transform:scaleX(0); transition:transform .8s cubic-bezier(.16,1,.3,1) .1s; }
-  .in .marker, .reveal.in .marker{ transform:scaleX(1); }
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
 
-  /* ---------- Marquee ---------- */
-  .marquee{ display:flex; width:max-content; animation:marq 38s linear infinite; }
-  .marquee:hover{ animation-play-state:paused; }
-  @keyframes marq{ to{ transform:translateX(-50%); } }
+    ::selection {
+      background: var(--brand-orange);
+      color: #fff;
+    }
 
-  /* ---------- Waveform ---------- */
-  .wave span{ display:block; width:3px; border-radius:2px; background:linear-gradient(180deg,#FFA43B,#FF6A1A); animation:bar 1.1s ease-in-out infinite; }
-  @keyframes bar{ 0%,100%{ transform:scaleY(.25) } 50%{ transform:scaleY(1) } }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
 
-  /* ---------- Skills bar ---------- */
-  .bar-fill{ width:0; transition:width 1.4s cubic-bezier(.16,1,.3,1) .12s; }
-  .in .bar-fill{ width:var(--w); }
+    ::-webkit-scrollbar-track {
+      background: #07070A;
+    }
 
-  /* ---------- Cards ---------- */
-  .card{ background:linear-gradient(160deg, rgba(255,255,255,.045), rgba(255,255,255,.012)); border:1px solid #22222A;
-    transition:transform .55s cubic-bezier(.16,1,.3,1), border-color .45s ease, box-shadow .55s ease; }
-  .card:hover{ transform:translateY(-7px); border-color:rgba(255,106,26,.38); box-shadow:0 28px 60px -30px rgba(0,0,0,.95), 0 0 0 1px rgba(255,106,26,.06); }
+    ::-webkit-scrollbar-thumb {
+      background: #25252F;
+      border-radius: 999px;
+    }
 
-  .proj:hover .frame img{ transform:scale(1.07); }
-  .proj .cat-dot{ transition:width .5s cubic-bezier(.16,1,.3,1); }
-  .proj:hover .cat-dot{ width:44px; }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--brand-orange);
+    }
 
-  /* ---------- Filter chips ---------- */
-  .chip{ border:1px solid #26262C; transition:all .35s cubic-bezier(.16,1,.3,1); }
-  .chip:hover{ border-color:rgba(255,106,26,.5); color:#fff; }
-  .chip.active{ background:var(--flame); border-color:var(--flame); color:#0b0b0d; }
+    :focus-visible {
+      outline: 2px solid rgba(255, 94, 30, 0.85);
+      outline-offset: 3px;
+    }
 
-  /* ---------- Timeline ---------- */
-  .tl-line{ position:absolute; left:0; top:6px; bottom:6px; width:1px; background:#22222A; }
-  .tl-prog{ position:absolute; left:0; top:6px; width:1px; background:linear-gradient(180deg,#FF6A1A,rgba(255,106,26,0)); height:0; transition:height 1.6s cubic-bezier(.16,1,.3,1); }
-  .in .tl-prog{ height:calc(100% - 12px); }
-  .tl-dot{ box-shadow:0 0 0 4px rgba(255,106,26,.12); }
+    .site-header {
+      background: rgba(7, 7, 10, 0.62);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
 
-  /* ---------- Scroll rail ---------- */
-  #railFill{ height:0%; }
-  #progressBar{ transform-origin:left; transform:scaleX(0); }
+    .site-header.scrolled {
+      background: rgba(7, 7, 10, 0.92);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
+    }
 
-  /* ---------- Testimonial stars ---------- */
-  .stars svg{ filter:drop-shadow(0 2px 8px rgba(255,106,26,.35)); }
+    .cinematic-glow {
+      background: radial-gradient(circle at 50% 50%, rgba(255, 94, 30, 0.12) 0%, rgba(255, 94, 30, 0.035) 34%, rgba(7, 7, 10, 0) 72%);
+    }
 
-  /* ---------- Input ---------- */
-  .fld{ background:rgba(255,255,255,.03); border:1px solid #24242B; transition:border-color .35s ease, background .35s ease; }
-  .fld:focus{ outline:none; border-color:rgba(255,106,26,.6); background:rgba(255,106,26,.04); }
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 38%, #FF7A00 72%, #ffc09a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
 
-  .noscroll{ overflow:hidden; }
-  @media (prefers-reduced-motion:reduce){
-    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
-    .reveal,.rev-mask{ opacity:1 !important; transform:none !important; }
-    .frame::after{ transform:translateY(-101%) !important; }
-  }
-</style>
+    .glass-panel {
+      background: linear-gradient(180deg, rgba(22, 22, 28, 0.78), rgba(13, 13, 18, 0.74));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+    }
+
+    .glass-panel:hover {
+      border-color: rgba(255, 94, 30, 0.28);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--brand-orange);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 999px;
+      background: var(--brand-orange);
+      box-shadow: 0 0 18px rgba(255, 94, 30, 0.72);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-100 {
+      transition-delay: 0.1s;
+    }
+
+    .delay-150 {
+      transition-delay: 0.15s;
+    }
+
+    .delay-200 {
+      transition-delay: 0.2s;
+    }
+
+    .hero-visual {
+      position: relative;
+      isolation: isolate;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 94, 30, 0.06);
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      z-index: 1;
+      pointer-events: none;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 78% 16%, rgba(255, 94, 30, 0.24), transparent 32%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%);
+      mix-blend-mode: screen;
+    }
+
+    .hero-visual img {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .editor-panel {
+      position: absolute;
+      z-index: 2;
+    }
+
+    .float-card {
+      position: absolute;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: floatCard 6s ease-in-out infinite;
+    }
+
+    .float-card:nth-child(2) {
+      animation-delay: -1.8s;
+    }
+
+    @keyframes floatCard {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    .timeline-strip {
+      position: relative;
+    }
+
+    .playhead {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 8%;
+      width: 2px;
+      background: var(--brand-orange);
+      box-shadow: 0 0 18px rgba(255, 94, 30, 0.95);
+      animation: playheadMove 4s linear infinite;
+    }
+
+    @keyframes playheadMove {
+      0% {
+        left: 8%;
+      }
+      100% {
+        left: 92%;
+      }
+    }
+
+    .filter-btn {
+      transition: all 0.25s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn[aria-pressed="true"] {
+      background: var(--brand-orange);
+      border-color: var(--brand-orange);
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(255, 94, 30, 0.22);
+      transform: translateY(-1px);
+    }
+
+    [data-nav-link].active {
+      color: var(--brand-orange) !important;
+    }
+
+    .portfolio-card[hidden] {
+      display: none;
+    }
+
+    .portfolio-card {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .portfolio-card img {
+      transition: transform 0.6s ease;
+    }
+
+    .portfolio-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .thumbnail-overlay {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .portfolio-card:hover .thumbnail-overlay {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+
+    .skill-card,
+    .service-card,
+    .testimonial-card {
+      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .skill-card:hover,
+    .service-card:hover,
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 94, 30, 0.3);
+      background: rgba(255, 94, 30, 0.055);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+    }
+
+    .timeline {
+      position: relative;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 94, 30, 0.48), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 2.85rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 0.62rem;
+      top: 1.45rem;
+      width: 0.85rem;
+      height: 0.85rem;
+      border-radius: 999px;
+      background: var(--brand-orange);
+      box-shadow: 0 0 0 8px rgba(255, 94, 30, 0.1), 0 0 30px rgba(255, 94, 30, 0.55);
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      min-height: 3rem;
+      padding: 0 1.15rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand-orange), #ffb000);
+      color: #0b0b0d;
+      box-shadow: 0 18px 45px rgba(255, 94, 30, 0.28);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 60px rgba(255, 94, 30, 0.38);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 94, 30, 0.1);
+      border-color: rgba(255, 94, 30, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .view-project {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 94, 30, 0.35);
+      background: rgba(255, 94, 30, 0.1);
+      color: #fff;
+      padding: 0.55rem 0.82rem;
+      font-size: 0.75rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+    }
+
+    .view-project:hover {
+      background: var(--brand-orange);
+      border-color: var(--brand-orange);
+      transform: translateY(-2px);
+    }
+
+    .social-btn {
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+      transition: all 0.25s ease;
+    }
+
+    .social-btn:hover {
+      background: rgba(255, 94, 30, 0.16);
+      border-color: rgba(255, 94, 30, 0.45);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .contact-shell {
+      overflow: hidden;
+    }
+
+    .contact-shell::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 80% 15%, rgba(255, 94, 30, 0.16), transparent 35%),
+        radial-gradient(circle at 15% 85%, rgba(255, 255, 255, 0.05), transparent 30%);
+    }
+
+    .contact-shell > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    #modal-details ul {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    #modal-details li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      color: #cbd5e1;
+    }
+
+    #modal-details li::before {
+      content: "";
+      width: 0.45rem;
+      height: 0.45rem;
+      margin-top: 0.45rem;
+      border-radius: 999px;
+      flex: 0 0 auto;
+      background: var(--brand-orange);
+      box-shadow: 0 0 16px rgba(255, 94, 30, 0.75);
+    }
+
+    @media (max-width: 640px) {
+      .float-card {
+        display: none;
+      }
+
+      .hero-visual {
+        min-height: 520px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
 </head>
-<body class="font-sans antialiased">
 
-<div class="grain"></div>
-<div class="spot" id="spot"></div>
-
-<!-- Scroll progress -->
-<div class="fixed top-0 left-0 right-0 h-[2px] z-[70] bg-transparent">
-  <div id="progressBar" class="h-full bg-gradient-to-r from-flame to-amber"></div>
-</div>
-
-<!-- Timeline rail -->
-<div class="hidden xl:flex fixed left-7 top-1/2 -translate-y-1/2 z-40 flex-col items-center gap-4 select-none">
-  <span class="font-mono text-[10px] tracking-widest text-mute/70">00:00</span>
-  <div class="relative w-px h-52 bg-line overflow-hidden">
-    <div id="railFill" class="absolute top-0 left-0 w-full bg-gradient-to-b from-amber to-flame"></div>
+<body class="bg-brand-dark text-neutral-300 font-sans selection:bg-brand-orange selection:text-white antialiased overflow-x-hidden">
+  <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute inset-0 opacity-[0.035]" style="background-image: radial-gradient(rgba(255, 255, 255, 0.55) 1px, transparent 1px); background-size: 24px 24px;"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[34rem] cinematic-glow"></div>
+    <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-brand-orange/10 blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-orange-950/30 blur-3xl"></div>
   </div>
-  <span id="railPct" class="font-mono text-[10px] tracking-widest text-flame">00%</span>
-</div>
 
-<!-- ================= NAV ================= -->
-<header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
-  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
-    <div class="flex items-center justify-between h-20">
-      <a href="#hero" class="flex items-center gap-3 group">
-        <span class="relative w-9 h-9 rounded-md bg-gradient-to-br from-flame to-amber grid place-items-center overflow-hidden">
-          <span class="font-display font-bold text-[15px] text-black leading-none">GD</span>
-        </span>
-        <span class="leading-tight">
-          <span class="block font-display font-semibold tracking-tight text-[15px]">Ganesh Dangi</span>
-          <span class="block font-mono text-[9px] tracking-[0.22em] text-mute uppercase">Editor / AI Creator</span>
-        </span>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-full focus:bg-brand-orange focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white">
+    Skip to content
+  </a>
+
+  <header class="site-header fixed inset-x-0 top-0 z-50">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-3 group" aria-label="Ganesh Dangi home">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-orange to-amber-400 flex items-center justify-center font-display font-black text-white shadow-glow transition-transform duration-300 group-hover:scale-105">
+          GD
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-bold text-white tracking-tight leading-none">GANESH DANGI</span>
+          <span class="text-[10px] uppercase tracking-[0.22em] text-neutral-500 font-semibold mt-1">Editor & AI Director</span>
+        </div>
       </a>
 
-      <nav class="hidden lg:flex items-center gap-9 text-[12.5px] font-medium tracking-wide uppercase text-mute">
-        <a href="#work" class="navlink hover:text-bone transition-colors">Work</a>
-        <a href="#skills" class="navlink hover:text-bone transition-colors">Skills</a>
-        <a href="#about" class="navlink hover:text-bone transition-colors">About</a>
-        <a href="#experience" class="navlink hover:text-bone transition-colors">Experience</a>
-        <a href="#services" class="navlink hover:text-bone transition-colors">Services</a>
-        <a href="#testimonials" class="navlink hover:text-bone transition-colors">Clients</a>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide" aria-label="Primary navigation">
+        <a data-nav-link href="#work" class="text-neutral-400 hover:text-white transition-colors">Work</a>
+        <a data-nav-link href="#skills" class="text-neutral-400 hover:text-white transition-colors">Skills</a>
+        <a data-nav-link href="#about" class="text-neutral-400 hover:text-white transition-colors">About</a>
+        <a data-nav-link href="#experience" class="text-neutral-400 hover:text-white transition-colors">Experience</a>
+        <a data-nav-link href="#services" class="text-neutral-400 hover:text-white transition-colors">Services</a>
+        <a data-nav-link href="#testimonials" class="text-neutral-400 hover:text-white transition-colors">Reviews</a>
       </nav>
 
-      <div class="flex items-center gap-3">
-        <span id="navTime" class="hidden md:block font-mono text-[11px] tracking-widest text-flame/90">00:00:00:00</span>
-        <a href="#contact" class="hidden sm:inline-flex btn-flame magnetic items-center gap-2 px-5 py-2.5 rounded-full text-[11.5px] font-semibold tracking-[0.14em] uppercase">
-          Contact
+      <div class="flex items-center gap-4">
+        <a href="#contact" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-white/5 hover:bg-brand-orange text-white border border-white/10 hover:border-brand-orange transition-all duration-300">
+          Let's Connect
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
-        <button id="burger" class="lg:hidden w-10 h-10 grid place-items-center rounded-md border border-line" aria-label="Menu">
-          <span class="block w-5 space-y-[5px]">
-            <span class="block h-[1.5px] bg-bone transition-transform duration-300" id="b1"></span>
-            <span class="block h-[1.5px] bg-bone transition-opacity duration-300" id="b2"></span>
-            <span class="block h-[1.5px] bg-bone transition-transform duration-300" id="b3"></span>
-          </span>
+
+        <button id="mobile-menu-btn" type="button" class="md:hidden text-neutral-300 hover:text-white focus:outline-none p-2 rounded-xl" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
+          <i data-lucide="menu" class="w-6 h-6"></i>
         </button>
       </div>
     </div>
-  </div>
-  <div id="mobileMenu" class="lg:hidden overflow-hidden max-h-0 transition-[max-height] duration-500 ease-out bg-char/95 backdrop-blur-xl border-t border-line/60">
-    <nav class="px-6 py-6 flex flex-col gap-1 text-sm uppercase tracking-widest">
-      <a href="#work" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">Work</a>
-      <a href="#skills" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">Skills</a>
-      <a href="#about" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">About</a>
-      <a href="#experience" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">Experience</a>
-      <a href="#services" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">Services</a>
-      <a href="#testimonials" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">Clients</a>
-      <a href="#contact" class="mt-4 btn-flame text-center py-3 rounded-full text-[12px] font-semibold tracking-[0.16em]">Contact Me</a>
-    </nav>
-  </div>
-</header>
 
-<!-- ================= HERO ================= -->
-<section id="hero" class="relative min-h-[100svh] flex items-center pt-28 pb-16 overflow-hidden">
-  <canvas id="dust" class="absolute inset-0 w-full h-full pointer-events-none opacity-70"></canvas>
-  <div class="absolute -top-40 right-0 w-[60vw] h-[60vw] max-w-[820px] max-h-[820px] rounded-full pointer-events-none"
-       style="background:radial-gradient(circle, rgba(255,106,26,.16) 0%, rgba(255,106,26,0) 62%);"></div>
-  <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent pointer-events-none"></div>
+    <div id="mobile-menu" class="hidden md:hidden bg-brand-surface/95 border-b border-brand-border px-5 py-4 flex flex-col gap-3">
+      <a data-nav-link href="#work" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">Work</a>
+      <a data-nav-link href="#skills" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">Skills</a>
+      <a data-nav-link href="#about" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">About</a>
+      <a data-nav-link href="#experience" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">Experience</a>
+      <a data-nav-link href="#services" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">Services</a>
+      <a data-nav-link href="#testimonials" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">Reviews</a>
+      <a data-nav-link href="#contact" class="text-brand-orange font-bold">Contact Me</a>
+    </div>
+  </header>
 
-  <div class="relative max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 w-full">
-    <div class="grid lg:grid-cols-12 gap-12 lg:gap-14 items-center">
-
-      <!-- Copy -->
-      <div class="lg:col-span-7 reveal in">
-        <div class="flex items-center gap-3 mb-7">
-          <span class="marker !scale-x-100"></span>
-          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Portfolio — Reel 2025</span>
-        </div>
-
-        <h1 class="font-display font-bold tracking-[-0.035em] leading-[0.92] text-[clamp(2.6rem,7.4vw,5.6rem)]">
-          <span class="line-mask"><span class="rev-mask in block" style="--d:.05s">VIDEO EDITOR</span></span>
-          <span class="line-mask"><span class="rev-mask in block text-transparent bg-clip-text" style="--d:.16s;background-image:linear-gradient(100deg,#FF6A1A,#FFC178 55%,#FF6A1A)">&amp; AI CONTENT</span></span>
-          <span class="line-mask"><span class="rev-mask in block" style="--d:.26s">CREATOR</span></span>
-        </h1>
-
-        <p class="mt-7 text-lg sm:text-xl text-bone/85 font-light max-w-xl leading-relaxed reveal in" style="--d:.4s">
-          Transforming Ideas Into <span class="text-flame font-normal">Cinematic Visual Stories</span>
-        </p>
-        <p class="mt-4 text-[15px] text-mute max-w-lg leading-relaxed reveal in" style="--d:.5s">
-          I create engaging documentaries, cinematic videos, social media content and AI-powered visual experiences — cut with rhythm, coloured with intent.
-        </p>
-
-        <div class="mt-10 flex flex-wrap items-center gap-4 reveal in" style="--d:.6s">
-          <a href="#work" class="btn-flame magnetic inline-flex items-center gap-3 px-8 py-4 rounded-full text-[12px] font-semibold tracking-[0.16em] uppercase">
-            View My Work
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a href="#contact" class="btn-ghost magnetic inline-flex items-center gap-3 px-8 py-4 rounded-full text-[12px] font-semibold tracking-[0.16em] uppercase">
-            Contact Me
-          </a>
-        </div>
-
-        <div class="mt-12 grid grid-cols-3 gap-5 max-w-md reveal in" style="--d:.7s">
-          <div>
-            <div class="font-display text-3xl font-semibold text-bone"><span class="count" data-to="250">0</span>+</div>
-            <div class="font-mono text-[10px] tracking-[0.18em] uppercase text-mute mt-1">Projects</div>
-          </div>
-          <div>
-            <div class="font-display text-3xl font-semibold text-bone"><span class="count" data-to="40">0</span>M+</div>
-            <div class="font-mono text-[10px] tracking-[0.18em] uppercase text-mute mt-1">Views</div>
-          </div>
-          <div>
-            <div class="font-display text-3xl font-semibold text-bone"><span class="count" data-to="6">0</span>Y</div>
-            <div class="font-mono text-[10px] tracking-[0.18em] uppercase text-mute mt-1">Experience</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Portrait -->
-      <div class="lg:col-span-5 reveal in" style="--d:.25s">
-        <div class="relative">
-          <div class="absolute -inset-3 rounded-[28px] border border-line/70"></div>
-          <div class="relative rounded-[22px] overflow-hidden frame sweep group shadow-[0_50px_100px_-40px_rgba(0,0,0,1)]" style="--d:.35s">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
-                 alt="Ganesh Dangi, video editor portrait"
-                 class="w-full h-[440px] sm:h-[540px] lg:h-[600px] object-cover object-center ken"
-                 onerror="this.style.display='none';this.parentElement.classList.add('img-fallback')">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
-            <div class="absolute inset-0" style="box-shadow:inset 0 0 120px 20px rgba(255,106,26,.10)"></div>
-
-            <!-- REC badge -->
-            <div class="absolute top-5 left-5 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/55 backdrop-blur border border-white/10">
-              <span class="w-1.5 h-1.5 rounded-full bg-flame animate-pulse"></span>
-              <span class="font-mono text-[10px] tracking-[0.2em] text-bone">REC</span>
+  <main id="main" class="relative z-10">
+    <section id="home" class="relative min-h-screen flex items-center pt-28 pb-20 lg:pt-32 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          <div class="lg:col-span-6 flex flex-col items-start space-y-7 reveal">
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-brand-orange/30 bg-brand-orange/5 text-brand-orange text-xs font-black tracking-wider uppercase">
+              <span class="w-2 h-2 rounded-full bg-brand-orange animate-pulse"></span>
+              Available for Select Projects
             </div>
-            <div class="absolute top-5 right-5 font-mono text-[10px] tracking-[0.18em] text-bone/70" id="heroTime">00:00:04:12</div>
 
-            <!-- bottom meta -->
-            <div class="absolute inset-x-0 bottom-0 p-6">
-              <div class="wave flex items-end gap-[3px] h-8 mb-4 opacity-90" id="wave"></div>
-              <div class="flex items-end justify-between gap-4">
-                <div>
-                  <div class="font-display text-xl font-semibold tracking-tight">Ganesh Dangi</div>
-                  <div class="font-mono text-[10px] tracking-[0.22em] uppercase text-flame mt-1">Editor · Colourist · AI Creator</div>
+            <h1 class="font-display font-black text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] tracking-[-0.07em] text-white">
+              VIDEO EDITOR
+              <span class="block">&</span>
+              AI CONTENT CREATOR
+            </h1>
+
+            <p class="gradient-text text-2xl sm:text-3xl font-display font-semibold tracking-tight">
+              Transforming Ideas Into Cinematic Visual Stories
+            </p>
+
+            <p class="max-w-2xl text-lg text-neutral-400 leading-8">
+              I create engaging documentaries, cinematic videos, social media content and AI-powered visual experiences.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 pt-2">
+              <a href="#work" class="btn-primary">
+                VIEW MY WORK
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              </a>
+              <a href="#contact" class="btn-secondary">
+                CONTACT ME
+                <i data-lucide="mail" class="w-4 h-4"></i>
+              </a>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 max-w-xl w-full pt-4">
+              <div class="glass-panel rounded-2xl p-4">
+                <p class="text-2xl font-display font-bold text-white">120+</p>
+                <p class="text-[11px] uppercase tracking-widest text-neutral-500 mt-1">Projects</p>
+              </div>
+              <div class="glass-panel rounded-2xl p-4">
+                <p class="text-2xl font-display font-bold text-white">4K/8K</p>
+                <p class="text-[11px] uppercase tracking-widest text-neutral-500 mt-1">Workflow</p>
+              </div>
+              <div class="glass-panel rounded-2xl p-4">
+                <p class="text-2xl font-display font-bold text-white">48h</p>
+                <p class="text-[11px] uppercase tracking-widest text-neutral-500 mt-1">Delivery</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 reveal delay-150">
+            <div class="relative mx-auto max-w-2xl">
+              <div class="hero-visual rounded-[2rem] overflow-hidden h-[560px] lg:h-[620px]">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=85" alt="Professional video editor working on a cinematic editing workstation" decoding="async" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+
+                <div class="absolute top-6 right-6 z-20 flex items-center gap-2 rounded-full bg-black/45 border border-white/10 px-4 py-2 backdrop-blur-xl">
+                  <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                  <span class="text-[11px] uppercase tracking-widest text-neutral-300 font-bold">REC / EDIT MODE</span>
                 </div>
-                <div class="text-right font-mono text-[9.5px] leading-relaxed text-bone/50 tracking-wider">
-                  <div>4K / 60FPS</div>
-                  <div>REC.709 · DAVINCI</div>
+
+                <div class="editor-panel left-5 right-5 bottom-5 glass-panel rounded-[1.5rem] p-5">
+                  <div class="flex items-center justify-between gap-4">
+                    <div>
+                      <p class="text-[10px] uppercase tracking-[0.25em] text-brand-orange font-black">Editing Suite</p>
+                      <h3 class="text-white font-display font-bold text-xl tracking-tight mt-1">Cinematic Storytelling Workflow</h3>
+                    </div>
+                    <span class="rounded-full bg-brand-orange/15 text-brand-orange border border-brand-orange/25 px-3 py-1 text-xs font-black uppercase tracking-wider">
+                      4K Ready
+                    </span>
+                  </div>
+
+                  <div class="mt-5 space-y-2.5">
+                    <div class="flex items-center justify-between text-xs text-neutral-400">
+                      <span>Narrative Cut</span>
+                      <span>82%</span>
+                    </div>
+                    <div class="h-2 rounded-full bg-white/10 overflow-hidden">
+                      <div class="h-full w-[82%] rounded-full bg-gradient-to-r from-brand-orange to-amber-400"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-neutral-400">
+                      <span>Color & Sound</span>
+                      <span>91%</span>
+                    </div>
+                    <div class="h-2 rounded-full bg-white/10 overflow-hidden">
+                      <div class="h-full w-[91%] rounded-full bg-gradient-to-r from-brand-orange to-amber-400"></div>
+                    </div>
+                  </div>
+
+                  <div class="timeline-strip mt-5 h-14 rounded-xl bg-black/50 border border-white/10 overflow-hidden flex items-center gap-2 px-3">
+                    <div class="w-10 h-10 rounded-lg bg-brand-orange/20 border border-brand-orange/30"></div>
+                    <div class="w-16 h-8 rounded-md bg-white/10"></div>
+                    <div class="w-24 h-8 rounded-md bg-white/10"></div>
+                    <div class="w-14 h-8 rounded-md bg-brand-orange/20"></div>
+                    <div class="w-20 h-8 rounded-md bg-white/10"></div>
+                    <div class="playhead"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="float-card left-5 top-8 glass-panel rounded-2xl px-4 py-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-orange/15 flex items-center justify-center text-brand-orange">
+                  <i data-lucide="sparkles" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-[11px] uppercase tracking-widest text-neutral-500 font-bold">AI Visuals</p>
+                  <p class="text-sm font-bold text-white">Concept → Edit</p>
+                </div>
+              </div>
+
+              <div class="float-card right-5 bottom-24 glass-panel rounded-2xl px-4 py-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-orange/15 flex items-center justify-center text-brand-orange">
+                  <i data-lucide="clapperboard" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-[11px] uppercase tracking-widest text-neutral-500 font-bold">Color Grade</p>
+                  <p class="text-sm font-bold text-white">Cinematic Look</p>
                 </div>
               </div>
             </div>
           </div>
-          <!-- floating tag -->
-          <div class="hidden sm:flex absolute -left-6 bottom-24 items-center gap-2 px-4 py-2.5 rounded-xl bg-char2/90 backdrop-blur border border-line shadow-2xl">
-            <span class="w-2 h-2 rounded-full bg-amber"></span>
-            <span class="font-mono text-[10px] tracking-[0.16em] uppercase text-bone/80">AI Pipeline Ready</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="relative py-24 lg:py-32">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-8 items-end mb-10">
+          <div class="lg:col-span-7 reveal">
+            <p class="eyebrow">Portfolio</p>
+            <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl lg:text-6xl tracking-[-0.05em] text-white">
+              Selected Projects Built for Impact
+            </h2>
+          </div>
+          <p class="lg:col-span-5 text-neutral-400 leading-7 reveal delay-100">
+            Explore cinematic edits across documentary storytelling, creator content, social-first reels, AI-generated concepts and motion design.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3 mb-10 reveal delay-150" aria-label="Portfolio filters">
+          <button type="button" class="filter-btn active rounded-full border border-white/10 bg-brand-orange px-4 py-2 text-sm font-black text-white" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="Documentary" aria-pressed="false">Documentary</button>
+          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="YouTube Videos" aria-pressed="false">YouTube Videos</button>
+          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="Social Media" aria-pressed="false">Social Media</button>
+          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="Cinematic Videos" aria-pressed="false">Cinematic Videos</button>
+          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="AI Generated Content" aria-pressed="false">AI Generated Content</button>
+          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="Motion Graphics" aria-pressed="false">Motion Graphics</button>
+        </div>
+
+        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <article class="portfolio-card reveal" data-portfolio-card data-category="Documentary" data-project-index="0">
+            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
+              <div class="relative aspect-video overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1000&q=85" alt="Documentary video editing thumbnail" loading="lazy" decoding="async" />
+                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
+                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">Documentary</span>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-bold text-2xl text-white tracking-tight">Desert Voices</h3>
+                <p class="mt-2 text-sm text-neutral-400 leading-6">A documentary-style edit focused on intimate interviews, atmospheric b-roll and emotional pacing.</p>
+                <div class="mt-5 flex items-center justify-between gap-4">
+                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">Cinematic Storytelling</span>
+                  <button type="button" data-project-index="0" class="view-project">
+                    View Project
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="portfolio-card reveal delay-100" data-portfolio-card data-category="YouTube Videos" data-project-index="1">
+            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
+              <div class="relative aspect-video overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=85" alt="YouTube video editing thumbnail" loading="lazy" decoding="async" />
+                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
+                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">YouTube Videos</span>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-bold text-2xl text-white tracking-tight">Creator Growth System</h3>
+                <p class="mt-2 text-sm text-neutral-400 leading-6">Retention-focused YouTube editing with hooks, pattern interrupts, captions and clean sound design.</p>
+                <div class="mt-5 flex items-center justify-between gap-4">
+                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">Retention Editing</span>
+                  <button type="button" data-project-index="1" class="view-project">
+                    View Project
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="portfolio-card reveal delay-200" data-portfolio-card data-category="Social Media" data-project-index="2">
+            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
+              <div class="relative aspect-video overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1000&q=85" alt="Social media reels editing thumbnail" loading="lazy" decoding="async" />
+                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
+                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">Social Media</span>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-bold text-2xl text-white tracking-tight">30-Second Launch Reels</h3>
+                <p class="mt-2 text-sm text-neutral-400 leading-6">Fast-paced vertical edits designed for Reels, Shorts and TikTok with bold captions and strong hooks.</p>
+                <div class="mt-5 flex items-center justify-between gap-4">
+                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">Short-Form Ready</span>
+                  <button type="button" data-project-index="2" class="view-project">
+                    View Project
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="portfolio-card reveal" data-portfolio-card data-category="Cinematic Videos" data-project-index="3">
+            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
+              <div class="relative aspect-video overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=85" alt="Cinematic video production thumbnail" loading="lazy" decoding="async" />
+                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
+                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">Cinematic Videos</span>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-bold text-2xl text-white tracking-tight">Midnight Run</h3>
+                <p class="mt-2 text-sm text-neutral-400 leading-6">A cinematic brand film with dramatic pacing, color grading, slow motion and immersive sound.</p>
+                <div class="mt-5 flex items-center justify-between gap-4">
+                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">Premium Grade</span>
+                  <button type="button" data-project-index="3" class="view-project">
+                    View Project
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="portfolio-card reveal delay-100" data-portfolio-card data-category="AI Generated Content" data-project-index="4">
+            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
+              <div class="relative aspect-video overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=85" alt="AI generated visual content thumbnail" loading="lazy" decoding="async" />
+                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
+                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">AI Generated Content</span>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-bold text-2xl text-white tracking-tight">Neon Future Brand Film</h3>
+                <p class="mt-2 text-sm text-neutral-400 leading-6">AI-assisted concept development, generated b-roll, voiceover and polished motion finishing.</p>
+                <div class="mt-5 flex items-center justify-between gap-4">
+                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">AI Workflow</span>
+                  <button type="button" data-project-index="4" class="view-project">
+                    View Project
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="portfolio-card reveal delay-200" data-portfolio-card data-category="Motion Graphics" data-project-index="5">
+            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
+              <div class="relative aspect-video overflow-hidden">
+                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1000&q=85" alt="Motion graphics editing thumbnail" loading="lazy" decoding="async" />
+                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
+                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">Motion Graphics</span>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display font-bold text-2xl text-white tracking-tight">Kinetic Brand Motion Kit</h3>
+                <p class="mt-2 text-sm text-neutral-400 leading-6">Animated typography, lower thirds, logo motion and transition systems for modern content.</p>
+                <div class="mt-5 flex items-center justify-between gap-4">
+                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">Motion System</span>
+                  <button type="button" data-project-index="5" class="view-project">
+                    View Project
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="relative py-24 lg:py-32">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-5 glass-panel rounded-[2rem] p-6 sm:p-8 reveal">
+            <p class="eyebrow">Skills</p>
+            <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl tracking-[-0.05em] text-white">
+              Professional Editing Stack
+            </h2>
+            <p class="mt-5 text-neutral-400 leading-7">
+              A polished workflow built around storytelling, pacing, clean audio, cinematic color and platform-specific delivery.
+            </p>
+
+            <div class="mt-8 grid grid-cols-2 gap-3">
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <p class="text-2xl font-display font-bold text-white">4K/8K</p>
+                <p class="text-[11px] uppercase tracking-widest text-neutral-500 mt-1 font-bold">Media Handling</p>
+              </div>
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <p class="text-2xl font-display font-bold text-white">AI</p>
+                <p class="text-[11px] uppercase tracking-widest text-neutral-500 mt-1 font-bold">Creative Workflow</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+                    <i data-lucide="film" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-display font-bold text-lg text-white">Adobe Premiere Pro</h3>
+                    <p class="text-sm text-neutral-500">Timeline, multicam, exports</p>
+                  </div>
+                </div>
+                <span class="text-sm font-black text-white">95%</span>
+              </div>
+              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 95%;"></div>
+              </div>
+            </div>
+
+            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal delay-100">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+                    <i data-lucide="palette" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-display font-bold text-lg text-white">DaVinci Resolve</h3>
+                    <p class="text-sm text-neutral-500">Color correction & grade</p>
+                  </div>
+                </div>
+                <span class="text-sm font-black text-white">88%</span>
+              </div>
+              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 88%;"></div>
+              </div>
+            </div>
+
+            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal delay-200">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+                    <i data-lucide="smartphone" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-display font-bold text-lg text-white">CapCut</h3>
+                    <p class="text-sm text-neutral-500">Short-form social edits</p>
+                  </div>
+                </div>
+                <span class="text-sm font-black text-white">92%</span>
+              </div>
+              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 92%;"></div>
+              </div>
+            </div>
+
+            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+                    <i data-lucide="bot" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-display font-bold text-lg text-white">AI Scriptwriting</h3>
+                    <p class="text-sm text-neutral-500">Hooks, outlines, VO</p>
+                  </div>
+                </div>
+                <span class="text-sm font-black text-white">90%</span>
+              </div>
+              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 90%;"></div>
+              </div>
+            </div>
+
+            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal delay-100">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+                    <i data-lucide="image" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-display font-bold text-lg text-white">Thumbnail Design</h3>
+                    <p class="text-sm text-neutral-500">CTR-focused visuals</p>
+                  </div>
+                </div>
+                <span class="text-sm font-black text-white">86%</span>
+              </div>
+              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 86%;"></div>
+              </div>
+            </div>
+
+            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal delay-200">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+                    <i data-lucide="wand-sparkles" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="font-display font-bold text-lg text-white">Motion Graphics</h3>
+                    <p class="text-sm text-neutral-500">Titles, transitions, FX</p>
+                  </div>
+                </div>
+                <span class="text-sm font-black text-white">78%</span>
+              </div>
+              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 78%;"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ================= MARQUEE ================= -->
-<section class="relative border-y border-line/70 bg-char/60 py-5 overflow-hidden">
-  <div class="marquee gap-10 items-center whitespace-nowrap" id="marq"></div>
-</section>
+    <section id="about" class="relative py-24 lg:py-32">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-5 reveal">
+            <div class="relative rounded-[2rem] overflow-hidden glass-panel p-3">
+              <div class="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
+                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=85" alt="Portrait of Ganesh Dangi" loading="lazy" decoding="async" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+              </div>
+              <div class="absolute left-6 right-6 bottom-6 glass-panel rounded-2xl p-4">
+                <p class="text-[11px] uppercase tracking-widest text-brand-orange font-black">Ganesh Dangi</p>
+                <p class="text-white font-display font-bold text-xl mt-1">Professional Video Editor</p>
+              </div>
+            </div>
+          </div>
 
-<!-- ================= PORTFOLIO ================= -->
-<section id="work" class="relative py-24 sm:py-32">
-  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+          <div class="lg:col-span-7 reveal delay-150">
+            <p class="eyebrow">About Me</p>
+            <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl lg:text-6xl tracking-[-0.05em] text-white">
+              Editorial Precision Meets Modern AI Creativity
+            </h2>
+            <p class="mt-6 text-neutral-400 leading-8 text-lg">
+              Hi, I'm Ganesh Dangi, a professional video editor and AI content creator helping creators, brands and documentary storytellers turn raw footage into polished visual narratives.
+            </p>
+            <p class="mt-4 text-neutral-400 leading-8 text-lg">
+              My workflow combines pacing, storytelling, sound design, color correction and AI-assisted ideation to produce content that feels premium, emotionally engaging and platform-ready.
+            </p>
 
-    <div class="reveal flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
-      <div>
-        <div class="flex items-center gap-3 mb-5">
-          <span class="marker"></span>
-          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Selected Work</span>
+            <ul class="grid sm:grid-cols-2 gap-3 mt-8">
+              <li class="glass-panel rounded-2xl p-4 flex gap-3 items-start">
+                <i data-lucide="check" class="w-5 h-5 text-brand-orange mt-0.5 flex-shrink-0"></i>
+                <div>
+                  <h3 class="text-white font-bold">Story-First Editing</h3>
+                  <p class="text-sm text-neutral-500 mt-1">Every cut supports emotion, clarity and viewer retention.</p>
+                </div>
+              </li>
+              <li class="glass-panel rounded-2xl p-4 flex gap-3 items-start">
+                <i data-lucide="check" class="w-5 h-5 text-brand-orange mt-0.5 flex-shrink-0"></i>
+                <div>
+                  <h3 class="text-white font-bold">Cinematic Polish</h3>
+                  <p class="text-sm text-neutral-500 mt-1">Color, sound, transitions and pacing refined for a premium finish.</p>
+                </div>
+              </li>
+              <li class="glass-panel rounded-2xl p-4 flex gap-3 items-start">
+                <i data-lucide="check" class="w-5 h-5 text-brand-orange mt-0.5 flex-shrink-0"></i>
+                <div>
+                  <h3 class="text-white font-bold">AI-Powered Workflow</h3>
+                  <p class="text-sm text-neutral-500 mt-1">Ideation, scripting, concepts and visual direction accelerated with AI.</p>
+                </div>
+              </li>
+              <li class="glass-panel rounded-2xl p-4 flex gap-3 items-start">
+                <i data-lucide="check" class="w-5 h-5 text-brand-orange mt-0.5 flex-shrink-0"></i>
+                <div>
+                  <h3 class="text-white font-bold">Platform Delivery</h3>
+                  <p class="text-sm text-neutral-500 mt-1">Exports optimized for YouTube, Instagram, reels, ads and web.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-        <h2 class="font-display font-bold tracking-[-0.03em] leading-[1] text-[clamp(2.1rem,5vw,3.6rem)]">
-          The <span class="text-transparent bg-clip-text" style="background-image:linear-gradient(100deg,#FF6A1A,#FFC178)">Edit Bay</span> Archive
-        </h2>
       </div>
-      <p class="text-mute text-[15px] max-w-sm leading-relaxed">
-        A cross-section of long-form documentaries, channel work, short-form verticals and generative pieces — each one graded, sound-designed and delivered to spec.
+    </section>
+
+    <section id="experience" class="relative py-24 lg:py-32">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto text-center mb-12 reveal">
+          <p class="eyebrow">Experience</p>
+          <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl lg:text-6xl tracking-[-0.05em] text-white">
+            Professional Timeline
+          </h2>
+          <p class="mt-5 text-neutral-400 leading-7">
+            A clean progression through documentary, creator, brand and AI-assisted content production.
+          </p>
+        </div>
+
+        <div class="relative max-w-4xl mx-auto timeline reveal delay-100">
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="glass-panel rounded-[1.5rem] p-6">
+              <p class="text-brand-orange text-xs font-black uppercase tracking-widest">2024 — Present</p>
+              <h3 class="mt-3 font-display font-bold text-2xl text-white">Freelance Video Editor & AI Content Creator</h3>
+              <p class="mt-3 text-neutral-400 leading-7">
+                Delivering cinematic edits, AI-assisted concepts, YouTube packages and short-form content for creators, startups and brands.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="glass-panel rounded-[1.5rem] p-6">
+              <p class="text-brand-orange text-xs font-black uppercase tracking-widest">2022 — 2024</p>
+              <h3 class="mt-3 font-display font-bold text-2xl text-white">YouTube & Creator Content Specialist</h3>
+              <p class="mt-3 text-neutral-400 leading-7">
+                Built retention-focused editing systems for long-form videos, Shorts, Reels, thumbnails and creator branding.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="glass-panel rounded-[1.5rem] p-6">
+              <p class="text-brand-orange text-xs font-black uppercase tracking-widest">2020 — 2022</p>
+              <h3 class="mt-3 font-display font-bold text-2xl text-white">Documentary & Brand Storytelling Editor</h3>
+              <p class="mt-3 text-neutral-400 leading-7">
+                Worked on interview-led edits, brand films, travel content, social campaigns and polished post-production workflows.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="relative py-24 lg:py-32">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-12 reveal">
+          <p class="eyebrow">Services</p>
+          <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl lg:text-6xl tracking-[-0.05em] text-white">
+            Premium Editing Services
+          </h2>
+          <p class="mt-5 text-neutral-400 leading-7">
+            From raw footage to finished cinematic content, every service is designed for clarity, retention and visual impact.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal">
+            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+              <i data-lucide="film" class="w-6 h-6"></i>
+            </div>
+            <h3 class="mt-5 font-display font-bold text-xl text-white">Video Editing</h3>
+            <p class="mt-3 text-sm text-neutral-400 leading-6">Clean cuts, narrative pacing, sound design and color polish for premium final videos.</p>
+          </article>
+
+          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal delay-100">
+            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+              <i data-lucide="monitor-play" class="w-6 h-6"></i>
+            </div>
+            <h3 class="mt-5 font-display font-bold text-xl text-white">YouTube Editing</h3>
+            <p class="mt-3 text-sm text-neutral-400 leading-6">Retention-focused edits with hooks, captions, B-roll, sound effects and strong pacing.</p>
+          </article>
+
+          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal delay-200">
+            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+              <i data-lucide="clapperboard" class="w-6 h-6"></i>
+            </div>
+            <h3 class="mt-5 font-display font-bold text-xl text-white">Documentary Editing</h3>
+            <p class="mt-3 text-sm text-neutral-400 leading-6">Interview-led storytelling, atmosphere, structure and emotional narrative flow.</p>
+          </article>
+
+          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal">
+            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+              <i data-lucide="smartphone" class="w-6 h-6"></i>
+            </div>
+            <h3 class="mt-5 font-display font-bold text-xl text-white">Short-form/Reels Editing</h3>
+            <p class="mt-3 text-sm text-neutral-400 leading-6">Vertical edits for Instagram, YouTube Shorts and TikTok with captions and hooks.</p>
+          </article>
+
+          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal delay-100">
+            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+              <i data-lucide="layers" class="w-6 h-6"></i>
+            </div>
+            <h3 class="mt-5 font-display font-bold text-xl text-white">Motion Graphics</h3>
+            <p class="mt-3 text-sm text-neutral-400 leading-6">Animated titles, lower thirds, transitions, logo motion and visual effects.</p>
+          </article>
+
+          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal delay-200">
+            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+              <i data-lucide="bot" class="w-6 h-6"></i>
+            </div>
+            <h3 class="mt-5 font-display font-bold text-xl text-white">AI Video Production</h3>
+            <p class="mt-3 text-sm text-neutral-400 leading-6">AI scripts, visual concepts, generated assets, voiceover direction and final polish.</p>
+          </article>
+
+          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal">
+            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
+              <i data-lucide="image" class="w-6 h-6"></i>
+            </div>
+            <h3 class="mt-5 font-display font-bold text-xl text-white">Thumbnail Design</h3>
+            <p class="mt-3 text-sm text-neutral-400 leading-6">High-CTR thumbnails with bold composition, contrast, typography and branding.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="relative py-24 lg:py-32">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-12 reveal">
+          <p class="eyebrow">Testimonials</p>
+          <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl lg:text-6xl tracking-[-0.05em] text-white">
+            Trusted by Creators & Brands
+          </h2>
+          <p class="mt-5 text-neutral-400 leading-7">
+            Modern clients value fast communication, cinematic polish and edits that perform across platforms.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <article class="testimonial-card glass-panel rounded-[1.5rem] p-6 reveal">
+            <div class="flex items-center gap-1 text-amber-400" aria-label="5 out of 5 rating">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              <span class="ml-2 text-sm text-neutral-300 font-bold">5.0</span>
+            </div>
+            <p class="mt-5 text-neutral-300 leading-7">
+              “Ganesh transformed our raw travel footage into a cinematic story that felt premium, emotional and perfectly paced.”
+            </p>
+            <div class="mt-6 flex items-center gap-4">
+              <img class="w-12 h-12 rounded-full object-cover border border-white/10" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=85" alt="Client profile image" loading="lazy" decoding="async" />
+              <div>
+                <h3 class="text-white font-bold">Rohan Mehta</h3>
+                <p class="text-sm text-neutral-500">Travel Creator</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card glass-panel rounded-[1.5rem] p-6 reveal delay-100">
+            <div class="flex items-center gap-1 text-amber-400" aria-label="5 out of 5 rating">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              <span class="ml-2 text-sm text-neutral-300 font-bold">5.0</span>
+            </div>
+            <p class="mt-5 text-neutral-300 leading-7">
+              “The YouTube edits were sharp, engaging and retention-focused. Ganesh understood pacing, hooks and brand tone immediately.”
+            </p>
+            <div class="mt-6 flex items-center gap-4">
+              <img class="w-12 h-12 rounded-full object-cover border border-white/10" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=85" alt="Client profile image" loading="lazy" decoding="async" />
+              <div>
+                <h3 class="text-white font-bold">Neha Kapoor</h3>
+                <p class="text-sm text-neutral-500">Brand Manager</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonial-card glass-panel rounded-[1.5rem] p-6 reveal delay-200">
+            <div class="flex items-center gap-1 text-amber-400" aria-label="5 out of 5 rating">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              <span class="ml-2 text-sm text-neutral-300 font-bold">5.0</span>
+            </div>
+            <p class="mt-5 text-neutral-300 leading-7">
+              “Our AI concept video looked incredibly polished. The scripting, visuals and final edit felt like a professional studio production.”
+            </p>
+            <div class="mt-6 flex items-center gap-4">
+              <img class="w-12 h-12 rounded-full object-cover border border-white/10" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=85" alt="Client profile image" loading="lazy" decoding="async" />
+              <div>
+                <h3 class="text-white font-bold">Aarav Shah</h3>
+                <p class="text-sm text-neutral-500">Startup Founder</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="relative py-24 lg:py-32">
+      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div class="contact-shell glass-panel rounded-[2rem] p-6 sm:p-8 lg:p-10">
+          <div class="grid lg:grid-cols-5 gap-10">
+            <div class="lg:col-span-2 space-y-6">
+              <p class="eyebrow">Contact</p>
+              <h2 class="font-display font-black text-4xl sm:text-5xl tracking-[-0.04em] text-white">
+                Let’s Create Something Amazing
+              </h2>
+              <p class="text-neutral-400 leading-7">
+                Share your footage, concept or content goal — I’ll help shape it into a polished, cinematic final piece.
+              </p>
+
+              <div class="space-y-4">
+                <div class="flex items-start gap-3 rounded-2xl bg-white/5 border border-white/10 p-4">
+                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <p class="text-[11px] uppercase tracking-widest text-neutral-500 font-black">Email</p>
+                    <a id="contact-email" href="mailto:ganeshdangi.video@gmail.com" data-mailto class="text-white font-semibold hover:text-brand-orange transition-colors">ganeshdangi.video@gmail.com</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <a class="social-btn" href="https://www.instagram.com/ganeshdangi.video" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <i data-lucide="instagram" class="w-5 h-5"></i>
+                </a>
+                <a class="social-btn" href="https://www.youtube.com/@ganeshdangi.video" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                  <i data-lucide="youtube" class="w-5 h-5"></i>
+                </a>
+                <a class="social-btn" href="https://www.linkedin.com/in/ganeshdangi-video" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                  <i data-lucide="linkedin" class="w-5 h-5"></i>
+                </a>
+                <a class="social-btn" href="https://www.behance.net/ganeshdangi" target="_blank" rel="noopener noreferrer" aria-label="Behance">
+                  <i data-lucide="share-2" class="w-5 h-5"></i>
+                </a>
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                <button id="copy-email" type="button" class="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-black uppercase tracking-wider text-white hover:bg-brand-orange hover:border-brand-orange transition-all">
+                  Copy Email
+                  <i data-lucide="copy" class="w-4 h-4"></i>
+                </button>
+                <a href="mailto:ganeshdangi.video@gmail.com" data-mailto class="btn-primary">
+                  Start a Project
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="lg:col-span-3">
+              <form id="contact-form" class="glass-panel rounded-[1.5rem] p-5 sm:p-6 space-y-4">
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <label class="block">
+                    <span class="block text-sm font-bold text-white">Name</span>
+                    <input id="name" name="name" type="text" autocomplete="name" required placeholder="Your name" class="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-neutral-600 outline-none transition-all focus:border-brand-orange/60 focus:ring-4 focus:ring-brand-orange/10" />
+                  </label>
+
+                  <label class="block">
+                    <span class="block text-sm font-bold text-white">Email</span>
+                    <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" class="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-neutral-600 outline-none transition-all focus:border-brand-orange/60 focus:ring-4 focus:ring-brand-orange/10" />
+                  </label>
+                </div>
+
+                <label class="block">
+                  <span class="block text-sm font-bold text-white">Project Type</span>
+                  <select id="project-type" name="project-type" class="mt-2 w-full rounded-2xl border border-white/10 bg-brand-surface px-4 py-3 text-white outline-none transition-all focus:border-brand-orange/60 focus:ring-4 focus:ring-brand-orange/10">
+                    <option value="">Select a service</option>
+                    <option value="Video Editing">Video Editing</option>
+                    <option value="YouTube Editing">YouTube Editing</option>
+                    <option value="Documentary Editing">Documentary Editing</option>
+                    <option value="Short-form/Reels Editing">Short-form/Reels Editing</option>
+                    <option value="Motion Graphics">Motion Graphics</option>
+                    <option value="AI Video Production">AI Video Production</option>
+                    <option value="Thumbnail Design">Thumbnail Design</option>
+                  </select>
+                </label>
+
+                <label class="block">
+                  <span class="block text-sm font-bold text-white">Message</span>
+                  <textarea id="message" name="message" required rows="5" placeholder="Tell me about your footage, timeline, goals and preferred style..." class="mt-2 w-full resize-y rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-neutral-600 outline-none transition-all focus:border-brand-orange/60 focus:ring-4 focus:ring-brand-orange/10"></textarea>
+                </label>
+
+                <button type="submit" class="btn-primary w-full">
+                  Send Project Brief
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="relative z-10 border-t border-white/10 bg-black/40">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-neutral-500">
+        © <span id="year"></span> Ganesh Dangi. Professional Video Editor & AI Content Creator.
       </p>
-    </div>
-
-    <!-- Filters -->
-    <div class="reveal flex flex-wrap gap-2.5 mb-10" id="filters" style="--d:.08s"></div>
-
-    <!-- Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="grid"></div>
-
-    <div class="reveal mt-14 flex justify-center">
-      <a href="#contact" class="btn-ghost magnetic inline-flex items-center gap-3 px-8 py-4 rounded-full text-[12px] font-semibold tracking-[0.16em] uppercase">
-        Start a Project
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      <a href="#home" class="inline-flex items-center gap-2 text-sm font-bold text-neutral-400 hover:text-brand-orange transition-colors">
+        Back to top
+        <i data-lucide="arrow-up" class="w-4 h-4"></i>
       </a>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- ================= SKILLS ================= -->
-<section id="skills" class="relative py-24 sm:py-28 bg-char/50 border-y border-line/60">
-  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
-    <div class="grid lg:grid-cols-12 gap-14">
+  <div id="project-modal" class="fixed inset-0 z-[80] hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" data-modal-close></div>
+    <div class="relative min-h-full flex items-center justify-center p-4 sm:p-6">
+      <div class="glass-panel max-w-5xl w-full max-h-[90vh] overflow-y-auto rounded-[2rem] p-4 sm:p-6">
+        <button id="modal-close" type="button" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-brand-orange text-white transition-colors" aria-label="Close project details">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
 
-      <div class="lg:col-span-5 reveal">
-        <div class="flex items-center gap-3 mb-5">
-          <span class="marker"></span>
-          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Craft</span>
-        </div>
-        <h2 class="font-display font-bold tracking-[-0.03em] leading-[1.02] text-[clamp(2rem,4.6vw,3.2rem)]">
-          Tools, taste and<br>technical precision.
-        </h2>
-        <p class="mt-6 text-mute text-[15px] leading-relaxed max-w-md">
-          Six years inside the timeline — from offline assembly and story structure to colour science, sound design and AI-assisted production pipelines that shorten delivery without losing soul.
-        </p>
-
-        <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-3" id="tiles"></div>
-      </div>
-
-      <div class="lg:col-span-7">
-        <div class="reveal rounded-2xl border border-line/80 bg-gradient-to-br from-white/[0.045] to-white/[0.01] p-6 sm:p-9" id="skillBlock">
-          <div class="flex items-center justify-between mb-8">
-            <span class="font-mono text-[10px] tracking-[0.24em] uppercase text-mute">Proficiency Index</span>
-            <span class="font-mono text-[10px] tracking-[0.24em] uppercase text-flame">01 — 09</span>
+        <div class="grid lg:grid-cols-2 gap-6">
+          <div class="rounded-[1.5rem] overflow-hidden bg-black border border-white/10 aspect-video lg:aspect-auto">
+            <img id="modal-image" class="w-full h-full object-cover" src="" alt="Selected project preview" />
           </div>
-          <div class="space-y-6" id="bars"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ================= ABOUT ================= -->
-<section id="about" class="relative py-24 sm:py-32">
-  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
-    <div class="grid lg:grid-cols-12 gap-14 items-center">
-
-      <div class="lg:col-span-5 reveal">
-        <div class="relative">
-          <div class="absolute -inset-3 rounded-[26px] border border-line/70"></div>
-          <div class="frame sweep rounded-[20px] overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80"
-                 alt="Ganesh Dangi working on a cinematic edit"
-                 class="w-full h-[420px] sm:h-[520px] object-cover"
-                 onerror="this.style.display='none';this.parentElement.classList.add('img-fallback')">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
-          </div>
-          <div class="absolute -bottom-7 -right-2 sm:right-6 bg-char2/95 backdrop-blur border border-line rounded-2xl px-6 py-5 shadow-2xl">
-            <div class="font-display text-3xl font-bold text-flame leading-none"><span class="count" data-to="250">0</span>+</div>
-            <div class="font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute mt-2">Projects Delivered</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="lg:col-span-7 lg:pl-6 reveal" style="--d:.1s">
-        <div class="flex items-center gap-3 mb-5">
-          <span class="marker"></span>
-          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">About Me</span>
-        </div>
-        <h2 class="font-display font-bold tracking-[-0.03em] leading-[1.03] text-[clamp(2rem,4.6vw,3.2rem)]">
-          Every frame earns its place<br>in the timeline.
-        </h2>
-        <div class="mt-7 space-y-5 text-[15.5px] leading-[1.85] text-mute max-w-2xl">
-          <p>
-            I'm <span class="text-bone">Ganesh Dangi</span> — a professional video editor and AI content creator working with founders, filmmakers and creators across documentary, brand and YouTube formats. I started with a borrowed laptop and a 40-minute timeline; today I deliver broadcast-grade edits for clients on four continents.
-          </p>
-          <p>
-            My approach is editorial first: story, rhythm and restraint. Technology — DaVinci Resolve colour science, generative video models, AI voice and audio restoration — simply lets the story arrive faster and cleaner. The result is content that holds attention past the first three seconds.
-          </p>
-        </div>
-
-        <div class="mt-10 grid sm:grid-cols-3 gap-4">
-          <div class="rounded-xl border border-line/80 bg-white/[0.02] px-5 py-5">
-            <div class="font-mono text-[9.5px] tracking-[0.2em] uppercase text-flame mb-2">Based In</div>
-            <div class="font-display text-[15px]">Indore, India</div>
-          </div>
-          <div class="rounded-xl border border-line/80 bg-white/[0.02] px-5 py-5">
-            <div class="font-mono text-[9.5px] tracking-[0.2em] uppercase text-flame mb-2">Turnaround</div>
-            <div class="font-display text-[15px]">48–72 Hours</div>
-          </div>
-          <div class="rounded-xl border border-line/80 bg-white/[0.02] px-5 py-5">
-            <div class="font-mono text-[9.5px] tracking-[0.2em] uppercase text-flame mb-2">Availability</div>
-            <div class="font-display text-[15px]">Open for Q3</div>
+          <div class="flex flex-col justify-center p-2 sm:p-4">
+            <p id="modal-category" class="text-xs font-black uppercase tracking-widest text-brand-orange"></p>
+            <h3 id="modal-title" class="mt-3 font-display font-black text-3xl sm:text-4xl text-white tracking-tight"></h3>
+            <p id="modal-description" class="mt-4 text-neutral-400 leading-7"></p>
+            <div id="modal-details"></div>
+            <a id="modal-contact" href="#contact" class="btn-primary mt-6">
+              Discuss Similar Project
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ================= EXPERIENCE ================= -->
-<section id="experience" class="relative py-24 sm:py-28 bg-char/50 border-y border-line/60">
-  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
-    <div class="reveal mb-14">
-      <div class="flex items-center gap-3 mb-5">
-        <span class="marker"></span>
-        <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Experience</span>
-      </div>
-      <h2 class="font-display font-bold tracking-[-0.03em] leading-[1] text-[clamp(2rem,4.6vw,3.2rem)]">A timeline of my own.</h2>
-    </div>
+  <div id="toast" class="fixed left-1/2 bottom-6 z-[90] -translate-x-1/2 translate-y-4 opacity-0 pointer-events-none transition-all duration-300 glass-panel rounded-full px-5 py-3 text-sm font-bold text-white shadow-2xl" role="status" aria-live="polite"></div>
 
-    <div class="reveal relative pl-8 sm:pl-10" id="timelineWrap">
-      <div class="tl-line"></div>
-      <div class="tl-prog"></div>
-      <div class="space-y-4" id="timeline"></div>
-    </div>
-  </div>
-</section>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
 
-<!-- ================= SERVICES ================= -->
-<section id="services" class="relative py-24 sm:py-32">
-  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
-    <div class="reveal flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
-      <div>
-        <div class="flex items-center gap-3 mb-5">
-          <span class="marker"></span>
-          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Services</span>
-        </div>
-        <h2 class="font-display font-bold tracking-[-0.03em] leading-[1] text-[clamp(2rem,4.6vw,3.2rem)]">What I deliver.</h2>
-      </div>
-      <p class="text-mute text-[15px] max-w-sm leading-relaxed">End-to-end post production — from raw footage handover to platform-ready masters, captions and thumbnails.</p>
-    </div>
+      const EMAIL = 'ganeshdangi.video@gmail.com';
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="services-grid"></div>
-  </div>
-</section>
+      document.querySelectorAll('[data-mailto]').forEach((link) => {
+        link.href = `mailto:${EMAIL}`;
+      });
 
-<!-- ================= TESTIMONIALS ================= -->
-<section id="testimonials" class="relative py-24 sm:py-28 bg-char/50 border-y border-line/60">
-  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
-    <div class="reveal mb-14">
-      <div class="flex items-center gap-3 mb-5">
-        <span class="marker"></span>
-        <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Client Voices</span>
-      </div>
-      <h2 class="font-display font-bold tracking-[-0.03em] leading-[1] text-[clamp(2rem,4.6vw,3.2rem)]">Trusted by creators &amp; brands.</h2>
-    </div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="testimonials-grid"></div>
-  </div>
-</section>
+      const header = document.querySelector('.site-header');
+      const updateHeader = () => {
+        if (header) header.classList.toggle('scrolled', window.scrollY > 12);
+      };
+      updateHeader();
+      window.addEventListener('scroll', updateHeader, { passive: true });
 
-<!-- ================= CONTACT ================= -->
-<section id="contact" class="relative py-24 sm:py-32 overflow-hidden">
-  <div class="absolute left-1/2 -translate-x-1/2 top-0 w-[80vw] h-[50vw] max-w-[900px] pointer-events-none"
-       style="background:radial-gradient(ellipse at center, rgba(255,106,26,.14) 0%, rgba(255,106,26,0) 65%)"></div>
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
 
-  <div class="relative max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
-    <div class="grid lg:grid-cols-12 gap-14">
+      menuBtn?.addEventListener('click', () => {
+        const willOpen = mobileMenu.classList.toggle('hidden') === false;
+        menuBtn.setAttribute('aria-expanded', String(willOpen));
+      });
 
-      <div class="lg:col-span-6 reveal">
-        <div class="flex items-center gap-3 mb-6">
-          <span class="marker"></span>
-          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Get In Touch</span>
-        </div>
-        <h2 class="font-display font-bold tracking-[-0.035em] leading-[0.98] text-[clamp(2.3rem,6vw,4.4rem)]">
-          Let's Create<br><span class="text-transparent bg-clip-text" style="background-image:linear-gradient(100deg,#FF6A1A,#FFC178)">Something Amazing</span>
-        </h2>
-        <p class="mt-7 text-mute text-[15.5px] leading-relaxed max-w-md">
-          Have footage, an idea, or just a rough concept? Send it over — I'll come back with a clear approach, timeline and quote within 24 hours.
-        </p>
+      mobileMenu?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          menuBtn?.setAttribute('aria-expanded', 'false');
+        });
+      });
 
-        <div class="mt-10 space-y-3">
-          <a href="mailto:hello@ganeshdangi.com" class="group flex items-center gap-4 px-5 py-4 rounded-xl border border-line/80 bg-white/[0.02] hover:border-flame/50 hover:bg-flame/[0.06] transition-all duration-400">
-            <span class="w-10 h-10 rounded-lg bg-flame/12 border border-flame/25 grid place-items-center shrink-0">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6A1A" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-            </span>
-            <span>
-              <span class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute">Email</span>
-              <span class="block text-[15px] text-bone group-hover:text-flame transition-colors">hello@ganeshdangi.com</span>
-            </span>
-          </a>
-          <a href="tel:+919000000000" class="group flex items-center gap-4 px-5 py-4 rounded-xl border border-line/80 bg-white/[0.02] hover:border-flame/50 hover:bg-flame/[0.06] transition-all duration-400">
-            <span class="w-10 h-10 rounded-lg bg-flame/12 border border-flame/25 grid place-items-center shrink-0">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6A1A" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
-            </span>
-            <span>
-              <span class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute">Phone</span>
-              <span class="block text-[15px] text-bone group-hover:text-flame transition-colors">+91 90000 00000</span>
-            </span>
-          </a>
-        </div>
+      const revealItems = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.12,
+          rootMargin: '0px 0px -60px 0px'
+        });
 
-        <div class="mt-8 flex flex-wrap gap-2.5" id="socials"></div>
-      </div>
+        revealItems.forEach((item) => revealObserver.observe(item));
+      } else {
+        revealItems.forEach((item) => item.classList.add('is-visible'));
+      }
 
-      <div class="lg:col-span-6 reveal" style="--d:.12s">
-        <form id="contactForm" class="rounded-2xl border border-line/80 bg-gradient-to-br from-white/[0.05] to-white/[0.012] p-6 sm:p-8 backdrop-blur-sm">
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute mb-2">Name</label>
-              <input required type="text" placeholder="Your name" class="fld w-full rounded-lg px-4 py-3 text-[14px] text-bone placeholder:text-mute/50">
-            </div>
-            <div>
-              <label class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute mb-2">Email</label>
-              <input required type="email" placeholder="you@studio.com" class="fld w-full rounded-lg px-4 py-3 text-[14px] text-bone placeholder:text-mute/50">
-            </div>
-          </div>
-          <div class="mt-4">
-            <label class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute mb-2">Project Type</label>
-            <select class="fld w-full rounded-lg px-4 py-3 text-[14px] text-bone">
-              <option class="bg-char">Documentary Edit</option>
-              <option class="bg-char">YouTube / Channel Edit</option>
-              <option class="bg-char">Short-form / Reels</option>
-              <option class="bg-char">Cinematic Brand Film</option>
-              <option class="bg-char">AI Video Production</option>
-              <option class="bg-char">Motion Graphics</option>
-            </select>
-          </div>
-          <div class="mt-4">
-            <label class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute mb-2">Message</label>
-            <textarea required rows="4" placeholder="Tell me about the footage, the story and the deadline…" class="fld w-full rounded-lg px-4 py-3 text-[14px] text-bone placeholder:text-mute/50 resize-none"></textarea>
-          </div>
-          <button type="submit" class="btn-flame magnetic mt-6 w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full text-[12px] font-semibold tracking-[0.16em] uppercase">
-            Send Message
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-          <p class="mt-4 text-center font-mono text-[10px] tracking-[0.14em] uppercase text-mute/70">Avg. response time — under 24 hours</p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
+      const navLinks = Array.from(document.querySelectorAll('[data-nav-link]'));
+      const sections = navLinks
+        .map((link) => ({
+          link,
+          section: document.querySelector(link.getAttribute('href'))
+        }))
+        .filter((item) => item.section);
 
-<!-- ================= FOOTER ================= -->
-<footer class="border-t border-line/60 bg-char/60">
-  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-12">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
-      <div class="flex items-center gap-3">
-        <span class="w-9 h-9 rounded-md bg-gradient-to-br from-flame to-amber grid place-items-center">
-          <span class="font-display font-bold text-[15px] text-black leading-none">GD</span>
-        </span>
-        <div>
-          <div class="font-display font-semibold tracking-tight text-[15px]">Ganesh Dangi</div>
-          <div class="font-mono text-[9.5px] tracking-[0.22em] uppercase text-mute">Video Editor &amp; AI Content Creator</div>
-        </div>
-      </div>
-      <nav class="flex flex-wrap gap-x-7 gap-y-3 text-[12px] uppercase tracking-widest text-mute">
-        <a href="#work" class="navlink hover:text-bone transition-colors">Work</a>
-        <a href="#about" class="navlink hover:text-bone transition-colors">About</a>
-        <a href="#services" class="navlink hover:text-bone transition-colors">Services</a>
-        <a href="#contact" class="navlink hover:text-bone transition-colors">Contact</a>
-      </nav>
-    </div>
-    <div class="mt-10 pt-6 border-t border-line/50 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <p class="font-mono text-[10px] tracking-[0.14em] uppercase text-mute/70">© 2025 Ganesh Dangi — All rights reserved</p>
-      <p class="font-mono text-[10px] tracking-[0.14em] uppercase text-mute/70">Cut · Colour · Sound · AI</p>
-    </div>
-  </div>
-</footer>
+      if ('IntersectionObserver' in window) {
+        const navObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              navLinks.forEach((link) => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+              });
+            }
+          });
+        }, {
+          rootMargin: '-45% 0px -45% 0px',
+          threshold: 0
+        });
 
-<!-- Toast -->
-<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-[80] transition-all duration-500 px-6 py-4 rounded-xl bg-char2 border border-flame/40 shadow-2xl flex items-center gap-3">
-  <span class="w-2 h-2 rounded-full bg-flame"></span>
-  <span class="text-[13.5px]">Thanks — your message is in the queue. I'll reply within 24 hours.</span>
-</div>
+        sections.forEach((item) => navObserver.observe(item.section));
+      }
 
-<script>
-/* ============ DATA ============ */
-const IMG = (id,w=1200)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+      const filterButtons = document.querySelectorAll('[data-filter]');
+      const portfolioCards = document.querySelectorAll('[data-portfolio-card]');
 
-const projects = [
-  { t:"Vanishing Rivers", c:"Documentary", d:"A 42-minute feature following four river communities through drought season. Full offline/online edit, grade and sound design.", img:IMG("photo-1470071459604-3b5ec3a7fe05"), feat:true, yr:"2024", len:"42:10" },
-  { t:"Threads of the Himalaya", c:"Documentary", d:"Portrait series on wool weavers of Himachal — 6 episodes, archive integration and bilingual subtitles.", img:IMG("photo-1524492412937-b28074a5d7da"), feat:true, yr:"2024", len:"6 × 18:00" },
-  { t:"The Creator Playbook", c:"YouTube Videos", d:"Weekly long-form channel edit. Retention-driven pacing, b-roll scripting support and motion lower-thirds.", img:IMG("photo-1522202176988-66273c2fd55f"), yr:"2025", len:"24:36" },
-  { t:"Reels That Retain", c:"Social Media", d:"30-day vertical content sprint — 30 reels, hook variants, captions and platform-native colour LUTs.", img:IMG("photo-1516035069371-29a1b244cc32"), yr:"2025", len:"9:16" },
-  { t:"Night Signal", c:"Cinematic Videos", d:"Brand film shot anamorphic at 4K/60. Speed ramps, halation pass and a fully designed soundscape.", img:IMG("photo-1519681393784-d120267933ba"), feat:true, yr:"2024", len:"02:48" },
-  { t:"Neon Monsoon", c:"Cinematic Videos", d:"Live-event concert cut with multicam sync, crowd energy beats and concert-grade audio mix.", img:IMG("photo-1502136969935-8d8eef54d77b"), yr:"2023", len:"06:12" },
-  { t:"Synthetic Dreams", c:"AI Generated Content", d:"Fully generative short film. Runway + frame interpolation, AI voice performance and manual cleanup pass.", img:IMG("photo-1620712943543-bcc4688e7485"), yr:"2025", len:"03:04" },
-  { t:"Neural Echoes", c:"AI Generated Content", d:"Product launch sequence built from text-to-video, motion-tracked UI composites and AI score stems.", img:IMG("photo-1677442136019-21780ecad995"), yr:"2025", len:"01:20" },
-  { t:"Kinetic Titles Vol. 01", c:"Motion Graphics", d:"Typography system for a documentary series — 24 animated title cards, all project-linked and editable.", img:IMG("photo-1550745165-9bc0b252726f"), yr:"2024", len:"Toolkit" },
-  { t:"Signal Studio Identity", c:"Motion Graphics", d:"Broadcast package: logo sting, transitions, lower thirds and end cards across 6 aspect ratios.", img:IMG("photo-1526374965328-7f61d4dc18c5"), yr:"2023", len:"Package" }
-];
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const filter = button.dataset.filter;
 
-const categories = ["All", "Documentary", "YouTube Videos", "Social Media", "Cinematic Videos", "AI Generated Content", "Motion Graphics"];
+          filterButtons.forEach((btn) => {
+            const isActive = btn === button;
+            btn.classList.toggle('active', isActive);
+            btn.setAttribute('aria-pressed', String(isActive));
+          });
 
-const skills = [
-  { n:"Adobe Premiere Pro", v:96 }, { n:"Adobe After Effects", v:92 }, { n:"Adobe Photoshop", v:88 },
-  { n:"DaVinci Resolve", v:90 }, { n:"AI Video Generation", v:87 }, { n:"AI Voice & Audio", v:82 },
-  { n:"Motion Graphics", v:89 }, { n:"Color Grading", v:91 }, { n:"Sound Design", v:84 }
-];
+          portfolioCards.forEach((card) => {
+            const isMatch = filter === 'all' || card.dataset.category === filter;
+            card.hidden = !isMatch;
 
-const tiles = ["Premiere Pro","After Effects","Photoshop","DaVinci Resolve","Runway ML","ElevenLabs","Topaz AI","Frame.io","CapCut Pro"];
+            if (isMatch) {
+              card.classList.remove('is-visible');
+              requestAnimationFrame(() => card.classList.add('is-visible'));
+            } else {
+              card.classList.remove('is-visible');
+            }
+          });
+        });
+      });
 
-const experience = [
-  { r:"Senior Video Editor & AI Lead", c:"Nordlicht Media (Remote)", y:"2023 — Present", d:"Lead editor on documentary and brand film slate. Built the studio's AI pre-visualisation pipeline, cutting pre-production time by 40% and delivering 60+ finished pieces." },
-  { r:"Video Editor & Motion Designer", c:"Kite & Compass Studio", y:"2021 — 2023", d:"Owned post production for 12 YouTube channels averaging 300k+ subscribers. Designed the motion system used across all channel branding." },
-  { r:"Freelance Editor & Colourist", c:"Independent Practice", y:"2019 — 2021", d:"Cut commercials, event films and short documentaries for agency and direct clients across India, UAE and the UK." },
-  { r:"Junior Editor", c:"Redframe Productions", y:"2018 — 2019", d:"Assembly edits, proxy workflows, subtitling and archive research for broadcast factual programming." }
-];
+      const projects = [
+        {
+          title: 'Desert Voices',
+          category: 'Documentary',
+          image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=85',
+          description: 'A documentary-style edit focused on intimate interviews, atmospheric b-roll, emotional pacing and immersive sound design.',
+          details: ['Interview-led narrative structure', 'Atmospheric b-roll sequencing', 'Color correction and clean audio mix']
+        },
+        {
+          title: 'Creator Growth System',
+          category: 'YouTube Videos',
+          image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=85',
+          description: 'A retention-focused YouTube package built with strong hooks, pattern interrupts, captions, B-roll and dynamic pacing.',
+          details: ['Hook-first opening sequence', 'Retention-based pacing', 'Captions, SFX and clean export delivery']
+        },
+        {
+          title: '30-Second Launch Reels',
+          category: 'Social Media',
+          image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=85',
+          description: 'A short-form campaign designed for Reels, Shorts and TikTok with bold captions, fast cuts and platform-first formatting.',
+          details: ['Vertical 9:16 formatting', 'Trend-aware pacing and hooks', 'Caption systems for mobile viewing']
+        },
+        {
+          title: 'Midnight Run',
+          category: 'Cinematic Videos',
+          image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=85',
+          description: 'A cinematic brand film with dramatic pacing, slow motion, sound design, color grading and premium transitions.',
+          details: ['Cinematic color grade', 'Music-synced pacing', 'Slow motion and polished transitions']
+        },
+        {
+          title: 'Neon Future Brand Film',
+          category: 'AI Generated Content',
+          image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=85',
+          description: 'An AI-assisted visual concept combining generated assets, voiceover direction, motion polish and futuristic storytelling.',
+          details: ['AI concept and script development', 'Generated visual asset direction', 'Voiceover, motion and final polish']
+        },
+        {
+          title: 'Kinetic Brand Motion Kit',
+          category: 'Motion Graphics',
+          image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=85',
+          description: 'A motion system with animated typography, lower thirds, logo animation and transitions for modern content packages.',
+          details: ['Kinetic typography system', 'Animated lower thirds and titles', 'Reusable transition and logo motion kit']
+        }
+      ];
 
-const services = [
-  { t:"Video Editing", d:"Story-first offline and online editing for brand films, ads and features — assembly through final master.", tags:["Story Structure","J/L Cuts","Mastering"] },
-  { t:"YouTube Editing", d:"Retention-optimised long-form edits with pattern interrupts, zooms, sound FX and custom lower thirds.", tags:["Retention","B-Roll","Sound FX"] },
-  { t:"Documentary Editing", d:"Multi-camera assembly, archive integration, transcript-driven story building and long-form pacing.", tags:["Archive","Interview","Pacing"] },
-  { t:"Short-form / Reels Editing", d:"Vertical-first cuts engineered for the first 3 seconds — captions, hooks and platform-native grading.", tags:["9:16","Hooks","Captions"] },
-  { t:"Motion Graphics", d:"Animated titles, logo stings, explainers and full broadcast packages built in After Effects.", tags:["After Effects","Titles","Stings"] },
-  { t:"AI Video Production", d:"Generative video, AI voice performance, upscaling and cleanup — supervised by a human editorial eye.", tags:["Runway","AI Voice","Upscaling"] },
-  { t:"Thumbnail Design", d:"High-CTR thumbnail concepts: composition, colour separation, type hierarchy and A/B variants.", tags:["CTR","Photoshop","A/B Test"] }
-];
+      const modal = document.getElementById('project-modal');
+      const modalImage = document.getElementById('modal-image');
+      const modalCategory = document.getElementById('modal-category');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDescription = document.getElementById('modal-description');
+      const modalDetails = document.getElementById('modal-details');
+      const modalCloseButton = document.getElementById('modal-close');
+      const modalContact = document.getElementById('modal-contact');
 
-const testimonials = [
-  { n:"Meera Kapoor", r:"Founder, Nordlicht Media", q:"Ganesh turned 14 hours of chaotic field footage into a documentary that made our board go silent. His sense of rhythm is genuinely rare — and the AI pre-viz he built saved us weeks.", img:IMG("photo-1494790108377-be9c29b29330",300), s:5 },
-  { n:"Daniel Osei", r:"Head of Content, Kite & Compass", q:"Our channel's average view duration jumped 31% in two months after he took over the edits. He understands retention without ever making the video feel like an ad.", img:IMG("photo-1500648767791-00dcc994a43e",300), s:5 },
-  { n:"Ananya Rao", r:"Producer, Redframe Productions", q:"Precise, calm under deadline, and obsessive about sound. The colour grade alone elevated the whole series. He's the first call on any factual project we take on.", img:IMG("photo-1573497019940-1c28c88b4f3e",300), s:5 }
-];
+      const openModal = (project) => {
+        if (!project || !modal) return;
 
-/* ============ RENDER ============ */
-// Marquee
-const marqItems = ["Documentary","YouTube Videos","Social Media","Cinematic Videos","AI Generated Content","Motion Graphics","Color Grading","Sound Design"];
-const marqEl = document.getElementById('marq');
-marqEl.innerHTML = Array(2).fill(marqItems.map(i=>
-  `<span class="flex items-center gap-10 pr-10"><span class="font-display text-[13px] sm:text-[15px] tracking-[0.22em] uppercase text-bone/55 hover:text-flame transition-colors">${i}</span><span class="w-1.5 h-1.5 rounded-full bg-flame/70"></span></span>`
-).join('')).join('');
+        modalImage.src = project.image;
+        modalImage.alt = `${project.title} project preview`;
+        modalCategory.textContent = project.category;
+        modalTitle.textContent = project.title;
+        modalDescription.textContent = project.description;
+        modalDetails.innerHTML = `<ul>${project.details.map((detail) => `<li>${detail}</li>`).join('')}</ul>`;
 
-// Filters
-const filtersEl = document.getElementById('filters');
-filtersEl.innerHTML = categories.map((c,i)=>
-  `<button class="chip ${i===0?'active':''} px-4 py-2 rounded-full font-mono text-[10.5px] tracking-[0.14em] uppercase text-mute" data-cat="${c}">${c}</button>`
-).join('');
+        modal.classList.remove('hidden');
+        document.body.classList.add('modal-open');
+        setTimeout(() => modalCloseButton?.focus(), 50);
+      };
 
-// Projects
-const gridEl = document.getElementById('grid');
-function cardHTML(p, i){
-  return `
-  <article class="proj reveal card group rounded-2xl overflow-hidden ${p.feat?'md:col-span-2':''}" data-cat="${p.c}" style="--d:${(i%3)*0.08}s">
-    <div class="frame sweep relative aspect-video">
-      <img src="${p.img}" alt="${p.t}" loading="lazy" class="w-full h-full object-cover"
-        onerror="this.style.display='none';this.parentElement.classList.add('img-fallback')">
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent z-[2]"></div>
-      <div class="absolute top-4 left-4 z-[3] flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur border border-white/10">
-        <span class="w-1.5 h-1.5 rounded-full bg-flame"></span>
-        <span class="font-mono text-[9.5px] tracking-[0.18em] uppercase text-bone/90">${p.c}</span>
-      </div>
-      <div class="absolute bottom-4 right-4 z-[3] font-mono text-[9.5px] tracking-[0.16em] text-bone/60">${p.yr} · ${p.len}</div>
-    </div>
-    <div class="p-6 sm:p-7">
-      <div class="cat-dot h-px w-4 bg-flame mb-4"></div>
-      <h3 class="font-display text-[19px] sm:text-[21px] font-semibold tracking-tight leading-snug">${p.t}</h3>
-      <p class="mt-3 text-[13.8px] leading-relaxed text-mute">${p.d}</p>
-      <a href="#contact" class="mt-6 inline-flex items-center gap-2 font-mono text-[10.5px] tracking-[0.2em] uppercase text-bone group-hover:text-flame transition-colors">
-        View Project
-        <svg class="transition-transform duration-500 group-hover:translate-x-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-  </article>`;
-}
-function renderProjects(list){
-  gridEl.innerHTML = list.map(cardHTML).join('');
-  gridEl.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-}
-renderProjects(projects);
+      const closeModal = () => {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        document.body.classList.remove('modal-open');
+      };
 
-filtersEl.addEventListener('click', e=>{
-  const b = e.target.closest('.chip'); if(!b) return;
-  filtersEl.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-  b.classList.add('active');
-  const cat = b.dataset.cat;
-  gridEl.style.opacity = '0';
-  gridEl.style.transform = 'translateY(12px)';
-  gridEl.style.transition = 'opacity .3s ease, transform .3s ease';
-  setTimeout(()=>{
-    renderProjects(cat==='All' ? projects : projects.filter(p=>p.c===cat));
-    requestAnimationFrame(()=>{ gridEl.style.opacity='1'; gridEl.style.transform='none'; });
-  }, 300);
-});
+      document.querySelectorAll('[data-project-index]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const project = projects[Number(button.dataset.projectIndex)];
+          openModal(project);
+        });
+      });
 
-// Skills
-document.getElementById('bars').innerHTML = skills.map((s,i)=>`
-  <div>
-    <div class="flex items-baseline justify-between mb-2.5">
-      <span class="text-[14px] text-bone/90">${s.n}</span>
-      <span class="font-mono text-[11px] text-flame"><span class="count" data-to="${s.v}">0</span>%</span>
-    </div>
-    <div class="h-[5px] rounded-full bg-white/[0.06] overflow-hidden">
-      <div class="bar-fill h-full rounded-full bg-gradient-to-r from-amber to-flame" style="--w:${s.v}%; transition-delay:${i*0.07}s"></div>
-    </div>
-  </div>`).join('');
+      modalCloseButton?.addEventListener('click', closeModal);
 
-document.getElementById('tiles').innerHTML = tiles.map((t,i)=>`
-  <div class="reveal rounded-lg border border-line/80 bg-white/[0.02] px-4 py-3 font-mono text-[10px] tracking-[0.14em] uppercase text-mute hover:text-flame hover:border-flame/40 transition-all duration-400" style="--d:${i*0.04}s">${t}</div>`).join('');
+      modal?.querySelectorAll('[data-modal-close]').forEach((element) => {
+        element.addEventListener('click', closeModal);
+      });
 
-// Timeline
-document.getElementById('timeline').innerHTML = experience.map((x,i)=>`
-  <div class="relative pb-8 last:pb-0 reveal" style="--d:${i*0.08}s">
-    <span class="tl-dot absolute -left-8 sm:-left-10 top-2 w-[9px] h-[9px] rounded-full bg-flame -translate-x-1/2"></span>
-    <div class="card rounded-2xl p-6 sm:p-7">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
-        <h3 class="font-display text-[18px] sm:text-[20px] font-semibold tracking-tight">${x.r}</h3>
-        <span class="font-mono text-[10px] tracking-[0.16em] uppercase text-flame">${x.y}</span>
-      </div>
-      <div class="font-mono text-[10.5px] tracking-[0.16em] uppercase text-mute mb-4">${x.c}</div>
-      <p class="text-[14px] leading-relaxed text-mute">${x.d}</p>
-    </div>
-  </div>`).join('');
+      modalContact?.addEventListener('click', closeModal);
 
-// Services
-document.getElementById('services-grid').innerHTML = services.map((s,i)=>`
-  <div class="reveal card sweep group rounded-2xl p-7 relative overflow-hidden" style="--d:${(i%3)*0.08}s">
-    <div class="absolute -right-6 -top-8 font-display font-bold text-[110px] leading-none text-white/[0.028] group-hover:text-flame/10 transition-colors duration-500">${String(i+1).padStart(2,'0')}</div>
-    <div class="relative">
-      <span class="font-mono text-[10px] tracking-[0.2em] text-flame">${String(i+1).padStart(2,'0')}</span>
-      <h3 class="mt-4 font-display text-[19px] font-semibold tracking-tight">${s.t}</h3>
-      <p class="mt-3 text-[13.8px] leading-relaxed text-mute">${s.d}</p>
-      <div class="mt-5 flex flex-wrap gap-2">
-        ${s.tags.map(t=>`<span class="font-mono text-[9.5px] tracking-[0.12em] uppercase text-mute/85 border border-line/80 rounded-full px-3 py-1.5 group-hover:border-flame/30 transition-colors">${t}</span>`).join('')}
-      </div>
-    </div>
-  </div>`).join('');
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
 
-// Testimonials
-const star = `<svg width="13" height="13" viewBox="0 0 24 24" fill="#FF6A1A"><path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2Z"/></svg>`;
-document.getElementById('testimonials-grid').innerHTML = testimonials.map((t,i)=>`
-  <div class="reveal card rounded-2xl p-7 flex flex-col" style="--d:${i*0.1}s">
-    <div class="stars flex gap-1.5 mb-5">${star.repeat(t.s)}</div>
-    <p class="text-[14.5px] leading-[1.8] text-bone/85 flex-1">"${t.q}"</p>
-    <div class="mt-7 pt-6 border-t border-line/70 flex items-center gap-4">
-      <div class="w-11 h-11 rounded-full overflow-hidden shrink-0 border border-flame/30 frame">
-        <img src="${t.img}" alt="${t.n}" loading="lazy" class="w-full h-full object-cover"
-          onerror="this.style.display='none';this.parentElement.classList.add('img-fallback')">
-      </div>
-      <div>
-        <div class="font-display text-[14.5px] font-semibold tracking-tight">${t.n}</div>
-        <div class="font-mono text-[9.5px] tracking-[0.16em] uppercase text-mute mt-1">${t.r}</div>
-      </div>
-    </div>
-  </div>`).join('');
+      const toast = document.getElementById('toast');
+      let toastTimer;
 
-// Socials
-const socialData = [
-  {n:"YouTube", u:"#", p:"M23 8.5a3 3 0 0 0-2.1-2.1C19 6 12 6 12 6s-7 0-8.9.4A3 3 0 0 0 1 8.5 31 31 0 0 0 .6 12 31 31 0 0 0 1 15.5a3 3 0 0 0 2.1 2.1C5 18 12 18 12 18s7 0 8.9-.4a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-3.5 31 31 0 0 0-.4-3.5ZM9.8 15.3V8.7l5.7 3.3-5.7 3.3Z"},
-  {n:"Instagram", u:"#", p:"M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2Zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4Zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3Zm6.9-11.1a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5Z"},
-  {n:"LinkedIn", u:"#", p:"M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.1a4.2 4.2 0 0 1 3.8-2c4 0 4.8 2.6 4.8 6V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21h-4V9Z"},
-  {n:"Behance", u:"#", p:"M9 5H2v14h7.3c3 0 4.7-1.5 4.7-4 0-1.9-1.1-3-2.6-3.3 1.2-.4 2-1.5 2-3 0-2.3-1.7-3.7-4.4-3.7H9Zm-3.5 5.7h3c1.3 0 2 .5 2 1.6s-.8 1.7-2.1 1.7h-3V10.7Zm0-5.4h2.9c1.1 0 1.8.5 1.8 1.5s-.7 1.5-1.9 1.5H5.5V5.3ZM18 6.3h6v1.6h-6V6.3Zm3.1 4c-3 0-5 2.2-5 5.1s1.9 5 4.9 5c2.3 0 4-1.2 4.6-3.1h-2.5c-.3.8-1 1.2-2 1.2-1.4 0-2.3-.9-2.4-2.3H26v-.7c0-3-1.8-5.2-4.9-5.2Zm-2.3 4c.2-1.2 1.1-2 2.4-2 1.4 0 2.2.8 2.3 2h-4.7Z"}
-];
-document.getElementById('socials').innerHTML = socialData.map(s=>`
-  <a href="${s.u}" aria-label="${s.n}" class="group w-11 h-11 rounded-lg border border-line/80 bg-white/[0.02] grid place-items-center hover:border-flame/50 hover:bg-flame/10 transition-all duration-400">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-mute group-hover:text-flame transition-colors"><path d="${s.p}"/></svg>
-  </a>`).join('');
+      const showToast = (message) => {
+        if (!toast) return;
 
-// Waveform bars
-const waveEl = document.getElementById('wave');
-waveEl.innerHTML = Array(44).fill(0).map((_,i)=>`<span style="height:${12 + Math.random()*22}px; animation-delay:${(i*0.06).toFixed(2)}s; animation-duration:${(0.8+Math.random()*0.8).toFixed(2)}s"></span>`).join('');
+        toast.textContent = message;
+        toast.classList.remove('opacity-0', 'translate-y-4');
+        toast.classList.add('opacity-100', 'translate-y-0');
 
-/* ============ OBSERVERS ============ */
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(en=>{
-    if(en.isIntersecting){
-      en.target.classList.add('in');
-      en.target.querySelectorAll?.('.count').forEach(runCount);
-      if(en.target.classList.contains('count')) runCount(en.target);
-      io.unobserve(en.target);
-    }
-  });
-},{ threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('opacity-100', 'translate-y-0');
+          toast.classList.add('opacity-0', 'translate-y-4');
+        }, 3000);
+      };
 
-document.querySelectorAll('.reveal, .count').forEach(el=>io.observe(el));
-// hero immediate
-document.querySelectorAll('#hero .reveal, #hero .rev-mask').forEach(el=>el.classList.add('in'));
+      document.getElementById('copy-email')?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(EMAIL);
+          showToast('Email copied to clipboard');
+        } catch {
+          showToast(`Email: ${EMAIL}`);
+        }
+      });
 
-function runCount(el){
-  if(el.dataset.done) return; el.dataset.done = '1';
-  const to = parseFloat(el.dataset.to); const dur = 1500; const start = performance.now();
-  function tick(now){
-    const p = Math.min((now-start)/dur,1);
-    const e = 1 - Math.pow(1-p,3);
-    el.textContent = Math.round(to*e).toLocaleString();
-    if(p<1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
+      const form = document.getElementById('contact-form');
 
-/* ============ SCROLL: progress, nav, rail ============ */
-const progressBar = document.getElementById('progressBar');
-const railFill = document.getElementById('railFill');
-const railPct = document.getElementById('railPct');
-const nav = document.getElementById('nav');
-let ticking = false;
-function onScroll(){
-  const y = window.scrollY;
-  const h = document.documentElement.scrollHeight - window.innerHeight;
-  const p = h>0 ? Math.min(y/h,1) : 0;
-  progressBar.style.transform = `scaleX(${p})`;
-  railFill.style.height = (p*100)+'%';
-  railPct.textContent = String(Math.round(p*100)).padStart(2,'0')+'%';
-  if(y>40){ nav.classList.add('bg-ink/80','backdrop-blur-xl','border-b','border-line/60'); }
-  else { nav.classList.remove('bg-ink/80','backdrop-blur-xl','border-b','border-line/60'); }
-  ticking = false;
-}
-window.addEventListener('scroll',()=>{ if(!ticking){ requestAnimationFrame(onScroll); ticking=true; } },{passive:true});
-onScroll();
+      form?.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-/* ============ Timecode ============ */
-const navTime = document.getElementById('navTime');
-const heroTime = document.getElementById('heroTime');
-let f=0;
-setInterval(()=>{
-  f++;
-  const fr=f%25, s=Math.floor(f/25)%60, m=Math.floor(f/1500)%60, hr=Math.floor(f/90000)%24;
-  const t = [hr,m,s,fr].map(n=>String(n).padStart(2,'0')).join(':');
-  if(navTime) navTime.textContent = t;
-  if(heroTime) heroTime.textContent = '00:'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+':'+String(fr).padStart(2,'0');
-}, 40);
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          showToast('Please complete the required fields.');
+          return;
+        }
 
-/* ============ Cursor spotlight + magnetic ============ */
-const spot = document.getElementById('spot');
-let mx=window.innerWidth/2, my=window.innerHeight/2, cx=mx, cy=my;
-if(window.matchMedia('(hover:hover)').matches){
-  window.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
-  (function loop(){
-    cx += (mx-cx)*0.09; cy += (my-cy)*0.09;
-    spot.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`;
-    requestAnimationFrame(loop);
-  })();
-  document.querySelectorAll('.magnetic').forEach(el=>{
-    el.addEventListener('mousemove', e=>{
-      const r = el.getBoundingClientRect();
-      const dx = e.clientX - (r.left + r.width/2);
-      const dy = e.clientY - (r.top + r.height/2);
-      el.style.transform = `translate(${dx*0.18}px, ${dy*0.28}px)`;
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const projectType = document.getElementById('project-type').value || 'General Project Inquiry';
+
+        const subject = encodeURIComponent(`Project Inquiry: ${projectType}`);
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nProject Type: ${projectType}\n\n${message}`);
+
+        window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+        showToast('Opening your email client...');
+        form.reset();
+      });
+
+      const year = document.getElementById('year');
+      if (year) year.textContent = new Date().getFullYear();
     });
-    el.addEventListener('mouseleave', ()=>{ el.style.transform = 'translate(0,0)'; });
-  });
-}
-
-/* ============ Hero dust particles ============ */
-(function(){
-  const c = document.getElementById('dust'); if(!c) return;
-  const ctx = c.getContext('2d');
-  let w,h,parts=[],raf;
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function size(){
-    const r = c.getBoundingClientRect();
-    w = c.width = r.width * (window.devicePixelRatio>1?1.5:1);
-    h = c.height = r.height * (window.devicePixelRatio>1?1.5:1);
-    const n = Math.min(70, Math.floor(r.width/18));
-    parts = Array.from({length:n},()=>({
-      x:Math.random()*w, y:Math.random()*h,
-      r:Math.random()*1.7+0.4,
-      vx:(Math.random()-0.5)*0.16, vy:-(Math.random()*0.22+0.04),
-      a:Math.random()*0.5+0.15, t:Math.random()*Math.PI*2
-    }));
-  }
-  function draw(){
-    ctx.clearRect(0,0,w,h);
-    parts.forEach(p=>{
-      p.x += p.vx; p.y += p.vy; p.t += 0.02;
-      if(p.y < -10){ p.y = h+10; p.x = Math.random()*w; }
-      if(p.x < -10) p.x = w+10; if(p.x > w+10) p.x = -10;
-      const al = p.a * (0.55 + 0.45*Math.sin(p.t));
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(255,${150+Math.floor(p.a*80)},90,${al})`;
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
-    });
-    raf = requestAnimationFrame(draw);
-  }
-  size(); if(!reduce) draw();
-  window.addEventListener('resize', ()=>{ cancelAnimationFrame(raf); size(); if(!reduce) draw(); });
-})();
-
-/* ============ Mobile menu ============ */
-const burger = document.getElementById('burger');
-const menu = document.getElementById('mobileMenu');
-const b1=document.getElementById('b1'), b2=document.getElementById('b2'), b3=document.getElementById('b3');
-let open=false;
-function toggleMenu(state){
-  open = state ?? !open;
-  menu.style.maxHeight = open ? menu.scrollHeight+'px' : '0px';
-  b1.style.transform = open ? 'translateY(6.5px) rotate(45deg)' : 'none';
-  b2.style.opacity = open ? '0' : '1';
-  b3.style.transform = open ? 'translateY(-6.5px) rotate(-45deg)' : 'none';
-}
-burger.addEventListener('click', ()=>toggleMenu());
-menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
-
-/* ============ Form ============ */
-const form = document.getElementById('contactForm');
-const toast = document.getElementById('toast');
-form.addEventListener('submit', e=>{
-  e.preventDefault();
-  toast.style.transform = 'translate(-50%, 0)';
-  toast.style.opacity = '1';
-  form.reset();
-  setTimeout(()=>{ toast.style.transform='translate(-50%, 6rem)'; toast.style.opacity='0'; }, 4200);
-});
-
-/* ============ Smooth anchor offset ============ */
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click', e=>{
-    const id = a.getAttribute('href');
-    if(id.length<2) return;
-    const el = document.querySelector(id);
-    if(!el) return;
-    e.preventDefault();
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior:'smooth' });
-  });
-});
-</script>
+  </script>
 </body>
 </html>
