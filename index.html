@@ -1,0 +1,985 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ganesh Dangi — Video Editor &amp; AI Content Creator</title>
+<meta name="description" content="Ganesh Dangi — Professional Video Editor & AI Content Creator. Documentaries, cinematic videos, social media content and AI-powered visual experiences." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#08080A',
+          char: '#0F0F12',
+          char2: '#16161A',
+          line: '#26262C',
+          flame: '#FF6A1A',
+          amber: '#FFA43B',
+          bone: '#EDE9E3',
+          mute: '#9A968F'
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  :root{ --flame:#FF6A1A; --amber:#FFA43B; }
+  *{ -webkit-tap-highlight-color: transparent; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:#08080A;
+    color:#EDE9E3;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:rgba(255,106,26,.3); color:#fff; }
+
+  /* ---------- Film grain ---------- */
+  .grain{
+    position:fixed; inset:-50%; z-index:60; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grainShift 6s steps(6) infinite;
+  }
+  @keyframes grainShift{
+    0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}
+    60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,1%)}100%{transform:translate(0,0)}
+  }
+
+  /* ---------- Cursor spotlight ---------- */
+  .spot{
+    position:fixed; width:520px; height:520px; border-radius:50%; z-index:0; pointer-events:none;
+    background:radial-gradient(circle, rgba(255,106,26,.13) 0%, rgba(255,106,26,0) 65%);
+    transform:translate(-50%,-50%); opacity:0; transition:opacity .6s ease;
+    mix-blend-mode:screen;
+  }
+  @media (hover:hover) and (min-width:1024px){ .spot{opacity:1} }
+
+  /* ---------- Reveal system ---------- */
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); transition-delay:var(--d,0s); }
+  .reveal.in{ opacity:1; transform:none; }
+  .rev-mask{ opacity:0; transform:translateY(110%); transition:transform 1.05s cubic-bezier(.16,1,.3,1), opacity .6s ease; transition-delay:var(--d,0s); }
+  .in .rev-mask, .rev-mask.in{ opacity:1; transform:none; }
+  .line-mask{ display:block; overflow:hidden; }
+
+  /* ---------- Frame curtain reveal ---------- */
+  .frame{ position:relative; overflow:hidden; background:#111114; }
+  .frame::after{
+    content:''; position:absolute; inset:0; background:#0d0d10; z-index:3;
+    transform:translateY(0); transition:transform 1.15s cubic-bezier(.76,0,.24,1); transition-delay:var(--d,0s);
+  }
+  .in .frame::after{ transform:translateY(-101%); }
+  .frame img{ transition:transform 1.2s cubic-bezier(.16,1,.3,1), filter .6s ease; }
+  .img-fallback{ background:linear-gradient(135deg,#1b1b20 0%,#0f0f12 60%,#2a1608 100%); }
+
+  /* ---------- Light sweep ---------- */
+  .sweep{ position:relative; overflow:hidden; }
+  .sweep::before{
+    content:''; position:absolute; top:0; left:-70%; width:55%; height:100%; z-index:4; pointer-events:none;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,.13), transparent);
+    transform:skewX(-16deg); transition:left .85s cubic-bezier(.16,1,.3,1);
+  }
+  .sweep:hover::before{ left:120%; }
+
+  /* ---------- Nav ---------- */
+  .navlink{ position:relative; }
+  .navlink::after{
+    content:''; position:absolute; left:0; bottom:-6px; height:1px; width:100%;
+    background:var(--flame); transform:scaleX(0); transform-origin:right; transition:transform .5s cubic-bezier(.16,1,.3,1);
+  }
+  .navlink:hover::after{ transform:scaleX(1); transform-origin:left; }
+
+  /* ---------- Buttons ---------- */
+  .btn-flame{
+    position:relative; overflow:hidden; isolation:isolate;
+    background:linear-gradient(120deg,#FF6A1A,#FF8A3D);
+    color:#0b0b0d; box-shadow:0 10px 34px -12px rgba(255,106,26,.75);
+    transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;
+  }
+  .btn-flame::after{
+    content:''; position:absolute; inset:0; z-index:-1; background:linear-gradient(120deg,#FFA43B,#FF6A1A);
+    opacity:0; transition:opacity .4s ease;
+  }
+  .btn-flame:hover::after{ opacity:1; }
+  .btn-flame:hover{ box-shadow:0 16px 44px -12px rgba(255,106,26,.9); }
+  .btn-ghost{
+    border:1px solid #2c2c33; color:#EDE9E3; background:rgba(255,255,255,.02);
+    transition:border-color .4s ease, background .4s ease, transform .35s cubic-bezier(.16,1,.3,1), color .3s ease;
+    backdrop-filter:blur(6px);
+  }
+  .btn-ghost:hover{ border-color:rgba(255,106,26,.65); background:rgba(255,106,26,.08); }
+
+  /* ---------- Eyebrow marker ---------- */
+  .marker{ width:26px; height:1px; background:var(--flame); display:inline-block; transform-origin:left; transform:scaleX(0); transition:transform .8s cubic-bezier(.16,1,.3,1) .1s; }
+  .in .marker, .reveal.in .marker{ transform:scaleX(1); }
+
+  /* ---------- Marquee ---------- */
+  .marquee{ display:flex; width:max-content; animation:marq 38s linear infinite; }
+  .marquee:hover{ animation-play-state:paused; }
+  @keyframes marq{ to{ transform:translateX(-50%); } }
+
+  /* ---------- Waveform ---------- */
+  .wave span{ display:block; width:3px; border-radius:2px; background:linear-gradient(180deg,#FFA43B,#FF6A1A); animation:bar 1.1s ease-in-out infinite; }
+  @keyframes bar{ 0%,100%{ transform:scaleY(.25) } 50%{ transform:scaleY(1) } }
+
+  /* ---------- Skills bar ---------- */
+  .bar-fill{ width:0; transition:width 1.4s cubic-bezier(.16,1,.3,1) .12s; }
+  .in .bar-fill{ width:var(--w); }
+
+  /* ---------- Cards ---------- */
+  .card{ background:linear-gradient(160deg, rgba(255,255,255,.045), rgba(255,255,255,.012)); border:1px solid #22222A;
+    transition:transform .55s cubic-bezier(.16,1,.3,1), border-color .45s ease, box-shadow .55s ease; }
+  .card:hover{ transform:translateY(-7px); border-color:rgba(255,106,26,.38); box-shadow:0 28px 60px -30px rgba(0,0,0,.95), 0 0 0 1px rgba(255,106,26,.06); }
+
+  .proj:hover .frame img{ transform:scale(1.07); }
+  .proj .cat-dot{ transition:width .5s cubic-bezier(.16,1,.3,1); }
+  .proj:hover .cat-dot{ width:44px; }
+
+  /* ---------- Filter chips ---------- */
+  .chip{ border:1px solid #26262C; transition:all .35s cubic-bezier(.16,1,.3,1); }
+  .chip:hover{ border-color:rgba(255,106,26,.5); color:#fff; }
+  .chip.active{ background:var(--flame); border-color:var(--flame); color:#0b0b0d; }
+
+  /* ---------- Timeline ---------- */
+  .tl-line{ position:absolute; left:0; top:6px; bottom:6px; width:1px; background:#22222A; }
+  .tl-prog{ position:absolute; left:0; top:6px; width:1px; background:linear-gradient(180deg,#FF6A1A,rgba(255,106,26,0)); height:0; transition:height 1.6s cubic-bezier(.16,1,.3,1); }
+  .in .tl-prog{ height:calc(100% - 12px); }
+  .tl-dot{ box-shadow:0 0 0 4px rgba(255,106,26,.12); }
+
+  /* ---------- Scroll rail ---------- */
+  #railFill{ height:0%; }
+  #progressBar{ transform-origin:left; transform:scaleX(0); }
+
+  /* ---------- Testimonial stars ---------- */
+  .stars svg{ filter:drop-shadow(0 2px 8px rgba(255,106,26,.35)); }
+
+  /* ---------- Input ---------- */
+  .fld{ background:rgba(255,255,255,.03); border:1px solid #24242B; transition:border-color .35s ease, background .35s ease; }
+  .fld:focus{ outline:none; border-color:rgba(255,106,26,.6); background:rgba(255,106,26,.04); }
+
+  .noscroll{ overflow:hidden; }
+  @media (prefers-reduced-motion:reduce){
+    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+    .reveal,.rev-mask{ opacity:1 !important; transform:none !important; }
+    .frame::after{ transform:translateY(-101%) !important; }
+  }
+</style>
+</head>
+<body class="font-sans antialiased">
+
+<div class="grain"></div>
+<div class="spot" id="spot"></div>
+
+<!-- Scroll progress -->
+<div class="fixed top-0 left-0 right-0 h-[2px] z-[70] bg-transparent">
+  <div id="progressBar" class="h-full bg-gradient-to-r from-flame to-amber"></div>
+</div>
+
+<!-- Timeline rail -->
+<div class="hidden xl:flex fixed left-7 top-1/2 -translate-y-1/2 z-40 flex-col items-center gap-4 select-none">
+  <span class="font-mono text-[10px] tracking-widest text-mute/70">00:00</span>
+  <div class="relative w-px h-52 bg-line overflow-hidden">
+    <div id="railFill" class="absolute top-0 left-0 w-full bg-gradient-to-b from-amber to-flame"></div>
+  </div>
+  <span id="railPct" class="font-mono text-[10px] tracking-widest text-flame">00%</span>
+</div>
+
+<!-- ================= NAV ================= -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
+  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+    <div class="flex items-center justify-between h-20">
+      <a href="#hero" class="flex items-center gap-3 group">
+        <span class="relative w-9 h-9 rounded-md bg-gradient-to-br from-flame to-amber grid place-items-center overflow-hidden">
+          <span class="font-display font-bold text-[15px] text-black leading-none">GD</span>
+        </span>
+        <span class="leading-tight">
+          <span class="block font-display font-semibold tracking-tight text-[15px]">Ganesh Dangi</span>
+          <span class="block font-mono text-[9px] tracking-[0.22em] text-mute uppercase">Editor / AI Creator</span>
+        </span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-9 text-[12.5px] font-medium tracking-wide uppercase text-mute">
+        <a href="#work" class="navlink hover:text-bone transition-colors">Work</a>
+        <a href="#skills" class="navlink hover:text-bone transition-colors">Skills</a>
+        <a href="#about" class="navlink hover:text-bone transition-colors">About</a>
+        <a href="#experience" class="navlink hover:text-bone transition-colors">Experience</a>
+        <a href="#services" class="navlink hover:text-bone transition-colors">Services</a>
+        <a href="#testimonials" class="navlink hover:text-bone transition-colors">Clients</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <span id="navTime" class="hidden md:block font-mono text-[11px] tracking-widest text-flame/90">00:00:00:00</span>
+        <a href="#contact" class="hidden sm:inline-flex btn-flame magnetic items-center gap-2 px-5 py-2.5 rounded-full text-[11.5px] font-semibold tracking-[0.14em] uppercase">
+          Contact
+        </a>
+        <button id="burger" class="lg:hidden w-10 h-10 grid place-items-center rounded-md border border-line" aria-label="Menu">
+          <span class="block w-5 space-y-[5px]">
+            <span class="block h-[1.5px] bg-bone transition-transform duration-300" id="b1"></span>
+            <span class="block h-[1.5px] bg-bone transition-opacity duration-300" id="b2"></span>
+            <span class="block h-[1.5px] bg-bone transition-transform duration-300" id="b3"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="mobileMenu" class="lg:hidden overflow-hidden max-h-0 transition-[max-height] duration-500 ease-out bg-char/95 backdrop-blur-xl border-t border-line/60">
+    <nav class="px-6 py-6 flex flex-col gap-1 text-sm uppercase tracking-widest">
+      <a href="#work" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">Work</a>
+      <a href="#skills" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">Skills</a>
+      <a href="#about" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">About</a>
+      <a href="#experience" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">Experience</a>
+      <a href="#services" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">Services</a>
+      <a href="#testimonials" class="py-3 border-b border-line/50 text-mute hover:text-flame transition-colors">Clients</a>
+      <a href="#contact" class="mt-4 btn-flame text-center py-3 rounded-full text-[12px] font-semibold tracking-[0.16em]">Contact Me</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="hero" class="relative min-h-[100svh] flex items-center pt-28 pb-16 overflow-hidden">
+  <canvas id="dust" class="absolute inset-0 w-full h-full pointer-events-none opacity-70"></canvas>
+  <div class="absolute -top-40 right-0 w-[60vw] h-[60vw] max-w-[820px] max-h-[820px] rounded-full pointer-events-none"
+       style="background:radial-gradient(circle, rgba(255,106,26,.16) 0%, rgba(255,106,26,0) 62%);"></div>
+  <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent pointer-events-none"></div>
+
+  <div class="relative max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 w-full">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+
+      <!-- Copy -->
+      <div class="lg:col-span-7 reveal in">
+        <div class="flex items-center gap-3 mb-7">
+          <span class="marker !scale-x-100"></span>
+          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Portfolio — Reel 2025</span>
+        </div>
+
+        <h1 class="font-display font-bold tracking-[-0.035em] leading-[0.92] text-[clamp(2.6rem,7.4vw,5.6rem)]">
+          <span class="line-mask"><span class="rev-mask in block" style="--d:.05s">VIDEO EDITOR</span></span>
+          <span class="line-mask"><span class="rev-mask in block text-transparent bg-clip-text" style="--d:.16s;background-image:linear-gradient(100deg,#FF6A1A,#FFC178 55%,#FF6A1A)">&amp; AI CONTENT</span></span>
+          <span class="line-mask"><span class="rev-mask in block" style="--d:.26s">CREATOR</span></span>
+        </h1>
+
+        <p class="mt-7 text-lg sm:text-xl text-bone/85 font-light max-w-xl leading-relaxed reveal in" style="--d:.4s">
+          Transforming Ideas Into <span class="text-flame font-normal">Cinematic Visual Stories</span>
+        </p>
+        <p class="mt-4 text-[15px] text-mute max-w-lg leading-relaxed reveal in" style="--d:.5s">
+          I create engaging documentaries, cinematic videos, social media content and AI-powered visual experiences — cut with rhythm, coloured with intent.
+        </p>
+
+        <div class="mt-10 flex flex-wrap items-center gap-4 reveal in" style="--d:.6s">
+          <a href="#work" class="btn-flame magnetic inline-flex items-center gap-3 px-8 py-4 rounded-full text-[12px] font-semibold tracking-[0.16em] uppercase">
+            View My Work
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#contact" class="btn-ghost magnetic inline-flex items-center gap-3 px-8 py-4 rounded-full text-[12px] font-semibold tracking-[0.16em] uppercase">
+            Contact Me
+          </a>
+        </div>
+
+        <div class="mt-12 grid grid-cols-3 gap-5 max-w-md reveal in" style="--d:.7s">
+          <div>
+            <div class="font-display text-3xl font-semibold text-bone"><span class="count" data-to="250">0</span>+</div>
+            <div class="font-mono text-[10px] tracking-[0.18em] uppercase text-mute mt-1">Projects</div>
+          </div>
+          <div>
+            <div class="font-display text-3xl font-semibold text-bone"><span class="count" data-to="40">0</span>M+</div>
+            <div class="font-mono text-[10px] tracking-[0.18em] uppercase text-mute mt-1">Views</div>
+          </div>
+          <div>
+            <div class="font-display text-3xl font-semibold text-bone"><span class="count" data-to="6">0</span>Y</div>
+            <div class="font-mono text-[10px] tracking-[0.18em] uppercase text-mute mt-1">Experience</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portrait -->
+      <div class="lg:col-span-5 reveal in" style="--d:.25s">
+        <div class="relative">
+          <div class="absolute -inset-3 rounded-[28px] border border-line/70"></div>
+          <div class="relative rounded-[22px] overflow-hidden frame sweep group shadow-[0_50px_100px_-40px_rgba(0,0,0,1)]" style="--d:.35s">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80"
+                 alt="Ganesh Dangi, video editor portrait"
+                 class="w-full h-[440px] sm:h-[540px] lg:h-[600px] object-cover object-center ken"
+                 onerror="this.style.display='none';this.parentElement.classList.add('img-fallback')">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
+            <div class="absolute inset-0" style="box-shadow:inset 0 0 120px 20px rgba(255,106,26,.10)"></div>
+
+            <!-- REC badge -->
+            <div class="absolute top-5 left-5 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/55 backdrop-blur border border-white/10">
+              <span class="w-1.5 h-1.5 rounded-full bg-flame animate-pulse"></span>
+              <span class="font-mono text-[10px] tracking-[0.2em] text-bone">REC</span>
+            </div>
+            <div class="absolute top-5 right-5 font-mono text-[10px] tracking-[0.18em] text-bone/70" id="heroTime">00:00:04:12</div>
+
+            <!-- bottom meta -->
+            <div class="absolute inset-x-0 bottom-0 p-6">
+              <div class="wave flex items-end gap-[3px] h-8 mb-4 opacity-90" id="wave"></div>
+              <div class="flex items-end justify-between gap-4">
+                <div>
+                  <div class="font-display text-xl font-semibold tracking-tight">Ganesh Dangi</div>
+                  <div class="font-mono text-[10px] tracking-[0.22em] uppercase text-flame mt-1">Editor · Colourist · AI Creator</div>
+                </div>
+                <div class="text-right font-mono text-[9.5px] leading-relaxed text-bone/50 tracking-wider">
+                  <div>4K / 60FPS</div>
+                  <div>REC.709 · DAVINCI</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- floating tag -->
+          <div class="hidden sm:flex absolute -left-6 bottom-24 items-center gap-2 px-4 py-2.5 rounded-xl bg-char2/90 backdrop-blur border border-line shadow-2xl">
+            <span class="w-2 h-2 rounded-full bg-amber"></span>
+            <span class="font-mono text-[10px] tracking-[0.16em] uppercase text-bone/80">AI Pipeline Ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MARQUEE ================= -->
+<section class="relative border-y border-line/70 bg-char/60 py-5 overflow-hidden">
+  <div class="marquee gap-10 items-center whitespace-nowrap" id="marq"></div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section id="work" class="relative py-24 sm:py-32">
+  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+
+    <div class="reveal flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="marker"></span>
+          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Selected Work</span>
+        </div>
+        <h2 class="font-display font-bold tracking-[-0.03em] leading-[1] text-[clamp(2.1rem,5vw,3.6rem)]">
+          The <span class="text-transparent bg-clip-text" style="background-image:linear-gradient(100deg,#FF6A1A,#FFC178)">Edit Bay</span> Archive
+        </h2>
+      </div>
+      <p class="text-mute text-[15px] max-w-sm leading-relaxed">
+        A cross-section of long-form documentaries, channel work, short-form verticals and generative pieces — each one graded, sound-designed and delivered to spec.
+      </p>
+    </div>
+
+    <!-- Filters -->
+    <div class="reveal flex flex-wrap gap-2.5 mb-10" id="filters" style="--d:.08s"></div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="grid"></div>
+
+    <div class="reveal mt-14 flex justify-center">
+      <a href="#contact" class="btn-ghost magnetic inline-flex items-center gap-3 px-8 py-4 rounded-full text-[12px] font-semibold tracking-[0.16em] uppercase">
+        Start a Project
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" class="relative py-24 sm:py-28 bg-char/50 border-y border-line/60">
+  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+    <div class="grid lg:grid-cols-12 gap-14">
+
+      <div class="lg:col-span-5 reveal">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="marker"></span>
+          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Craft</span>
+        </div>
+        <h2 class="font-display font-bold tracking-[-0.03em] leading-[1.02] text-[clamp(2rem,4.6vw,3.2rem)]">
+          Tools, taste and<br>technical precision.
+        </h2>
+        <p class="mt-6 text-mute text-[15px] leading-relaxed max-w-md">
+          Six years inside the timeline — from offline assembly and story structure to colour science, sound design and AI-assisted production pipelines that shorten delivery without losing soul.
+        </p>
+
+        <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-3" id="tiles"></div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div class="reveal rounded-2xl border border-line/80 bg-gradient-to-br from-white/[0.045] to-white/[0.01] p-6 sm:p-9" id="skillBlock">
+          <div class="flex items-center justify-between mb-8">
+            <span class="font-mono text-[10px] tracking-[0.24em] uppercase text-mute">Proficiency Index</span>
+            <span class="font-mono text-[10px] tracking-[0.24em] uppercase text-flame">01 — 09</span>
+          </div>
+          <div class="space-y-6" id="bars"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="relative py-24 sm:py-32">
+  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+    <div class="grid lg:grid-cols-12 gap-14 items-center">
+
+      <div class="lg:col-span-5 reveal">
+        <div class="relative">
+          <div class="absolute -inset-3 rounded-[26px] border border-line/70"></div>
+          <div class="frame sweep rounded-[20px] overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=900&q=80"
+                 alt="Ganesh Dangi working on a cinematic edit"
+                 class="w-full h-[420px] sm:h-[520px] object-cover"
+                 onerror="this.style.display='none';this.parentElement.classList.add('img-fallback')">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+          </div>
+          <div class="absolute -bottom-7 -right-2 sm:right-6 bg-char2/95 backdrop-blur border border-line rounded-2xl px-6 py-5 shadow-2xl">
+            <div class="font-display text-3xl font-bold text-flame leading-none"><span class="count" data-to="250">0</span>+</div>
+            <div class="font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute mt-2">Projects Delivered</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 lg:pl-6 reveal" style="--d:.1s">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="marker"></span>
+          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">About Me</span>
+        </div>
+        <h2 class="font-display font-bold tracking-[-0.03em] leading-[1.03] text-[clamp(2rem,4.6vw,3.2rem)]">
+          Every frame earns its place<br>in the timeline.
+        </h2>
+        <div class="mt-7 space-y-5 text-[15.5px] leading-[1.85] text-mute max-w-2xl">
+          <p>
+            I'm <span class="text-bone">Ganesh Dangi</span> — a professional video editor and AI content creator working with founders, filmmakers and creators across documentary, brand and YouTube formats. I started with a borrowed laptop and a 40-minute timeline; today I deliver broadcast-grade edits for clients on four continents.
+          </p>
+          <p>
+            My approach is editorial first: story, rhythm and restraint. Technology — DaVinci Resolve colour science, generative video models, AI voice and audio restoration — simply lets the story arrive faster and cleaner. The result is content that holds attention past the first three seconds.
+          </p>
+        </div>
+
+        <div class="mt-10 grid sm:grid-cols-3 gap-4">
+          <div class="rounded-xl border border-line/80 bg-white/[0.02] px-5 py-5">
+            <div class="font-mono text-[9.5px] tracking-[0.2em] uppercase text-flame mb-2">Based In</div>
+            <div class="font-display text-[15px]">Indore, India</div>
+          </div>
+          <div class="rounded-xl border border-line/80 bg-white/[0.02] px-5 py-5">
+            <div class="font-mono text-[9.5px] tracking-[0.2em] uppercase text-flame mb-2">Turnaround</div>
+            <div class="font-display text-[15px]">48–72 Hours</div>
+          </div>
+          <div class="rounded-xl border border-line/80 bg-white/[0.02] px-5 py-5">
+            <div class="font-mono text-[9.5px] tracking-[0.2em] uppercase text-flame mb-2">Availability</div>
+            <div class="font-display text-[15px]">Open for Q3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience" class="relative py-24 sm:py-28 bg-char/50 border-y border-line/60">
+  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+    <div class="reveal mb-14">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="marker"></span>
+        <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Experience</span>
+      </div>
+      <h2 class="font-display font-bold tracking-[-0.03em] leading-[1] text-[clamp(2rem,4.6vw,3.2rem)]">A timeline of my own.</h2>
+    </div>
+
+    <div class="reveal relative pl-8 sm:pl-10" id="timelineWrap">
+      <div class="tl-line"></div>
+      <div class="tl-prog"></div>
+      <div class="space-y-4" id="timeline"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services" class="relative py-24 sm:py-32">
+  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+    <div class="reveal flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="marker"></span>
+          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Services</span>
+        </div>
+        <h2 class="font-display font-bold tracking-[-0.03em] leading-[1] text-[clamp(2rem,4.6vw,3.2rem)]">What I deliver.</h2>
+      </div>
+      <p class="text-mute text-[15px] max-w-sm leading-relaxed">End-to-end post production — from raw footage handover to platform-ready masters, captions and thumbnails.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="services-grid"></div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section id="testimonials" class="relative py-24 sm:py-28 bg-char/50 border-y border-line/60">
+  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+    <div class="reveal mb-14">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="marker"></span>
+        <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Client Voices</span>
+      </div>
+      <h2 class="font-display font-bold tracking-[-0.03em] leading-[1] text-[clamp(2rem,4.6vw,3.2rem)]">Trusted by creators &amp; brands.</h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="testimonials-grid"></div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="relative py-24 sm:py-32 overflow-hidden">
+  <div class="absolute left-1/2 -translate-x-1/2 top-0 w-[80vw] h-[50vw] max-w-[900px] pointer-events-none"
+       style="background:radial-gradient(ellipse at center, rgba(255,106,26,.14) 0%, rgba(255,106,26,0) 65%)"></div>
+
+  <div class="relative max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12">
+    <div class="grid lg:grid-cols-12 gap-14">
+
+      <div class="lg:col-span-6 reveal">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="marker"></span>
+          <span class="font-mono text-[10.5px] tracking-[0.3em] uppercase text-flame">Get In Touch</span>
+        </div>
+        <h2 class="font-display font-bold tracking-[-0.035em] leading-[0.98] text-[clamp(2.3rem,6vw,4.4rem)]">
+          Let's Create<br><span class="text-transparent bg-clip-text" style="background-image:linear-gradient(100deg,#FF6A1A,#FFC178)">Something Amazing</span>
+        </h2>
+        <p class="mt-7 text-mute text-[15.5px] leading-relaxed max-w-md">
+          Have footage, an idea, or just a rough concept? Send it over — I'll come back with a clear approach, timeline and quote within 24 hours.
+        </p>
+
+        <div class="mt-10 space-y-3">
+          <a href="mailto:hello@ganeshdangi.com" class="group flex items-center gap-4 px-5 py-4 rounded-xl border border-line/80 bg-white/[0.02] hover:border-flame/50 hover:bg-flame/[0.06] transition-all duration-400">
+            <span class="w-10 h-10 rounded-lg bg-flame/12 border border-flame/25 grid place-items-center shrink-0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6A1A" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+            </span>
+            <span>
+              <span class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute">Email</span>
+              <span class="block text-[15px] text-bone group-hover:text-flame transition-colors">hello@ganeshdangi.com</span>
+            </span>
+          </a>
+          <a href="tel:+919000000000" class="group flex items-center gap-4 px-5 py-4 rounded-xl border border-line/80 bg-white/[0.02] hover:border-flame/50 hover:bg-flame/[0.06] transition-all duration-400">
+            <span class="w-10 h-10 rounded-lg bg-flame/12 border border-flame/25 grid place-items-center shrink-0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6A1A" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+            </span>
+            <span>
+              <span class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute">Phone</span>
+              <span class="block text-[15px] text-bone group-hover:text-flame transition-colors">+91 90000 00000</span>
+            </span>
+          </a>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-2.5" id="socials"></div>
+      </div>
+
+      <div class="lg:col-span-6 reveal" style="--d:.12s">
+        <form id="contactForm" class="rounded-2xl border border-line/80 bg-gradient-to-br from-white/[0.05] to-white/[0.012] p-6 sm:p-8 backdrop-blur-sm">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute mb-2">Name</label>
+              <input required type="text" placeholder="Your name" class="fld w-full rounded-lg px-4 py-3 text-[14px] text-bone placeholder:text-mute/50">
+            </div>
+            <div>
+              <label class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute mb-2">Email</label>
+              <input required type="email" placeholder="you@studio.com" class="fld w-full rounded-lg px-4 py-3 text-[14px] text-bone placeholder:text-mute/50">
+            </div>
+          </div>
+          <div class="mt-4">
+            <label class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute mb-2">Project Type</label>
+            <select class="fld w-full rounded-lg px-4 py-3 text-[14px] text-bone">
+              <option class="bg-char">Documentary Edit</option>
+              <option class="bg-char">YouTube / Channel Edit</option>
+              <option class="bg-char">Short-form / Reels</option>
+              <option class="bg-char">Cinematic Brand Film</option>
+              <option class="bg-char">AI Video Production</option>
+              <option class="bg-char">Motion Graphics</option>
+            </select>
+          </div>
+          <div class="mt-4">
+            <label class="block font-mono text-[9.5px] tracking-[0.2em] uppercase text-mute mb-2">Message</label>
+            <textarea required rows="4" placeholder="Tell me about the footage, the story and the deadline…" class="fld w-full rounded-lg px-4 py-3 text-[14px] text-bone placeholder:text-mute/50 resize-none"></textarea>
+          </div>
+          <button type="submit" class="btn-flame magnetic mt-6 w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full text-[12px] font-semibold tracking-[0.16em] uppercase">
+            Send Message
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="mt-4 text-center font-mono text-[10px] tracking-[0.14em] uppercase text-mute/70">Avg. response time — under 24 hours</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-line/60 bg-char/60">
+  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 py-12">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
+      <div class="flex items-center gap-3">
+        <span class="w-9 h-9 rounded-md bg-gradient-to-br from-flame to-amber grid place-items-center">
+          <span class="font-display font-bold text-[15px] text-black leading-none">GD</span>
+        </span>
+        <div>
+          <div class="font-display font-semibold tracking-tight text-[15px]">Ganesh Dangi</div>
+          <div class="font-mono text-[9.5px] tracking-[0.22em] uppercase text-mute">Video Editor &amp; AI Content Creator</div>
+        </div>
+      </div>
+      <nav class="flex flex-wrap gap-x-7 gap-y-3 text-[12px] uppercase tracking-widest text-mute">
+        <a href="#work" class="navlink hover:text-bone transition-colors">Work</a>
+        <a href="#about" class="navlink hover:text-bone transition-colors">About</a>
+        <a href="#services" class="navlink hover:text-bone transition-colors">Services</a>
+        <a href="#contact" class="navlink hover:text-bone transition-colors">Contact</a>
+      </nav>
+    </div>
+    <div class="mt-10 pt-6 border-t border-line/50 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="font-mono text-[10px] tracking-[0.14em] uppercase text-mute/70">© 2025 Ganesh Dangi — All rights reserved</p>
+      <p class="font-mono text-[10px] tracking-[0.14em] uppercase text-mute/70">Cut · Colour · Sound · AI</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 z-[80] transition-all duration-500 px-6 py-4 rounded-xl bg-char2 border border-flame/40 shadow-2xl flex items-center gap-3">
+  <span class="w-2 h-2 rounded-full bg-flame"></span>
+  <span class="text-[13.5px]">Thanks — your message is in the queue. I'll reply within 24 hours.</span>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const IMG = (id,w=1200)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+
+const projects = [
+  { t:"Vanishing Rivers", c:"Documentary", d:"A 42-minute feature following four river communities through drought season. Full offline/online edit, grade and sound design.", img:IMG("photo-1470071459604-3b5ec3a7fe05"), feat:true, yr:"2024", len:"42:10" },
+  { t:"Threads of the Himalaya", c:"Documentary", d:"Portrait series on wool weavers of Himachal — 6 episodes, archive integration and bilingual subtitles.", img:IMG("photo-1524492412937-b28074a5d7da"), feat:true, yr:"2024", len:"6 × 18:00" },
+  { t:"The Creator Playbook", c:"YouTube Videos", d:"Weekly long-form channel edit. Retention-driven pacing, b-roll scripting support and motion lower-thirds.", img:IMG("photo-1522202176988-66273c2fd55f"), yr:"2025", len:"24:36" },
+  { t:"Reels That Retain", c:"Social Media", d:"30-day vertical content sprint — 30 reels, hook variants, captions and platform-native colour LUTs.", img:IMG("photo-1516035069371-29a1b244cc32"), yr:"2025", len:"9:16" },
+  { t:"Night Signal", c:"Cinematic Videos", d:"Brand film shot anamorphic at 4K/60. Speed ramps, halation pass and a fully designed soundscape.", img:IMG("photo-1519681393784-d120267933ba"), feat:true, yr:"2024", len:"02:48" },
+  { t:"Neon Monsoon", c:"Cinematic Videos", d:"Live-event concert cut with multicam sync, crowd energy beats and concert-grade audio mix.", img:IMG("photo-1502136969935-8d8eef54d77b"), yr:"2023", len:"06:12" },
+  { t:"Synthetic Dreams", c:"AI Generated Content", d:"Fully generative short film. Runway + frame interpolation, AI voice performance and manual cleanup pass.", img:IMG("photo-1620712943543-bcc4688e7485"), yr:"2025", len:"03:04" },
+  { t:"Neural Echoes", c:"AI Generated Content", d:"Product launch sequence built from text-to-video, motion-tracked UI composites and AI score stems.", img:IMG("photo-1677442136019-21780ecad995"), yr:"2025", len:"01:20" },
+  { t:"Kinetic Titles Vol. 01", c:"Motion Graphics", d:"Typography system for a documentary series — 24 animated title cards, all project-linked and editable.", img:IMG("photo-1550745165-9bc0b252726f"), yr:"2024", len:"Toolkit" },
+  { t:"Signal Studio Identity", c:"Motion Graphics", d:"Broadcast package: logo sting, transitions, lower thirds and end cards across 6 aspect ratios.", img:IMG("photo-1526374965328-7f61d4dc18c5"), yr:"2023", len:"Package" }
+];
+
+const categories = ["All", "Documentary", "YouTube Videos", "Social Media", "Cinematic Videos", "AI Generated Content", "Motion Graphics"];
+
+const skills = [
+  { n:"Adobe Premiere Pro", v:96 }, { n:"Adobe After Effects", v:92 }, { n:"Adobe Photoshop", v:88 },
+  { n:"DaVinci Resolve", v:90 }, { n:"AI Video Generation", v:87 }, { n:"AI Voice & Audio", v:82 },
+  { n:"Motion Graphics", v:89 }, { n:"Color Grading", v:91 }, { n:"Sound Design", v:84 }
+];
+
+const tiles = ["Premiere Pro","After Effects","Photoshop","DaVinci Resolve","Runway ML","ElevenLabs","Topaz AI","Frame.io","CapCut Pro"];
+
+const experience = [
+  { r:"Senior Video Editor & AI Lead", c:"Nordlicht Media (Remote)", y:"2023 — Present", d:"Lead editor on documentary and brand film slate. Built the studio's AI pre-visualisation pipeline, cutting pre-production time by 40% and delivering 60+ finished pieces." },
+  { r:"Video Editor & Motion Designer", c:"Kite & Compass Studio", y:"2021 — 2023", d:"Owned post production for 12 YouTube channels averaging 300k+ subscribers. Designed the motion system used across all channel branding." },
+  { r:"Freelance Editor & Colourist", c:"Independent Practice", y:"2019 — 2021", d:"Cut commercials, event films and short documentaries for agency and direct clients across India, UAE and the UK." },
+  { r:"Junior Editor", c:"Redframe Productions", y:"2018 — 2019", d:"Assembly edits, proxy workflows, subtitling and archive research for broadcast factual programming." }
+];
+
+const services = [
+  { t:"Video Editing", d:"Story-first offline and online editing for brand films, ads and features — assembly through final master.", tags:["Story Structure","J/L Cuts","Mastering"] },
+  { t:"YouTube Editing", d:"Retention-optimised long-form edits with pattern interrupts, zooms, sound FX and custom lower thirds.", tags:["Retention","B-Roll","Sound FX"] },
+  { t:"Documentary Editing", d:"Multi-camera assembly, archive integration, transcript-driven story building and long-form pacing.", tags:["Archive","Interview","Pacing"] },
+  { t:"Short-form / Reels Editing", d:"Vertical-first cuts engineered for the first 3 seconds — captions, hooks and platform-native grading.", tags:["9:16","Hooks","Captions"] },
+  { t:"Motion Graphics", d:"Animated titles, logo stings, explainers and full broadcast packages built in After Effects.", tags:["After Effects","Titles","Stings"] },
+  { t:"AI Video Production", d:"Generative video, AI voice performance, upscaling and cleanup — supervised by a human editorial eye.", tags:["Runway","AI Voice","Upscaling"] },
+  { t:"Thumbnail Design", d:"High-CTR thumbnail concepts: composition, colour separation, type hierarchy and A/B variants.", tags:["CTR","Photoshop","A/B Test"] }
+];
+
+const testimonials = [
+  { n:"Meera Kapoor", r:"Founder, Nordlicht Media", q:"Ganesh turned 14 hours of chaotic field footage into a documentary that made our board go silent. His sense of rhythm is genuinely rare — and the AI pre-viz he built saved us weeks.", img:IMG("photo-1494790108377-be9c29b29330",300), s:5 },
+  { n:"Daniel Osei", r:"Head of Content, Kite & Compass", q:"Our channel's average view duration jumped 31% in two months after he took over the edits. He understands retention without ever making the video feel like an ad.", img:IMG("photo-1500648767791-00dcc994a43e",300), s:5 },
+  { n:"Ananya Rao", r:"Producer, Redframe Productions", q:"Precise, calm under deadline, and obsessive about sound. The colour grade alone elevated the whole series. He's the first call on any factual project we take on.", img:IMG("photo-1573497019940-1c28c88b4f3e",300), s:5 }
+];
+
+/* ============ RENDER ============ */
+// Marquee
+const marqItems = ["Documentary","YouTube Videos","Social Media","Cinematic Videos","AI Generated Content","Motion Graphics","Color Grading","Sound Design"];
+const marqEl = document.getElementById('marq');
+marqEl.innerHTML = Array(2).fill(marqItems.map(i=>
+  `<span class="flex items-center gap-10 pr-10"><span class="font-display text-[13px] sm:text-[15px] tracking-[0.22em] uppercase text-bone/55 hover:text-flame transition-colors">${i}</span><span class="w-1.5 h-1.5 rounded-full bg-flame/70"></span></span>`
+).join('')).join('');
+
+// Filters
+const filtersEl = document.getElementById('filters');
+filtersEl.innerHTML = categories.map((c,i)=>
+  `<button class="chip ${i===0?'active':''} px-4 py-2 rounded-full font-mono text-[10.5px] tracking-[0.14em] uppercase text-mute" data-cat="${c}">${c}</button>`
+).join('');
+
+// Projects
+const gridEl = document.getElementById('grid');
+function cardHTML(p, i){
+  return `
+  <article class="proj reveal card group rounded-2xl overflow-hidden ${p.feat?'md:col-span-2':''}" data-cat="${p.c}" style="--d:${(i%3)*0.08}s">
+    <div class="frame sweep relative aspect-video">
+      <img src="${p.img}" alt="${p.t}" loading="lazy" class="w-full h-full object-cover"
+        onerror="this.style.display='none';this.parentElement.classList.add('img-fallback')">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent z-[2]"></div>
+      <div class="absolute top-4 left-4 z-[3] flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur border border-white/10">
+        <span class="w-1.5 h-1.5 rounded-full bg-flame"></span>
+        <span class="font-mono text-[9.5px] tracking-[0.18em] uppercase text-bone/90">${p.c}</span>
+      </div>
+      <div class="absolute bottom-4 right-4 z-[3] font-mono text-[9.5px] tracking-[0.16em] text-bone/60">${p.yr} · ${p.len}</div>
+    </div>
+    <div class="p-6 sm:p-7">
+      <div class="cat-dot h-px w-4 bg-flame mb-4"></div>
+      <h3 class="font-display text-[19px] sm:text-[21px] font-semibold tracking-tight leading-snug">${p.t}</h3>
+      <p class="mt-3 text-[13.8px] leading-relaxed text-mute">${p.d}</p>
+      <a href="#contact" class="mt-6 inline-flex items-center gap-2 font-mono text-[10.5px] tracking-[0.2em] uppercase text-bone group-hover:text-flame transition-colors">
+        View Project
+        <svg class="transition-transform duration-500 group-hover:translate-x-1.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </article>`;
+}
+function renderProjects(list){
+  gridEl.innerHTML = list.map(cardHTML).join('');
+  gridEl.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}
+renderProjects(projects);
+
+filtersEl.addEventListener('click', e=>{
+  const b = e.target.closest('.chip'); if(!b) return;
+  filtersEl.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  b.classList.add('active');
+  const cat = b.dataset.cat;
+  gridEl.style.opacity = '0';
+  gridEl.style.transform = 'translateY(12px)';
+  gridEl.style.transition = 'opacity .3s ease, transform .3s ease';
+  setTimeout(()=>{
+    renderProjects(cat==='All' ? projects : projects.filter(p=>p.c===cat));
+    requestAnimationFrame(()=>{ gridEl.style.opacity='1'; gridEl.style.transform='none'; });
+  }, 300);
+});
+
+// Skills
+document.getElementById('bars').innerHTML = skills.map((s,i)=>`
+  <div>
+    <div class="flex items-baseline justify-between mb-2.5">
+      <span class="text-[14px] text-bone/90">${s.n}</span>
+      <span class="font-mono text-[11px] text-flame"><span class="count" data-to="${s.v}">0</span>%</span>
+    </div>
+    <div class="h-[5px] rounded-full bg-white/[0.06] overflow-hidden">
+      <div class="bar-fill h-full rounded-full bg-gradient-to-r from-amber to-flame" style="--w:${s.v}%; transition-delay:${i*0.07}s"></div>
+    </div>
+  </div>`).join('');
+
+document.getElementById('tiles').innerHTML = tiles.map((t,i)=>`
+  <div class="reveal rounded-lg border border-line/80 bg-white/[0.02] px-4 py-3 font-mono text-[10px] tracking-[0.14em] uppercase text-mute hover:text-flame hover:border-flame/40 transition-all duration-400" style="--d:${i*0.04}s">${t}</div>`).join('');
+
+// Timeline
+document.getElementById('timeline').innerHTML = experience.map((x,i)=>`
+  <div class="relative pb-8 last:pb-0 reveal" style="--d:${i*0.08}s">
+    <span class="tl-dot absolute -left-8 sm:-left-10 top-2 w-[9px] h-[9px] rounded-full bg-flame -translate-x-1/2"></span>
+    <div class="card rounded-2xl p-6 sm:p-7">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+        <h3 class="font-display text-[18px] sm:text-[20px] font-semibold tracking-tight">${x.r}</h3>
+        <span class="font-mono text-[10px] tracking-[0.16em] uppercase text-flame">${x.y}</span>
+      </div>
+      <div class="font-mono text-[10.5px] tracking-[0.16em] uppercase text-mute mb-4">${x.c}</div>
+      <p class="text-[14px] leading-relaxed text-mute">${x.d}</p>
+    </div>
+  </div>`).join('');
+
+// Services
+document.getElementById('services-grid').innerHTML = services.map((s,i)=>`
+  <div class="reveal card sweep group rounded-2xl p-7 relative overflow-hidden" style="--d:${(i%3)*0.08}s">
+    <div class="absolute -right-6 -top-8 font-display font-bold text-[110px] leading-none text-white/[0.028] group-hover:text-flame/10 transition-colors duration-500">${String(i+1).padStart(2,'0')}</div>
+    <div class="relative">
+      <span class="font-mono text-[10px] tracking-[0.2em] text-flame">${String(i+1).padStart(2,'0')}</span>
+      <h3 class="mt-4 font-display text-[19px] font-semibold tracking-tight">${s.t}</h3>
+      <p class="mt-3 text-[13.8px] leading-relaxed text-mute">${s.d}</p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        ${s.tags.map(t=>`<span class="font-mono text-[9.5px] tracking-[0.12em] uppercase text-mute/85 border border-line/80 rounded-full px-3 py-1.5 group-hover:border-flame/30 transition-colors">${t}</span>`).join('')}
+      </div>
+    </div>
+  </div>`).join('');
+
+// Testimonials
+const star = `<svg width="13" height="13" viewBox="0 0 24 24" fill="#FF6A1A"><path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2Z"/></svg>`;
+document.getElementById('testimonials-grid').innerHTML = testimonials.map((t,i)=>`
+  <div class="reveal card rounded-2xl p-7 flex flex-col" style="--d:${i*0.1}s">
+    <div class="stars flex gap-1.5 mb-5">${star.repeat(t.s)}</div>
+    <p class="text-[14.5px] leading-[1.8] text-bone/85 flex-1">"${t.q}"</p>
+    <div class="mt-7 pt-6 border-t border-line/70 flex items-center gap-4">
+      <div class="w-11 h-11 rounded-full overflow-hidden shrink-0 border border-flame/30 frame">
+        <img src="${t.img}" alt="${t.n}" loading="lazy" class="w-full h-full object-cover"
+          onerror="this.style.display='none';this.parentElement.classList.add('img-fallback')">
+      </div>
+      <div>
+        <div class="font-display text-[14.5px] font-semibold tracking-tight">${t.n}</div>
+        <div class="font-mono text-[9.5px] tracking-[0.16em] uppercase text-mute mt-1">${t.r}</div>
+      </div>
+    </div>
+  </div>`).join('');
+
+// Socials
+const socialData = [
+  {n:"YouTube", u:"#", p:"M23 8.5a3 3 0 0 0-2.1-2.1C19 6 12 6 12 6s-7 0-8.9.4A3 3 0 0 0 1 8.5 31 31 0 0 0 .6 12 31 31 0 0 0 1 15.5a3 3 0 0 0 2.1 2.1C5 18 12 18 12 18s7 0 8.9-.4a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .4-3.5 31 31 0 0 0-.4-3.5ZM9.8 15.3V8.7l5.7 3.3-5.7 3.3Z"},
+  {n:"Instagram", u:"#", p:"M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2Zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4Zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3Zm6.9-11.1a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5Z"},
+  {n:"LinkedIn", u:"#", p:"M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.1a4.2 4.2 0 0 1 3.8-2c4 0 4.8 2.6 4.8 6V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21h-4V9Z"},
+  {n:"Behance", u:"#", p:"M9 5H2v14h7.3c3 0 4.7-1.5 4.7-4 0-1.9-1.1-3-2.6-3.3 1.2-.4 2-1.5 2-3 0-2.3-1.7-3.7-4.4-3.7H9Zm-3.5 5.7h3c1.3 0 2 .5 2 1.6s-.8 1.7-2.1 1.7h-3V10.7Zm0-5.4h2.9c1.1 0 1.8.5 1.8 1.5s-.7 1.5-1.9 1.5H5.5V5.3ZM18 6.3h6v1.6h-6V6.3Zm3.1 4c-3 0-5 2.2-5 5.1s1.9 5 4.9 5c2.3 0 4-1.2 4.6-3.1h-2.5c-.3.8-1 1.2-2 1.2-1.4 0-2.3-.9-2.4-2.3H26v-.7c0-3-1.8-5.2-4.9-5.2Zm-2.3 4c.2-1.2 1.1-2 2.4-2 1.4 0 2.2.8 2.3 2h-4.7Z"}
+];
+document.getElementById('socials').innerHTML = socialData.map(s=>`
+  <a href="${s.u}" aria-label="${s.n}" class="group w-11 h-11 rounded-lg border border-line/80 bg-white/[0.02] grid place-items-center hover:border-flame/50 hover:bg-flame/10 transition-all duration-400">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-mute group-hover:text-flame transition-colors"><path d="${s.p}"/></svg>
+  </a>`).join('');
+
+// Waveform bars
+const waveEl = document.getElementById('wave');
+waveEl.innerHTML = Array(44).fill(0).map((_,i)=>`<span style="height:${12 + Math.random()*22}px; animation-delay:${(i*0.06).toFixed(2)}s; animation-duration:${(0.8+Math.random()*0.8).toFixed(2)}s"></span>`).join('');
+
+/* ============ OBSERVERS ============ */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      en.target.classList.add('in');
+      en.target.querySelectorAll?.('.count').forEach(runCount);
+      if(en.target.classList.contains('count')) runCount(en.target);
+      io.unobserve(en.target);
+    }
+  });
+},{ threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+
+document.querySelectorAll('.reveal, .count').forEach(el=>io.observe(el));
+// hero immediate
+document.querySelectorAll('#hero .reveal, #hero .rev-mask').forEach(el=>el.classList.add('in'));
+
+function runCount(el){
+  if(el.dataset.done) return; el.dataset.done = '1';
+  const to = parseFloat(el.dataset.to); const dur = 1500; const start = performance.now();
+  function tick(now){
+    const p = Math.min((now-start)/dur,1);
+    const e = 1 - Math.pow(1-p,3);
+    el.textContent = Math.round(to*e).toLocaleString();
+    if(p<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ============ SCROLL: progress, nav, rail ============ */
+const progressBar = document.getElementById('progressBar');
+const railFill = document.getElementById('railFill');
+const railPct = document.getElementById('railPct');
+const nav = document.getElementById('nav');
+let ticking = false;
+function onScroll(){
+  const y = window.scrollY;
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const p = h>0 ? Math.min(y/h,1) : 0;
+  progressBar.style.transform = `scaleX(${p})`;
+  railFill.style.height = (p*100)+'%';
+  railPct.textContent = String(Math.round(p*100)).padStart(2,'0')+'%';
+  if(y>40){ nav.classList.add('bg-ink/80','backdrop-blur-xl','border-b','border-line/60'); }
+  else { nav.classList.remove('bg-ink/80','backdrop-blur-xl','border-b','border-line/60'); }
+  ticking = false;
+}
+window.addEventListener('scroll',()=>{ if(!ticking){ requestAnimationFrame(onScroll); ticking=true; } },{passive:true});
+onScroll();
+
+/* ============ Timecode ============ */
+const navTime = document.getElementById('navTime');
+const heroTime = document.getElementById('heroTime');
+let f=0;
+setInterval(()=>{
+  f++;
+  const fr=f%25, s=Math.floor(f/25)%60, m=Math.floor(f/1500)%60, hr=Math.floor(f/90000)%24;
+  const t = [hr,m,s,fr].map(n=>String(n).padStart(2,'0')).join(':');
+  if(navTime) navTime.textContent = t;
+  if(heroTime) heroTime.textContent = '00:'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+':'+String(fr).padStart(2,'0');
+}, 40);
+
+/* ============ Cursor spotlight + magnetic ============ */
+const spot = document.getElementById('spot');
+let mx=window.innerWidth/2, my=window.innerHeight/2, cx=mx, cy=my;
+if(window.matchMedia('(hover:hover)').matches){
+  window.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+  (function loop(){
+    cx += (mx-cx)*0.09; cy += (my-cy)*0.09;
+    spot.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('.magnetic').forEach(el=>{
+    el.addEventListener('mousemove', e=>{
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width/2);
+      const dy = e.clientY - (r.top + r.height/2);
+      el.style.transform = `translate(${dx*0.18}px, ${dy*0.28}px)`;
+    });
+    el.addEventListener('mouseleave', ()=>{ el.style.transform = 'translate(0,0)'; });
+  });
+}
+
+/* ============ Hero dust particles ============ */
+(function(){
+  const c = document.getElementById('dust'); if(!c) return;
+  const ctx = c.getContext('2d');
+  let w,h,parts=[],raf;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){
+    const r = c.getBoundingClientRect();
+    w = c.width = r.width * (window.devicePixelRatio>1?1.5:1);
+    h = c.height = r.height * (window.devicePixelRatio>1?1.5:1);
+    const n = Math.min(70, Math.floor(r.width/18));
+    parts = Array.from({length:n},()=>({
+      x:Math.random()*w, y:Math.random()*h,
+      r:Math.random()*1.7+0.4,
+      vx:(Math.random()-0.5)*0.16, vy:-(Math.random()*0.22+0.04),
+      a:Math.random()*0.5+0.15, t:Math.random()*Math.PI*2
+    }));
+  }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    parts.forEach(p=>{
+      p.x += p.vx; p.y += p.vy; p.t += 0.02;
+      if(p.y < -10){ p.y = h+10; p.x = Math.random()*w; }
+      if(p.x < -10) p.x = w+10; if(p.x > w+10) p.x = -10;
+      const al = p.a * (0.55 + 0.45*Math.sin(p.t));
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255,${150+Math.floor(p.a*80)},90,${al})`;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+    });
+    raf = requestAnimationFrame(draw);
+  }
+  size(); if(!reduce) draw();
+  window.addEventListener('resize', ()=>{ cancelAnimationFrame(raf); size(); if(!reduce) draw(); });
+})();
+
+/* ============ Mobile menu ============ */
+const burger = document.getElementById('burger');
+const menu = document.getElementById('mobileMenu');
+const b1=document.getElementById('b1'), b2=document.getElementById('b2'), b3=document.getElementById('b3');
+let open=false;
+function toggleMenu(state){
+  open = state ?? !open;
+  menu.style.maxHeight = open ? menu.scrollHeight+'px' : '0px';
+  b1.style.transform = open ? 'translateY(6.5px) rotate(45deg)' : 'none';
+  b2.style.opacity = open ? '0' : '1';
+  b3.style.transform = open ? 'translateY(-6.5px) rotate(-45deg)' : 'none';
+}
+burger.addEventListener('click', ()=>toggleMenu());
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
+
+/* ============ Form ============ */
+const form = document.getElementById('contactForm');
+const toast = document.getElementById('toast');
+form.addEventListener('submit', e=>{
+  e.preventDefault();
+  toast.style.transform = 'translate(-50%, 0)';
+  toast.style.opacity = '1';
+  form.reset();
+  setTimeout(()=>{ toast.style.transform='translate(-50%, 6rem)'; toast.style.opacity='0'; }, 4200);
+});
+
+/* ============ Smooth anchor offset ============ */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    const id = a.getAttribute('href');
+    if(id.length<2) return;
+    const el = document.querySelector(id);
+    if(!el) return;
+    e.preventDefault();
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior:'smooth' });
+  });
+});
+</script>
+</body>
+</html>
