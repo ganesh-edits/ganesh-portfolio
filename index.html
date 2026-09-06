@@ -1,1195 +1,994 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ganesh Dangi | Video Editor &amp; AI Content Creator</title>
-  <meta name="description" content="Ganesh Dangi — Video Editor and AI Content Creator creating engaging videos, AI-powered content and creative visual stories." />
-  <meta name="author" content="Ganesh Dangi" />
-  <meta name="keywords" content="Ganesh Dangi, Video Editor, AI Content Creator, Visual Storyteller, Video Editing, Thumbnail Design" />
-  <meta property="og:title" content="Ganesh Dangi | Video Editor &amp; AI Content Creator" />
-  <meta property="og:description" content="Ganesh Dangi — Video Editor and AI Content Creator creating engaging videos, AI-powered content and creative visual stories." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#07080a" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <style>
-    :root {
-      --bg: #07080a;
-      --bg-2: #0c0e12;
-      --bg-elev: #101318;
-      --card: #13161c;
-      --card-hover: #181c24;
-      --text: #f3f4f6;
-      --muted: #9ca3af;
-      --dim: #6b7280;
-      --line: rgba(255, 255, 255, 0.08);
-      --line-strong: rgba(255, 255, 255, 0.14);
-      --accent: #5ce1d6;
-      --accent-2: #3ecfc3;
-      --accent-dim: rgba(92, 225, 214, 0.12);
-      --accent-glow: rgba(92, 225, 214, 0.28);
-      --radius: 18px;
-      --nav-h: 78px;
-      --ease: cubic-bezier(0.22, 1, 0.36, 1);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ganesh Dangi | Video Editor & AI Content Creator</title>
+<meta name="description" content="Ganesh Dangi — Video Editor and AI Content Creator creating engaging videos, AI-powered content and creative visual stories.">
+<meta property="og:title" content="Ganesh Dangi | Video Editor & AI Content Creator">
+<meta property="og:description" content="Turning ideas into powerful visual stories. Video editing, AI content creation and visual storytelling.">
+<meta property="og:type" content="website">
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    html, body { background: var(--bg); color: var(--text); }
-    body {
-      font-family: "Outfit", system-ui, sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    button, input, textarea { font-family: inherit; }
-    ::selection { background: var(--accent); color: #06110f; }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    ::-webkit-scrollbar { width: 10px; }
-    ::-webkit-scrollbar-track { background: #0a0b0e; }
-    ::-webkit-scrollbar-thumb { background: #2a3038; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #3a424c; }
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ink: '#0a0a0b',
+        coal: '#121214',
+        card: '#161619',
+        line: '#26262b',
+        ember: '#ff6b2c',
+        emberdark: '#d94f12',
+        paper: '#f4f2ec',
+        mute: '#9b988f'
+      },
+      fontFamily: {
+        display: ['Anton', 'sans-serif'],
+        body: ['"Space Grotesk"', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace']
+      }
+    }
+  }
+}
+</script>
 
-    .grain {
-      pointer-events: none;
-      position: fixed;
-      inset: 0;
-      z-index: 80;
-      opacity: 0.035;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
+<style>
+  :root{
+    --ember:#ff6b2c;
+    --ink:#0a0a0b;
+    --paper:#f4f2ec;
+  }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:"Space Grotesk",sans-serif;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--ember); color:#0a0a0b; }
+  section{ scroll-margin-top:88px; }
 
-    .container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+  /* ---------- scrollbar ---------- */
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:#0a0a0b; }
+  ::-webkit-scrollbar-thumb{ background:#2b2b30; border-radius:6px; }
+  ::-webkit-scrollbar-thumb:hover{ background:var(--ember); }
 
-    /* LOADER */
-    #loader {
-      position: fixed; inset: 0; z-index: 200;
-      background: #050607;
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 22px;
-      transition: opacity 0.7s var(--ease), visibility 0.7s;
-    }
-    #loader.hide { opacity: 0; visibility: hidden; }
-    .loader-mark {
-      font-family: "Syne", sans-serif;
-      font-weight: 800;
-      font-size: 42px;
-      letter-spacing: 0.18em;
-      color: var(--text);
-    }
-    .loader-bar { width: 140px; height: 2px; background: #1c2128; overflow: hidden; border-radius: 2px; }
-    .loader-bar span {
-      display: block; height: 100%; width: 0; background: var(--accent);
-      animation: load 1.15s var(--ease) forwards;
-    }
-    @keyframes load { to { width: 100%; } }
+  /* ---------- film grain ---------- */
+  .grain{
+    position:fixed; inset:0; z-index:70; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
 
-    /* NAV */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: var(--nav-h);
-      display: flex; align-items: center;
-      transition: background 0.35s, border-color 0.35s, backdrop-filter 0.35s;
-      border-bottom: 1px solid transparent;
-    }
-    .nav.scrolled {
-      background: rgba(7, 8, 10, 0.78);
-      backdrop-filter: blur(18px) saturate(140%);
-      border-bottom-color: var(--line);
-    }
-    .nav-inner {
-      width: min(1180px, calc(100% - 40px));
-      margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between; gap: 20px;
-    }
-    .logo {
-      font-family: "Syne", sans-serif;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      font-size: 15px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .logo-box {
-      width: 34px; height: 34px;
-      border: 1px solid var(--accent);
-      display: grid; place-items: center;
-      font-size: 11px; color: var(--accent);
-      border-radius: 7px;
-    }
-    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
-    .nav-links a {
-      font-size: 13px; font-weight: 500; color: var(--muted);
-      padding: 8px 12px; border-radius: 999px;
-      transition: color 0.25s, background 0.25s;
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--text); }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      border: none; cursor: pointer;
-      font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; font-size: 12px;
-      transition: transform 0.25s var(--ease), background 0.25s, color 0.25s, box-shadow 0.25s, border-color 0.25s;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn:active { transform: translateY(0); }
-    .btn-accent {
-      background: var(--accent); color: #06221f;
-      padding: 12px 20px; border-radius: 999px;
-      box-shadow: 0 8px 28px var(--accent-glow);
-    }
-    .btn-accent:hover { background: #79ebe1; box-shadow: 0 12px 32px var(--accent-glow); }
-    .btn-ghost {
-      background: transparent; color: var(--text);
-      padding: 12px 20px; border-radius: 999px;
-      border: 1px solid var(--line-strong);
-    }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-    .nav-cta { padding: 11px 18px; }
-    .hamburger {
-      display: none; width: 42px; height: 42px;
-      border: 1px solid var(--line-strong); background: transparent; color: var(--text);
-      border-radius: 10px; cursor: pointer; align-items: center; justify-content: center;
-    }
+  /* ---------- preloader ---------- */
+  #loader{
+    position:fixed; inset:0; z-index:200; background:#0a0a0b;
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #loader.done{ opacity:0; visibility:hidden; }
+  #loader .l-name{
+    font-family:Anton; font-size:clamp(2rem,7vw,4.5rem); letter-spacing:.04em;
+    overflow:hidden; white-space:nowrap;
+  }
+  #loader .l-name span{ display:inline-block; transform:translateY(110%); animation:riseUp .8s cubic-bezier(.2,.7,.2,1) forwards; }
+  #loader .l-name span:nth-child(2){ animation-delay:.08s; color:var(--ember); margin-left:.35em; }
+  #loader .l-bar{ width:min(280px,60vw); height:2px; background:#222; overflow:hidden; }
+  #loader .l-bar i{ display:block; height:100%; width:0; background:var(--ember); animation:load 1.3s ease forwards .15s; }
+  @keyframes riseUp{ to{ transform:translateY(0);} }
+  @keyframes load{ to{ width:100%;} }
 
-    /* MOBILE MENU */
-    .mobile-menu {
-      position: fixed; inset: 0; z-index: 99;
-      background: rgba(7,8,10,0.96);
-      backdrop-filter: blur(18px);
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 90px 32px 40px;
-      transform: translateX(100%);
-      transition: transform 0.5s var(--ease);
-    }
-    .mobile-menu.open { transform: translateX(0); }
-    .mobile-menu a {
-      font-family: "Syne", sans-serif;
-      font-size: clamp(28px, 7vw, 40px);
-      font-weight: 700;
-      padding: 10px 0;
-      color: var(--text);
-      border-bottom: 1px solid var(--line);
-    }
-    .mobile-menu .btn { margin-top: 28px; width: fit-content; }
+  /* ---------- nav ---------- */
+  #nav{ transition:background .35s ease, border-color .35s ease, backdrop-filter .35s ease; border-bottom:1px solid transparent; }
+  #nav.scrolled{ background:rgba(10,10,11,.82); backdrop-filter:blur(14px); border-bottom-color:#1f1f24; }
+  .nav-link{ position:relative; }
+  .nav-link::after{
+    content:""; position:absolute; left:0; bottom:-6px; height:2px; width:100%;
+    background:var(--ember); transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
+  }
+  .nav-link:hover::after, .nav-link.active::after{ transform:scaleX(1); }
+  .nav-link.active{ color:var(--ember); }
 
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      padding: calc(var(--nav-h) + 28px) 0 40px;
-      position: relative;
-      display: flex; align-items: center;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: "";
-      position: absolute; width: 620px; height: 620px;
-      right: -80px; top: 10%;
-      background: radial-gradient(circle, rgba(92,225,214,0.12), transparent 68%);
-      filter: blur(10px);
-      pointer-events: none;
-    }
-    .hero-bg-word {
-      position: absolute;
-      font-family: "Syne", sans-serif;
-      font-weight: 800;
-      font-size: clamp(80px, 16vw, 210px);
-      letter-spacing: -0.04em;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(255,255,255,0.035);
-      top: 18%; left: -2%;
-      pointer-events: none; user-select: none; white-space: nowrap;
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 48px;
-      align-items: center;
-      position: relative; z-index: 2;
-    }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--accent); font-weight: 600; margin-bottom: 18px;
-    }
-    .eyebrow::before {
-      content: ""; width: 28px; height: 1px; background: var(--accent);
-    }
-    .hero h1 {
-      font-family: "Syne", sans-serif;
-      font-weight: 800;
-      font-size: clamp(36px, 5.2vw, 64px);
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin-bottom: 18px;
-    }
-    .hero h1 span { color: var(--accent); }
-    .name-block {
-      font-family: "Syne", sans-serif;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-    .roles {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px;
-    }
-    .role-tag {
-      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 7px 12px; border-radius: 999px;
-      border: 1px solid var(--line-strong);
-      color: var(--muted); font-weight: 600;
-    }
-    .hero-desc {
-      color: var(--muted); font-size: 17px; max-width: 520px;
-      margin-bottom: 30px; font-weight: 300;
-    }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
-    .badge {
-      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 8px 14px; border-radius: 8px;
-      background: var(--accent-dim); color: var(--accent); font-weight: 600;
-      border: 1px solid rgba(92,225,214,0.2);
-    }
+  /* mobile menu */
+  #mobileMenu{ transform:translateX(100%); transition:transform .45s cubic-bezier(.7,0,.2,1); }
+  #mobileMenu.open{ transform:translateX(0); }
+  .m-link{ overflow:hidden; }
+  .m-link span{ display:inline-block; transform:translateY(110%); transition:transform .5s cubic-bezier(.2,.7,.2,1); }
+  #mobileMenu.open .m-link span{ transform:translateY(0); }
+  #mobileMenu.open .m-link:nth-child(1) span{ transition-delay:.10s }
+  #mobileMenu.open .m-link:nth-child(2) span{ transition-delay:.15s }
+  #mobileMenu.open .m-link:nth-child(3) span{ transition-delay:.20s }
+  #mobileMenu.open .m-link:nth-child(4) span{ transition-delay:.25s }
+  #mobileMenu.open .m-link:nth-child(5) span{ transition-delay:.30s }
+  #mobileMenu.open .m-link:nth-child(6) span{ transition-delay:.35s }
+  #mobileMenu.open .m-link:nth-child(7) span{ transition-delay:.40s }
 
-    .portrait-wrap {
-      position: relative;
-      display: flex; justify-content: center;
-      animation: floaty 7s ease-in-out infinite;
-    }
-    @keyframes floaty {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-    }
-    .portrait {
-      width: min(440px, 100%);
-      aspect-ratio: 4 / 5;
-      border-radius: 28px;
-      overflow: hidden;
-      position: relative;
-      background: #0b0d11;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.08),
-        0 30px 80px rgba(0,0,0,0.55),
-        0 0 80px rgba(92,225,214,0.08);
-    }
-    .portrait img {
-      width: 168%;
-      height: 168%;
-      object-fit: cover;
-      object-position: 51% 12%;
-      position: absolute;
-      left: 50%; top: 38%;
-      transform: translate(-50%, -50%) scale(1.08);
-      filter: contrast(1.06) saturate(0.92) brightness(1.02);
-    }
-    .portrait::after {
-      content: "";
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(180deg, transparent 52%, rgba(7,8,10,0.55) 100%),
-        radial-gradient(ellipse at 50% 38%, transparent 42%, rgba(7,8,10,0.55) 78%);
-      pointer-events: none;
-    }
-    .portrait-ring {
-      position: absolute;
-      inset: -14px;
-      border-radius: 36px;
-      border: 1px solid rgba(92,225,214,0.22);
-      pointer-events: none;
-    }
-    .portrait-caption {
-      position: absolute; left: 18px; bottom: 18px; z-index: 3;
-      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: #fff; background: rgba(7,8,10,0.55);
-      backdrop-filter: blur(10px);
-      padding: 8px 12px; border-radius: 8px;
-      border: 1px solid var(--line);
-    }
-    .scroll-hint {
-      position: absolute; bottom: 28px; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      color: var(--dim); font-size: 10px; letter-spacing: 0.24em;
-      z-index: 3;
-    }
-    .scroll-line {
-      width: 1px; height: 42px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: drip 1.8s ease-in-out infinite;
-    }
-    @keyframes drip {
-      0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
-      40% { transform: scaleY(1); opacity: 1; }
-      100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
-    }
+  /* ---------- hero ---------- */
+  .hero-grid-bg{
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 70% at 50% 40%, #000 30%, transparent 75%);
+  }
+  .hero-glow{
+    background:radial-gradient(circle at 70% 40%, rgba(255,107,44,.16), transparent 55%);
+  }
+  .stroke-word{
+    color:transparent;
+    -webkit-text-stroke:2px var(--ember);
+  }
+  .h-reveal{ opacity:0; transform:translateY(34px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+  body.ready .h-reveal{ opacity:1; transform:none; }
+  body.ready .h-reveal.d1{ transition-delay:.15s } body.ready .h-reveal.d2{ transition-delay:.28s }
+  body.ready .h-reveal.d3{ transition-delay:.4s }  body.ready .h-reveal.d4{ transition-delay:.52s }
+  body.ready .h-reveal.d5{ transition-delay:.64s } body.ready .h-reveal.d6{ transition-delay:.76s }
 
-    .marquee-wrap {
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      overflow: hidden;
-      padding: 16px 0;
-      background: #090b0e;
-    }
-    .marquee {
-      display: flex; gap: 0; width: max-content;
-      animation: slide 28s linear infinite;
-      white-space: nowrap;
-    }
-    .marquee span {
-      font-family: "Syne", sans-serif;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      font-size: 13px;
-      color: var(--dim);
-      padding: 0 28px;
-    }
-    .marquee span i { color: var(--accent); margin: 0 8px; font-size: 8px; }
-    @keyframes slide { to { transform: translateX(-50%); } }
+  .photo-frame{ position:relative; }
+  .photo-frame .corner{ position:absolute; width:26px; height:26px; border:2px solid var(--ember); z-index:5; }
+  .c-tl{ top:-2px; left:-2px; border-right:0; border-bottom:0; }
+  .c-tr{ top:-2px; right:-2px; border-left:0; border-bottom:0; }
+  .c-bl{ bottom:-2px; left:-2px; border-right:0; border-top:0; }
+  .c-br{ bottom:-2px; right:-2px; border-left:0; border-top:0; }
+  .photo-card{
+    overflow:hidden; background:#151517;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.8), 0 0 0 1px #232327;
+  }
+  .photo-card img{
+    width:100%; height:100%; object-fit:cover; object-position:50% 24%;
+    transform:scale(1.22);
+    filter:contrast(1.06) saturate(1.04);
+    transition:transform 6s ease;
+  }
+  .photo-card:hover img{ transform:scale(1.28); }
+  .photo-card::after{
+    content:""; position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(10,10,11,.28), transparent 26%, transparent 62%, rgba(10,10,11,.72)),
+      radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(10,10,11,.5) 100%);
+    pointer-events:none;
+  }
+  .float-tag{ animation:floaty 5s ease-in-out infinite; }
+  .float-tag.t2{ animation-delay:1.4s; }
+  @keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-9px);} }
+  .rec-dot{ animation:blink 1.2s steps(2) infinite; }
+  @keyframes blink{ 50%{ opacity:.15; } }
 
-    /* SECTIONS */
-    section { padding: 108px 0; position: relative; }
-    .sec-label {
-      font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase;
-      color: var(--accent); font-weight: 600; margin-bottom: 12px;
-    }
-    .sec-title {
-      font-family: "Syne", sans-serif;
-      font-weight: 800;
-      font-size: clamp(32px, 4.6vw, 52px);
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 14px;
-    }
-    .sec-sub { color: var(--muted); max-width: 560px; font-size: 17px; font-weight: 300; }
+  /* ---------- marquee ---------- */
+  .marquee{ overflow:hidden; }
+  .marquee-track{ display:flex; width:max-content; animation:scrollX 26s linear infinite; }
+  .marquee:hover .marquee-track{ animation-play-state:paused; }
+  @keyframes scrollX{ to{ transform:translateX(-50%);} }
 
-    /* ABOUT */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 56px;
-      align-items: center;
-    }
-    .about-copy p {
-      color: var(--muted); font-size: 17px; font-weight: 300;
-      margin-bottom: 16px; max-width: 620px;
-    }
-    .mindset {
-      background: linear-gradient(180deg, #151920, #101318);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 36px 28px;
-      position: relative;
-      overflow: hidden;
-      min-height: 280px;
-      display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .mindset::before {
-      content: "";
-      position: absolute; right: -40px; top: -40px;
-      width: 180px; height: 180px;
-      background: radial-gradient(circle, var(--accent-glow), transparent 70%);
-    }
-    .mindset-kicker {
-      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
-    }
-    .mindset h3 {
-      font-family: "Syne", sans-serif;
-      font-size: 34px; font-weight: 800; line-height: 1.1; margin: 14px 0;
-    }
-    .mindset p { color: var(--muted); font-size: 14px; }
+  /* ---------- section label ---------- */
+  .sec-label{ display:flex; align-items:center; gap:12px; font-family:"JetBrains Mono"; font-size:.72rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ember); }
+  .sec-label::before{ content:""; width:34px; height:2px; background:var(--ember); }
 
-    /* SERVICES */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 48px;
-    }
-    .service-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 28px 24px 26px;
-      min-height: 230px;
-      transition: transform 0.35s var(--ease), border-color 0.35s, background 0.35s;
-      position: relative;
-      overflow: hidden;
-    }
-    .service-card::after {
-      content: "";
-      position: absolute; inset: auto -20% -40% auto;
-      width: 140px; height: 140px;
-      background: radial-gradient(circle, var(--accent-dim), transparent 70%);
-      opacity: 0; transition: opacity 0.4s;
-    }
-    .service-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(92,225,214,0.28);
-      background: var(--card-hover);
-    }
-    .service-card:hover::after { opacity: 1; }
-    .svc-num {
-      font-family: "Syne", sans-serif;
-      color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: 0.16em;
-      margin-bottom: 28px; display: block;
-    }
-    .service-card h3 {
-      font-family: "Syne", sans-serif;
-      font-size: 20px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em;
-    }
-    .service-card p { color: var(--muted); font-size: 14.5px; font-weight: 300; }
+  .h-display{ font-family:Anton; text-transform:uppercase; line-height:.94; letter-spacing:.01em; }
 
-    /* PORTFOLIO */
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 22px;
-      margin-top: 48px;
-    }
-    .project {
-      display: grid;
-      grid-template-columns: 1.35fr 0.85fr;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      overflow: hidden;
-      transition: transform 0.4s var(--ease), border-color 0.4s, box-shadow 0.4s;
-    }
-    .project:hover {
-      transform: translateY(-4px);
-      border-color: rgba(92,225,214,0.25);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
-    }
-    .project-thumb {
-      position: relative; min-height: 280px; overflow: hidden; background: #0b0d11;
-    }
-    .project-thumb img {
-      width: 100%; height: 100%; object-fit: cover;
-      position: absolute; inset: 0;
-      transition: transform 0.7s var(--ease);
-    }
-    .project:hover .project-thumb img { transform: scale(1.06); }
-    .play-overlay {
-      position: absolute; inset: 0;
-      display: grid; place-items: center;
-      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.45));
-    }
-    .play-btn {
-      width: 68px; height: 68px; border-radius: 50%;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.28);
-      backdrop-filter: blur(8px);
-      display: grid; place-items: center;
-      color: #fff; font-size: 22px;
-      transition: transform 0.3s, background 0.3s;
-    }
-    .project:hover .play-btn { transform: scale(1.08); background: var(--accent); color: #06221f; }
-    .project-body { padding: 36px 32px; display: flex; flex-direction: column; justify-content: center; }
-    .proj-num { color: var(--accent); font-size: 12px; letter-spacing: 0.2em; font-weight: 700; margin-bottom: 10px; }
-    .project-body h3 {
-      font-family: "Syne", sans-serif;
-      font-size: 28px; font-weight: 800; margin-bottom: 10px;
-    }
-    .project-body p { color: var(--muted); font-size: 15px; margin-bottom: 22px; font-weight: 300; }
+  /* ---------- reveal on scroll ---------- */
+  [data-reveal]{ opacity:0; transform:translateY(36px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+  [data-reveal].in{ opacity:1; transform:none; }
+  [data-reveal="left"]{ transform:translateX(-40px); }
+  [data-reveal="right"]{ transform:translateX(40px); }
+  [data-reveal="left"].in,[data-reveal="right"].in{ transform:none; }
 
-    /* AI */
-    .ai-section {
-      background:
-        radial-gradient(800px 400px at 80% 20%, rgba(92,225,214,0.08), transparent 50%),
-        radial-gradient(600px 300px at 10% 80%, rgba(92,225,214,0.05), transparent 50%),
-        var(--bg-2);
-      overflow: hidden;
-    }
-    .ai-inner { position: relative; z-index: 2; text-align: center; max-width: 760px; margin: 0 auto; }
-    .ai-inner .sec-title { margin-left: auto; margin-right: auto; }
-    .ai-inner .sec-sub { margin: 0 auto 40px; }
-    #particles {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      z-index: 1; pointer-events: none;
-    }
-    .ai-pills {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
-    }
-    .ai-pill {
-      padding: 10px 16px; border-radius: 999px;
-      border: 1px solid var(--line-strong);
-      background: rgba(255,255,255,0.03);
-      font-size: 13px; color: var(--muted);
-    }
+  /* ---------- buttons ---------- */
+  .btn{ display:inline-flex; align-items:center; gap:10px; font-family:"JetBrains Mono"; font-weight:700; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; padding:16px 26px; transition:all .3s ease; position:relative; }
+  .btn-solid{ background:var(--ember); color:#0a0a0b; clip-path:polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%); }
+  .btn-solid:hover{ background:#ff844e; transform:translateY(-3px); box-shadow:0 14px 34px -10px rgba(255,107,44,.5); }
+  .btn-solid:active{ transform:translateY(0); }
+  .btn-solid i{ transition:transform .3s ease; }
+  .btn-solid:hover i{ transform:translateX(4px); }
+  .btn-ghost{ border:1px solid #3a3a40; color:var(--paper); clip-path:polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%); }
+  .btn-ghost:hover{ border-color:var(--ember); color:var(--ember); transform:translateY(-3px); }
+  .btn-yt:hover{ background:#ff0033 !important; border-color:#ff0033 !important; color:#fff !important; }
 
-    /* SKILLS */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 48px;
-    }
-    .skill {
-      border: 1px solid var(--line);
-      background: var(--card);
-      border-radius: 16px;
-      padding: 26px 22px;
-      display: flex; gap: 16px; align-items: flex-start;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    .skill:hover { border-color: rgba(92,225,214,0.3); transform: translateY(-3px); }
-    .skill-ico {
-      width: 44px; height: 44px; flex-shrink: 0;
-      border-radius: 12px;
-      background: var(--accent-dim); color: var(--accent);
-      display: grid; place-items: center; font-size: 16px;
-    }
-    .skill h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-    .skill p { color: var(--muted); font-size: 13px; font-weight: 300; }
+  /* ---------- chips ---------- */
+  .chip{ font-family:"JetBrains Mono"; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; border:1px solid #33333a; padding:8px 14px; color:#cfccc4; display:inline-flex; align-items:center; gap:8px; transition:all .3s ease; }
+  .chip:hover{ border-color:var(--ember); color:var(--ember); transform:translateY(-2px); }
+  .chip i{ color:var(--ember); font-size:.55rem; }
 
-    /* YT */
-    .yt-box {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 40px; align-items: center;
-      background: linear-gradient(90deg, #161a22, #101318);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 48px;
-      margin-top: 20px;
-    }
-    .yt-icon-lg {
-      width: 86px; height: 86px; border-radius: 22px;
-      background: #ff0000; display: grid; place-items: center;
-      font-size: 36px; color: #fff;
-      box-shadow: 0 16px 40px rgba(255,0,0,0.28);
-      margin-bottom: 8px;
-    }
+  /* ---------- service cards ---------- */
+  .svc{
+    position:relative; background:#141417; border:1px solid #232328; padding:2.2rem;
+    transition:transform .4s ease, border-color .4s ease, background .4s ease; overflow:hidden;
+  }
+  .svc::before{
+    content:""; position:absolute; inset:0; opacity:0; transition:opacity .4s ease;
+    background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(255,107,44,.10), transparent 60%);
+  }
+  .svc:hover{ transform:translateY(-8px); border-color:rgba(255,107,44,.55); }
+  .svc:hover::before{ opacity:1; }
+  .svc .num{ font-family:Anton; font-size:3.4rem; line-height:1; color:transparent; -webkit-text-stroke:1px #3a3a41; transition:all .4s ease; }
+  .svc:hover .num{ -webkit-text-stroke:1px var(--ember); color:rgba(255,107,44,.12); }
+  .svc .ico{ width:52px; height:52px; display:grid; place-items:center; background:rgba(255,107,44,.1); color:var(--ember); border:1px solid rgba(255,107,44,.3); transition:all .4s ease; }
+  .svc:hover .ico{ background:var(--ember); color:#0a0a0b; transform:rotate(-6deg) scale(1.06); }
 
-    /* SOCIAL */
-    .social-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 40px;
-    }
-    .social-card {
-      display: flex; align-items: center; gap: 14px;
-      padding: 18px 20px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--card);
-      transition: transform 0.3s, border-color 0.3s, background 0.3s;
-    }
-    .social-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(92,225,214,0.3);
-      background: var(--card-hover);
-    }
-    .social-card i {
-      width: 42px; height: 42px; border-radius: 10px;
-      display: grid; place-items: center;
-      background: var(--accent-dim); color: var(--accent); font-size: 16px;
-    }
-    .social-card strong { display: block; font-size: 14px; }
-    .social-card span { font-size: 12px; color: var(--dim); }
+  /* ---------- portfolio ---------- */
+  .work-card{ background:#131316; border:1px solid #232328; transition:border-color .4s ease, transform .4s ease; }
+  .work-card:hover{ border-color:rgba(255,107,44,.5); }
+  .work-thumb{ position:relative; overflow:hidden; }
+  .work-thumb img{ transition:transform .8s cubic-bezier(.2,.7,.2,1), filter .5s ease; filter:saturate(.9) contrast(1.05); }
+  .work-card:hover .work-thumb img{ transform:scale(1.07); filter:saturate(1.1) contrast(1.08); }
+  .work-thumb::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent 40%, rgba(10,10,11,.85)); }
+  .play-btn{
+    position:absolute; z-index:3; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:78px; height:78px; border-radius:50%; background:rgba(10,10,11,.55); backdrop-filter:blur(4px);
+    border:1px solid rgba(255,255,255,.35); display:grid; place-items:center; color:#fff; font-size:1.4rem;
+    transition:all .4s ease;
+  }
+  .play-btn i{ margin-left:4px; }
+  .work-card:hover .play-btn{ background:var(--ember); border-color:var(--ember); color:#0a0a0b; transform:translate(-50%,-50%) scale(1.12); }
+  .work-index{ font-family:Anton; font-size:clamp(3rem,7vw,5.5rem); color:transparent; -webkit-text-stroke:1.5px rgba(255,255,255,.5); line-height:1; }
 
-    /* CONTACT */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 0.95fr 1.05fr;
-      gap: 40px;
-      margin-top: 40px;
-    }
-    .contact-info h3 {
-      font-family: "Syne", sans-serif;
-      font-size: 22px; margin: 8px 0 4px;
-    }
-    .contact-meta { color: var(--muted); margin-bottom: 22px; font-size: 14px; }
-    .contact-row {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--line);
-      color: var(--muted); font-size: 15px;
-    }
-    .contact-row i { color: var(--accent); width: 18px; }
-    .contact-row a:hover { color: var(--accent); }
-    .contact-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  /* ---------- AI section ---------- */
+  #ai{ position:relative; overflow:hidden; background:#0c0c0e; }
+  #aiCanvas{ position:absolute; inset:0; width:100%; height:100%; }
+  .term{ background:rgba(14,14,16,.85); border:1px solid #26262c; backdrop-filter:blur(6px); }
+  .term-dot{ width:10px; height:10px; border-radius:50%; }
+  .cursor-blink{ display:inline-block; width:9px; height:1.05em; background:var(--ember); vertical-align:text-bottom; animation:blink 1s steps(2) infinite; }
+  .ai-chip{ border:1px solid rgba(255,107,44,.35); background:rgba(255,107,44,.06); color:#ffd9c4; font-family:"JetBrains Mono"; font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; padding:9px 16px; }
+  .scan-line{ position:absolute; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, rgba(255,107,44,.7), transparent); animation:scan 7s linear infinite; }
+  @keyframes scan{ 0%{ top:8%; opacity:0 } 10%{opacity:1} 90%{opacity:1} 100%{ top:92%; opacity:0 } }
 
-    .form {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 28px;
-    }
-    .form-note {
-      display: none;
-      background: var(--accent-dim);
-      border: 1px solid rgba(92,225,214,0.25);
-      color: var(--text);
-      padding: 14px 16px;
-      border-radius: 12px;
-      font-size: 14px;
-      margin-bottom: 16px;
-    }
-    .form-note.show { display: block; }
-    .field { margin-bottom: 14px; }
-    .field label {
-      display: block; font-size: 12px; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--dim); margin-bottom: 7px;
-    }
-    .field input, .field textarea {
-      width: 100%;
-      background: #0c0e12;
-      border: 1px solid var(--line-strong);
-      color: var(--text);
-      border-radius: 12px;
-      padding: 13px 14px;
-      font-size: 15px;
-      outline: none;
-      transition: border-color 0.25s, box-shadow 0.25s;
-      resize: vertical;
-    }
-    .field input:focus, .field textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-dim);
-    }
-    .form .btn { width: 100%; padding: 14px; }
+  /* ---------- skills ---------- */
+  .skill{ background:#141417; border:1px solid #232328; padding:1.8rem; transition:all .4s ease; }
+  .skill:hover{ border-color:rgba(255,107,44,.5); transform:translateY(-6px); }
+  .skill .bar{ height:3px; background:#26262b; margin-top:1.3rem; overflow:hidden; }
+  .skill .bar i{ display:block; height:100%; width:0; background:linear-gradient(90deg, var(--ember), #ffb38a); transition:width 1.4s cubic-bezier(.2,.7,.2,1) .2s; }
+  .skill.in .bar i{ width:var(--w); }
 
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--line);
-      padding: 40px 0 28px;
-      background: #08090c;
-    }
-    .foot-top {
-      display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;
-      flex-wrap: wrap; margin-bottom: 28px;
-    }
-    .foot-brand { font-family: "Syne", sans-serif; font-weight: 800; letter-spacing: 0.12em; }
-    .foot-brand small { display: block; font-family: "Outfit", sans-serif; font-weight: 400; letter-spacing: 0; color: var(--muted); margin-top: 6px; }
-    .foot-tag { color: var(--dim); font-style: italic; }
-    .foot-social { display: flex; gap: 10px; }
-    .foot-social a {
-      width: 40px; height: 40px; border-radius: 10px;
-      border: 1px solid var(--line-strong);
-      display: grid; place-items: center; color: var(--muted);
-      transition: color 0.25s, border-color 0.25s, background 0.25s;
-    }
-    .foot-social a:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
-    .copy { color: var(--dim); font-size: 13px; border-top: 1px solid var(--line); padding-top: 18px; }
+  /* ---------- social tiles ---------- */
+  .soc{ display:flex; align-items:center; gap:16px; padding:1.4rem 1.5rem; background:#141417; border:1px solid #232328; transition:all .35s ease; }
+  .soc i.brand{ font-size:1.5rem; width:34px; text-align:center; color:var(--ember); transition:transform .35s ease; }
+  .soc:hover{ border-color:var(--ember); transform:translateY(-5px); background:#18181c; }
+  .soc:hover i.brand{ transform:scale(1.2) rotate(-6deg); }
+  .soc .go{ margin-left:auto; color:#55555c; transition:all .35s ease; }
+  .soc:hover .go{ color:var(--ember); transform:translate(4px,-4px); }
 
-    /* FLOAT WHATSAPP */
-    .wa-float {
-      position: fixed; right: 22px; bottom: 22px; z-index: 90;
-      width: 56px; height: 56px; border-radius: 50%;
-      background: #25d366; color: #fff;
-      display: grid; place-items: center; font-size: 26px;
-      box-shadow: 0 12px 30px rgba(37,211,102,0.35);
-      transition: transform 0.25s;
-    }
-    .wa-float:hover { transform: scale(1.08); }
+  /* ---------- forms ---------- */
+  .field{ width:100%; background:#101013; border:1px solid #26262c; color:var(--paper); padding:15px 16px; font-size:.95rem; transition:border-color .3s ease, box-shadow .3s ease; }
+  .field:focus{ outline:none; border-color:var(--ember); box-shadow:0 0 0 3px rgba(255,107,44,.15); }
+  .field::placeholder{ color:#5c5c63; }
+  .flabel{ font-family:"JetBrains Mono"; font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:#8a887f; display:block; margin-bottom:8px; }
 
-    /* REVEAL */
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      animation: none;
-    }
-    .reveal.in {
-      animation: rise 0.9s var(--ease) forwards;
-    }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.35s; }
-    .delay-4 { animation-delay: 0.5s; }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(28px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .hero-copy .reveal { opacity: 0; }
-    .hero-copy .reveal.in { animation: rise 0.95s var(--ease) forwards; }
+  /* ---------- footer ---------- */
+  .footer-name{ font-family:Anton; text-transform:uppercase; line-height:.9; color:transparent; -webkit-text-stroke:1px #33333a; transition:all .6s ease; }
+  .footer-name:hover{ -webkit-text-stroke:1px var(--ember); }
 
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; }
-      .reveal { opacity: 1; transform: none; }
-      html { scroll-behavior: auto; }
-    }
+  /* ---------- FAB ---------- */
+  .wa-fab{ position:fixed; bottom:22px; right:22px; z-index:80; width:58px; height:58px; border-radius:50%; background:#25d366; color:#fff; display:grid; place-items:center; font-size:1.6rem; box-shadow:0 12px 30px -8px rgba(37,211,102,.55); transition:transform .3s ease; }
+  .wa-fab:hover{ transform:scale(1.1) rotate(6deg); }
+  .wa-fab::before{ content:""; position:absolute; inset:0; border-radius:50%; border:2px solid #25d366; animation:ping 2s ease-out infinite; }
+  @keyframes ping{ 0%{ transform:scale(1); opacity:.8 } 100%{ transform:scale(1.7); opacity:0 } }
 
-    @media (max-width: 980px) {
-      .nav-links, .nav-cta { display: none; }
-      .hamburger { display: inline-flex; }
-      .hero-grid, .about-grid, .contact-grid, .yt-box { grid-template-columns: 1fr; }
-      .hero-grid { gap: 36px; }
-      .portrait-wrap { order: -1; }
-      .portrait { width: min(340px, 78vw); margin: 0 auto; }
-      .services-grid, .skills-grid, .social-grid { grid-template-columns: 1fr 1fr; }
-      .project { grid-template-columns: 1fr; }
-      .project-thumb { min-height: 220px; aspect-ratio: 16/9; }
-      section { padding: 80px 0; }
-      .yt-box { padding: 28px; }
-    }
-    @media (max-width: 640px) {
-      .container { width: min(1180px, calc(100% - 32px)); }
-      .services-grid, .skills-grid, .social-grid { grid-template-columns: 1fr; }
-      .hero { padding-top: calc(var(--nav-h) + 16px); min-height: auto; }
-      .hero-actions .btn { width: 100%; }
-      .scroll-hint { display: none; }
-      .hero-desc { font-size: 15px; }
-      .form { padding: 20px; }
-      .project-body { padding: 24px 20px; }
-      .wa-float { right: 16px; bottom: 16px; }
-    }
-  </style>
+  .stamp{
+    display:inline-grid; place-items:center; width:110px; height:110px; border:1.5px dashed rgba(255,107,44,.6); border-radius:50%;
+    color:var(--ember); font-family:"JetBrains Mono"; font-size:.6rem; letter-spacing:.22em; text-transform:uppercase; text-align:center;
+    animation:spin 18s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+  .stamp b{ animation:spin 18s linear infinite reverse; display:block; }
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
 </head>
-<body>
-  <div class="grain" aria-hidden="true"></div>
 
-  <div id="loader" role="status" aria-live="polite">
-    <div class="loader-mark">GD</div>
-    <div class="loader-bar"><span></span></div>
-  </div>
+<body class="font-body bg-ink text-paper antialiased">
 
-  <header class="nav" id="nav">
-    <div class="nav-inner">
-      <a class="logo" href="#home">
-        <span class="logo-box">GD</span>
-        GANESH DANGI
+<!-- grain -->
+<div class="grain"></div>
+
+<!-- preloader -->
+<div id="loader" aria-hidden="true">
+  <div class="l-name"><span>GANESH</span><span>DANGI</span></div>
+  <div class="l-bar"><i></i></div>
+  <p class="font-mono text-[10px] tracking-[.35em] text-mute uppercase">Loading Portfolio</p>
+</div>
+
+<!-- ================= NAV ================= -->
+<header id="nav" class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 h-[76px] flex items-center justify-between">
+    <a href="#home" class="flex items-center gap-2 group">
+      <span class="w-9 h-9 grid place-items-center bg-ember text-ink font-display text-lg group-hover:rotate-[-8deg] transition-transform">G</span>
+      <span class="font-display text-lg tracking-wide">GANESH <span class="text-ember">DANGI</span></span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8">
+      <a href="#home" class="nav-link font-mono text-[11px] tracking-[.2em] uppercase text-mute hover:text-paper transition-colors">Home</a>
+      <a href="#about" class="nav-link font-mono text-[11px] tracking-[.2em] uppercase text-mute hover:text-paper transition-colors">About</a>
+      <a href="#services" class="nav-link font-mono text-[11px] tracking-[.2em] uppercase text-mute hover:text-paper transition-colors">Services</a>
+      <a href="#portfolio" class="nav-link font-mono text-[11px] tracking-[.2em] uppercase text-mute hover:text-paper transition-colors">Portfolio</a>
+      <a href="#ai" class="nav-link font-mono text-[11px] tracking-[.2em] uppercase text-mute hover:text-paper transition-colors">AI Content</a>
+      <a href="#skills" class="nav-link font-mono text-[11px] tracking-[.2em] uppercase text-mute hover:text-paper transition-colors">Skills</a>
+      <a href="#contact" class="nav-link font-mono text-[11px] tracking-[.2em] uppercase text-mute hover:text-paper transition-colors">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <a href="https://wa.me/9779742251081" target="_blank" rel="noopener" class="btn btn-solid hidden sm:inline-flex !py-3 !px-5">
+        Contact Me <i class="fa-brands fa-whatsapp text-base"></i>
       </a>
-      <ul class="nav-links">
-        <li><a href="#home" class="active">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
-        <li><a href="#ai">AI Content</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <a class="btn btn-accent nav-cta" href="#contact">Contact Me</a>
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <button id="menuBtn" class="lg:hidden w-11 h-11 grid place-items-center border border-line text-paper" aria-label="Open menu" aria-expanded="false">
         <i class="fa-solid fa-bars"></i>
       </button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#portfolio">Portfolio</a>
-    <a href="#ai">AI Content</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
-    <a class="btn btn-accent" href="https://wa.me/9779742251081" target="_blank" rel="noopener">Contact Me</a>
+<!-- mobile menu -->
+<div id="mobileMenu" class="fixed inset-0 z-[90] bg-ink/98 backdrop-blur-xl lg:hidden flex flex-col">
+  <div class="h-[76px] px-5 flex items-center justify-between border-b border-line">
+    <span class="font-display text-lg">GANESH <span class="text-ember">DANGI</span></span>
+    <button id="menuClose" class="w-11 h-11 grid place-items-center border border-line" aria-label="Close menu"><i class="fa-solid fa-xmark text-xl"></i></button>
+  </div>
+  <nav class="flex-1 flex flex-col justify-center px-8 gap-1">
+    <a href="#home" class="m-link font-display text-4xl uppercase py-2 hover:text-ember transition-colors"><span>Home</span></a>
+    <a href="#about" class="m-link font-display text-4xl uppercase py-2 hover:text-ember transition-colors"><span>About</span></a>
+    <a href="#services" class="m-link font-display text-4xl uppercase py-2 hover:text-ember transition-colors"><span>Services</span></a>
+    <a href="#portfolio" class="m-link font-display text-4xl uppercase py-2 hover:text-ember transition-colors"><span>Portfolio</span></a>
+    <a href="#ai" class="m-link font-display text-4xl uppercase py-2 hover:text-ember transition-colors"><span>AI Content</span></a>
+    <a href="#skills" class="m-link font-display text-4xl uppercase py-2 hover:text-ember transition-colors"><span>Skills</span></a>
+    <a href="#contact" class="m-link font-display text-4xl uppercase py-2 hover:text-ember transition-colors"><span>Contact</span></a>
   </nav>
+  <div class="px-8 pb-10">
+    <a href="https://wa.me/9779742251081" target="_blank" rel="noopener" class="btn btn-solid w-full justify-center">Contact Me <i class="fa-brands fa-whatsapp"></i></a>
+    <div class="flex gap-5 mt-6 text-mute text-lg">
+      <a href="https://www.facebook.com/share/1Bskx2YCoJ/" target="_blank" rel="noopener" aria-label="Facebook" class="hover:text-ember"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/ganesh_dang_official" target="_blank" rel="noopener" aria-label="Instagram" class="hover:text-ember"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@ganesh_dangi03" target="_blank" rel="noopener" aria-label="TikTok" class="hover:text-ember"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener" aria-label="YouTube" class="hover:text-ember"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+  </div>
+</div>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-bg-word" aria-hidden="true">EDITOR</div>
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="name-block reveal">GANESH DANGI</p>
-          <p class="eyebrow reveal delay-1">Video Editor · AI Content Creator</p>
-          <h1 class="reveal delay-2">Turning Ideas Into <span>Powerful Visual Stories.</span></h1>
-          <div class="roles reveal delay-2">
-            <span class="role-tag">Video Editor</span>
-            <span class="role-tag">AI Content Creator</span>
-            <span class="role-tag">Visual Storyteller</span>
-          </div>
-          <p class="hero-desc reveal delay-3">I’m a Video Editor and AI Content Creator passionate about transforming ideas into engaging videos, creative visuals and powerful digital stories.</p>
-          <div class="hero-actions reveal delay-3">
-            <a class="btn btn-accent" href="#portfolio"><i class="fa-solid fa-play"></i> View My Work</a>
-            <a class="btn btn-ghost" href="https://wa.me/9779742251081" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Contact Me</a>
-          </div>
-          <div class="badges reveal delay-4">
-            <span class="badge">Video Editor</span>
-            <span class="badge">AI Content Creator</span>
-            <span class="badge">Visual Storyteller</span>
-          </div>
-        </div>
-        <div class="portrait-wrap reveal delay-2">
-          <div class="portrait-ring"></div>
-          <div class="portrait">
-            <img
-              src="https://dvxrhkgloakisnvqoxgl.supabase.co/storage/v1/object/sign/images/inputs/1788701534299_8nb8vfh49.jpeg?token=eyJraWQiOiI0NWE1YWU1ZS0xNzg4LTRiMWYtYWM5OC1hMjgwNmQ2OTM4ZWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW5wdXRzLzE3ODg3MDE1MzQyOTlfOG5iOHZmaDQ5LmpwZWciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzAxNTU3LCJleHAiOjE4MjAyMzc1NTd9.wWn5vyXtMbeV3Sk5VCyBGb0lfYdJI4I4br4RM889dc4"
-              alt="Ganesh Dangi - Video Editor and AI Content Creator"
-              width="800" height="1000"
-            />
-            <div class="portrait-caption">Ganesh Dangi</div>
-          </div>
-        </div>
-      </div>
-      <div class="scroll-hint">
-        SCROLL
-        <div class="scroll-line"></div>
-      </div>
-    </section>
+<!-- ================= HERO ================= -->
+<section id="home" class="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
+  <div class="absolute inset-0 hero-grid-bg"></div>
+  <div class="absolute inset-0 hero-glow"></div>
 
-    <div class="marquee-wrap" aria-hidden="true">
-      <div class="marquee">
-        <span>VIDEO EDITING <i class="fa-solid fa-circle"></i> AI CONTENT CREATION <i class="fa-solid fa-circle"></i> VISUAL STORYTELLING <i class="fa-solid fa-circle"></i> THUMBNAIL DESIGN <i class="fa-solid fa-circle"></i> CREATIVE DIRECTION <i class="fa-solid fa-circle"></i> SOCIAL MEDIA CONTENT <i class="fa-solid fa-circle"></i></span>
-        <span>VIDEO EDITING <i class="fa-solid fa-circle"></i> AI CONTENT CREATION <i class="fa-solid fa-circle"></i> VISUAL STORYTELLING <i class="fa-solid fa-circle"></i> THUMBNAIL DESIGN <i class="fa-solid fa-circle"></i> CREATIVE DIRECTION <i class="fa-solid fa-circle"></i> SOCIAL MEDIA CONTENT <i class="fa-solid fa-circle"></i></span>
+  <div class="relative max-w-7xl mx-auto px-5 md:px-8 w-full grid lg:grid-cols-12 gap-14 lg:gap-8 items-center">
+    <!-- left -->
+    <div class="lg:col-span-7">
+      <p class="h-reveal d1 font-mono text-[11px] tracking-[.3em] uppercase text-mute mb-6 flex items-center gap-3">
+        <span class="w-2 h-2 rounded-full bg-ember rec-dot"></span>
+        Ganesh Dangi — Portfolio 2026
+      </p>
+
+      <h1 class="h-display text-[clamp(2.9rem,8.5vw,6.6rem)]">
+        <span class="h-reveal d2 block">Turning Ideas</span>
+        <span class="h-reveal d3 block">Into <span class="text-ember">Powerful</span></span>
+        <span class="h-reveal d4 block"><span class="stroke-word">Visual</span> Stories.</span>
+      </h1>
+
+      <p class="h-reveal d5 mt-7 max-w-xl text-mute text-base md:text-lg leading-relaxed">
+        I'm a <span class="text-paper font-semibold">Video Editor</span> and <span class="text-paper font-semibold">AI Content Creator</span> passionate about transforming ideas into engaging videos, creative visuals and powerful digital stories.
+      </p>
+
+      <div class="h-reveal d5 mt-8 flex flex-wrap gap-3">
+        <span class="chip"><i class="fa-solid fa-circle"></i> Video Editor</span>
+        <span class="chip"><i class="fa-solid fa-circle"></i> AI Content Creator</span>
+        <span class="chip"><i class="fa-solid fa-circle"></i> Visual Storyteller</span>
+      </div>
+
+      <div class="h-reveal d6 mt-10 flex flex-wrap gap-4">
+        <a href="#portfolio" class="btn btn-solid">View My Work <i class="fa-solid fa-arrow-down"></i></a>
+        <a href="https://wa.me/9779742251081" target="_blank" rel="noopener" class="btn btn-ghost">Contact Me <i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </div>
 
-    <section id="about">
-      <div class="container about-grid">
-        <div class="about-copy reveal">
-          <p class="sec-label">About Me</p>
-          <h2 class="sec-title">Crafting stories that stay with people.</h2>
-          <p>Hi, I'm Ganesh Dangi, a Video Editor and AI Content Creator passionate about visual storytelling, creative editing and emerging AI technologies.</p>
-          <p>I combine video editing, storytelling and AI-powered creative tools to transform ideas into engaging digital content. My goal is simple — to turn ideas into visuals that capture attention and tell a story.</p>
-        </div>
-        <aside class="mindset reveal delay-2">
-          <div>
-            <p class="mindset-kicker">Creative Mindset</p>
-            <h3>Let’s Create.</h3>
-            <p>Every frame is a chance to say something clearer, bolder and more human.</p>
+    <!-- right: photo -->
+    <div class="lg:col-span-5 h-reveal d3">
+      <div class="photo-frame max-w-md mx-auto lg:ml-auto">
+        <span class="corner c-tl"></span><span class="corner c-tr"></span>
+        <span class="corner c-bl"></span><span class="corner c-br"></span>
+
+        <div class="photo-card relative aspect-[4/5]">
+          <img src="https://dvxrhkgloakisnvqoxgl.supabase.co/storage/v1/object/sign/images/inputs/1788702894366_tgyxt0r37.jpeg?token=eyJraWQiOiI0NWE1YWU1ZS0xNzg4LTRiMWYtYWM5OC1hMjgwNmQ2OTM4ZWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW5wdXRzLzE3ODg3MDI5OTQzNjZfdGd5eHQwcjM3LmpwZWciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzAyOTIwLCJleHAiOjE4MjAyMzg5MjB9.NgrGuk2WnFSA_-L_VTNmmOAW5wlb2JX08KydiQSsD4U"
+               alt="Ganesh Dangi - Video Editor and AI Content Creator"
+               fetchpriority="high">
+          <!-- HUD overlays -->
+          <div class="absolute top-4 left-4 z-10 float-tag font-mono text-[10px] tracking-[.18em] bg-ink/70 backdrop-blur border border-white/15 px-3 py-2 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-red-500 rec-dot"></span> REC 00:12:47
           </div>
-          <p style="color:var(--accent);font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;">Editing · Story · Intelligence</p>
-        </aside>
-      </div>
-    </section>
-
-    <section id="services" style="background:var(--bg-2);">
-      <div class="container">
-        <p class="sec-label reveal">What I Do</p>
-        <h2 class="sec-title reveal">Services built for visuals that matter.</h2>
-        <p class="sec-sub reveal">Creative services focused on engaging visuals and meaningful storytelling.</p>
-        <div class="services-grid">
-          <article class="service-card reveal">
-            <span class="svc-num">01</span>
-            <h3>Video Editing</h3>
-            <p>Professional video editing, pacing, transitions, sound design and visual effects.</p>
-          </article>
-          <article class="service-card reveal delay-1">
-            <span class="svc-num">02</span>
-            <h3>AI Content Creation</h3>
-            <p>Creating innovative visuals and digital content using modern AI tools.</p>
-          </article>
-          <article class="service-card reveal delay-2">
-            <span class="svc-num">03</span>
-            <h3>Thumbnail Design</h3>
-            <p>Clean, creative and attention-grabbing thumbnails for digital platforms.</p>
-          </article>
-          <article class="service-card reveal">
-            <span class="svc-num">04</span>
-            <h3>Creative Video Content</h3>
-            <p>Creating engaging video concepts and content for YouTube and social media.</p>
-          </article>
-          <article class="service-card reveal delay-1">
-            <span class="svc-num">05</span>
-            <h3>Storytelling</h3>
-            <p>Turning information, ideas and research into engaging visual stories.</p>
-          </article>
-          <article class="service-card reveal delay-2">
-            <span class="svc-num">06</span>
-            <h3>Social Media Content</h3>
-            <p>Creating modern visual content optimized for social media platforms.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="portfolio">
-      <div class="container">
-        <p class="sec-label reveal">Selected Work</p>
-        <h2 class="sec-title reveal">A selection of my recent video projects.</h2>
-        <p class="sec-sub reveal">Watch the work — each project opens on YouTube.</p>
-        <div class="portfolio-grid">
-          <article class="project reveal">
-            <a class="project-thumb" href="https://youtu.be/l6Ux6H1hvt0" target="_blank" rel="noopener" aria-label="Watch Project 01 on YouTube">
-              <img src="https://img.youtube.com/vi/l6Ux6H1hvt0/maxresdefault.jpg" alt="Project 01 video thumbnail" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/l6Ux6H1hvt0/hqdefault.jpg';" />
-              <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
-            </a>
-            <div class="project-body">
-              <p class="proj-num">PROJECT 01</p>
-              <h3>Visual Story</h3>
-              <p>A selected video project focused on editing, pacing and visual storytelling.</p>
-              <a class="btn btn-accent" href="https://youtu.be/l6Ux6H1hvt0" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> Watch Video</a>
-            </div>
-          </article>
-          <article class="project reveal">
-            <a class="project-thumb" href="https://youtu.be/_xgDNhRnUdU" target="_blank" rel="noopener" aria-label="Watch Project 02 on YouTube">
-              <img src="https://img.youtube.com/vi/_xgDNhRnUdU/maxresdefault.jpg" alt="Project 02 video thumbnail" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/_xgDNhRnUdU/hqdefault.jpg';" />
-              <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
-            </a>
-            <div class="project-body">
-              <p class="proj-num">PROJECT 02</p>
-              <h3>Creative Edit</h3>
-              <p>A recent video piece exploring rhythm, atmosphere and narrative flow.</p>
-              <a class="btn btn-accent" href="https://youtu.be/_xgDNhRnUdU" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> Watch Video</a>
-            </div>
-          </article>
-          <article class="project reveal">
-            <a class="project-thumb" href="https://youtu.be/LfszcsFkb4E" target="_blank" rel="noopener" aria-label="Watch Project 03 on YouTube">
-              <img src="https://img.youtube.com/vi/LfszcsFkb4E/maxresdefault.jpg" alt="Project 03 video thumbnail" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/LfszcsFkb4E/hqdefault.jpg';" />
-              <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
-            </a>
-            <div class="project-body">
-              <p class="proj-num">PROJECT 03</p>
-              <h3>Digital Narrative</h3>
-              <p>A selected YouTube project built around clear visuals and story-driven editing.</p>
-              <a class="btn btn-accent" href="https://youtu.be/LfszcsFkb4E" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> Watch Video</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="ai-section" id="ai">
-      <canvas id="particles"></canvas>
-      <div class="container ai-inner">
-        <p class="sec-label reveal">AI × Creativity</p>
-        <h2 class="sec-title reveal">Where Creativity Meets Artificial Intelligence.</h2>
-        <p class="sec-sub reveal">I explore the possibilities of AI to create new visual concepts, creative assets and engaging digital experiences.</p>
-        <div class="ai-pills reveal">
-          <span class="ai-pill">Generative visuals</span>
-          <span class="ai-pill">Concept development</span>
-          <span class="ai-pill">Creative assets</span>
-          <span class="ai-pill">Digital storytelling</span>
-          <span class="ai-pill">Modern AI tools</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills">
-      <div class="container">
-        <p class="sec-label reveal">My Skills</p>
-        <h2 class="sec-title reveal">Tools of the craft.</h2>
-        <p class="sec-sub reveal">A focused set of creative capabilities I bring to every project.</p>
-        <div class="skills-grid">
-          <article class="skill reveal"><div class="skill-ico"><i class="fa-solid fa-clapperboard"></i></div><div><h3>Video Editing</h3><p>Pacing, structure, transitions and finishing.</p></div></article>
-          <article class="skill reveal delay-1"><div class="skill-ico"><i class="fa-solid fa-microchip"></i></div><div><h3>AI Content Creation</h3><p>AI-assisted visuals, concepts and production.</p></div></article>
-          <article class="skill reveal delay-2"><div class="skill-ico"><i class="fa-solid fa-book-open"></i></div><div><h3>Visual Storytelling</h3><p>Turning ideas into sequences that hold attention.</p></div></article>
-          <article class="skill reveal"><div class="skill-ico"><i class="fa-solid fa-image"></i></div><div><h3>Thumbnail Design</h3><p>Clear, click-worthy frames for digital platforms.</p></div></article>
-          <article class="skill reveal delay-1"><div class="skill-ico"><i class="fa-solid fa-compass"></i></div><div><h3>Creative Direction</h3><p>Tone, look and narrative decisions that stay consistent.</p></div></article>
-          <article class="skill reveal delay-2"><div class="skill-ico"><i class="fa-solid fa-share-nodes"></i></div><div><h3>Social Media Content</h3><p>Short-form visuals shaped for modern feeds.</p></div></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="youtube" style="background:var(--bg-2);">
-      <div class="container">
-        <div class="yt-box reveal">
-          <div>
-            <p class="sec-label">Watch My Work</p>
-            <h2 class="sec-title">Latest videos, on YouTube.</h2>
-            <p class="sec-sub">Watch my latest videos and creative projects on YouTube.</p>
-            <a class="btn btn-accent" style="margin-top:28px;" href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener">
-              <i class="fa-brands fa-youtube"></i> Visit My YouTube Channel
-            </a>
+          <div class="absolute bottom-4 right-4 z-10 float-tag t2 font-mono text-[10px] tracking-[.18em] bg-ink/70 backdrop-blur border border-ember/40 text-ember px-3 py-2">
+            AI • 4K • 24FPS
           </div>
-          <div style="display:flex;justify-content:center;">
-            <a href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener" aria-label="YouTube channel">
-              <div class="yt-icon-lg"><i class="fa-brands fa-youtube"></i></div>
-            </a>
+          <div class="absolute bottom-4 left-4 z-10 font-mono text-[10px] tracking-[.18em] text-white/80">
+            <i class="fa-solid fa-clapperboard text-ember mr-1"></i> SCENE_01 / TAKE_∞
           </div>
         </div>
-      </div>
-    </section>
 
-    <section id="connect">
-      <div class="container">
-        <p class="sec-label reveal">Connect With Me</p>
-        <h2 class="sec-title reveal">Find me online.</h2>
-        <div class="social-grid">
-          <a class="social-card reveal" href="https://www.facebook.com/share/1Bskx2YCoJ/" target="_blank" rel="noopener">
-            <i class="fa-brands fa-facebook-f"></i>
-            <div><strong>Facebook</strong><span>Profile</span></div>
-          </a>
-          <a class="social-card reveal delay-1" href="https://www.instagram.com/ganesh_dang_official" target="_blank" rel="noopener">
-            <i class="fa-brands fa-instagram"></i>
-            <div><strong>Instagram</strong><span>@ganesh_dang_official</span></div>
-          </a>
-          <a class="social-card reveal delay-2" href="https://www.tiktok.com/@ganesh_dangi03" target="_blank" rel="noopener">
-            <i class="fa-brands fa-tiktok"></i>
-            <div><strong>TikTok</strong><span>@ganesh_dangi03</span></div>
-          </a>
-          <a class="social-card reveal" href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener">
-            <i class="fa-brands fa-youtube"></i>
-            <div><strong>YouTube</strong><span>@ganesh_dc</span></div>
-          </a>
-          <a class="social-card reveal delay-1" href="https://whatsapp.com/channel/0029VbAr2w44dTnCuum0sy0Y" target="_blank" rel="noopener">
-            <i class="fa-brands fa-whatsapp"></i>
-            <div><strong>WhatsApp Community</strong><span>Channel</span></div>
-          </a>
-          <a class="social-card reveal delay-2" href="https://www.messenger.com/channel/ganeshdangi02" target="_blank" rel="noopener">
-            <i class="fa-brands fa-facebook-messenger"></i>
-            <div><strong>Messenger Broadcast</strong><span>Channel</span></div>
-          </a>
+        <div class="mt-5 flex items-center justify-between font-mono text-[10px] tracking-[.2em] text-mute uppercase">
+          <span>Visual Storyteller</span>
+          <span class="text-ember">EST. NEPAL</span>
         </div>
       </div>
-    </section>
-
-    <section id="contact" style="background:var(--bg-2);">
-      <div class="container">
-        <p class="sec-label reveal">Let’s Work Together</p>
-        <h2 class="sec-title reveal">Have an idea? Let’s turn it into something powerful.</h2>
-        <p class="sec-sub reveal">For video editing, AI content creation, creative projects or collaborations, feel free to get in touch.</p>
-        <div class="contact-grid">
-          <div class="reveal">
-            <h3>Ganesh Dangi</h3>
-            <p class="contact-meta">Video Editor | AI Content Creator</p>
-            <div class="contact-row"><i class="fa-brands fa-whatsapp"></i><a href="https://wa.me/9779742251081" target="_blank" rel="noopener">+977 9742251081</a></div>
-            <div class="contact-row"><i class="fa-regular fa-envelope"></i><a href="mailto:dangiganesh442@gmail.com">dangiganesh442@gmail.com</a></div>
-            <div class="contact-actions">
-              <a class="btn btn-accent" href="https://wa.me/9779742251081" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
-              <a class="btn btn-ghost" href="mailto:dangiganesh442@gmail.com"><i class="fa-regular fa-envelope"></i> Email Me</a>
-            </div>
-          </div>
-          <form class="form reveal delay-2" id="contactForm" novalidate>
-            <div class="form-note" id="formNote">This page doesn’t send messages to a server. Use WhatsApp or email — or the button below will open your mail app with this note drafted.</div>
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" required placeholder="Your name" />
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@email.com" />
-            </div>
-            <div class="field">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project"></textarea>
-            </div>
-            <button class="btn btn-accent" type="submit">Send Message</button>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="foot-top">
-        <div>
-          <div class="foot-brand">GANESH DANGI<small>Video Editor | AI Content Creator</small></div>
-          <p class="foot-tag" style="margin-top:10px;">Creating. Editing. Innovating.</p>
-        </div>
-        <div class="foot-social">
-          <a href="https://www.facebook.com/share/1Bskx2YCoJ/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/ganesh_dang_official" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="https://www.tiktok.com/@ganesh_dangi03" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-          <a href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-          <a href="https://wa.me/9779742251081" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-        </div>
-      </div>
-      <p class="copy">© 2026 Ganesh Dangi. All Rights Reserved.</p>
     </div>
-  </footer>
+  </div>
 
-  <a class="wa-float" href="https://wa.me/9779742251081" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-    <i class="fa-brands fa-whatsapp"></i>
+  <!-- scroll cue -->
+  <a href="#about" class="hidden md:flex absolute bottom-24 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-mute hover:text-ember transition-colors">
+    <span class="font-mono text-[10px] tracking-[.3em] uppercase">Scroll</span>
+    <i class="fa-solid fa-arrow-down-long animate-bounce"></i>
   </a>
+</section>
 
-  <script>
-    const loader = document.getElementById("loader");
-    window.addEventListener("load", () => {
-      setTimeout(() => loader.classList.add("hide"), 900);
-      document.querySelectorAll(".hero-copy .reveal, .portrait-wrap").forEach(el => el.classList.add("in"));
-    });
+<!-- marquee -->
+<div class="marquee border-y border-line bg-coal py-4">
+  <div class="marquee-track font-display text-xl md:text-2xl uppercase tracking-wide text-paper/85">
+    <span class="flex shrink-0 items-center">
+      <span class="px-6">Video Editing</span><span class="text-ember">◆</span>
+      <span class="px-6">AI Content Creation</span><span class="text-ember">◆</span>
+      <span class="px-6">Visual Storytelling</span><span class="text-ember">◆</span>
+      <span class="px-6">Thumbnail Design</span><span class="text-ember">◆</span>
+      <span class="px-6">Creative Direction</span><span class="text-ember">◆</span>
+      <span class="px-6">Social Media Content</span><span class="text-ember">◆</span>
+    </span>
+    <span class="flex shrink-0 items-center" aria-hidden="true">
+      <span class="px-6">Video Editing</span><span class="text-ember">◆</span>
+      <span class="px-6">AI Content Creation</span><span class="text-ember">◆</span>
+      <span class="px-6">Visual Storytelling</span><span class="text-ember">◆</span>
+      <span class="px-6">Thumbnail Design</span><span class="text-ember">◆</span>
+      <span class="px-6">Creative Direction</span><span class="text-ember">◆</span>
+      <span class="px-6">Social Media Content</span><span class="text-ember">◆</span>
+    </span>
+  </div>
+</div>
 
-    const nav = document.getElementById("nav");
-    const hamburger = document.getElementById("hamburger");
-    const mobileMenu = document.getElementById("mobileMenu");
+<!-- ================= ABOUT ================= -->
+<section id="about" class="py-24 md:py-32">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-12">
+    <div class="lg:col-span-4" data-reveal="left">
+      <p class="sec-label mb-6">01 / About Me</p>
+      <h2 class="h-display text-5xl md:text-6xl">About<br><span class="text-ember">Me</span></h2>
+      <div class="mt-10 hidden lg:block">
+        <div class="stamp"><b>Let's<br>Create ✦</b></div>
+      </div>
+    </div>
 
-    hamburger.addEventListener("click", () => {
-      const open = mobileMenu.classList.toggle("open");
-      hamburger.setAttribute("aria-expanded", open);
-      hamburger.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
-      document.body.style.overflow = open ? "hidden" : "";
-    });
-    mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
-      mobileMenu.classList.remove("open");
-      hamburger.setAttribute("aria-expanded", "false");
-      hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
-      document.body.style.overflow = "";
-    }));
+    <div class="lg:col-span-8" data-reveal="right">
+      <p class="text-xl md:text-2xl leading-relaxed text-paper/90">
+        Hi, I'm <span class="text-ember font-semibold">Ganesh Dangi</span>, a Video Editor and AI Content Creator passionate about visual storytelling, creative editing and emerging AI technologies.
+      </p>
+      <p class="mt-6 text-mute leading-relaxed md:text-lg">
+        I combine video editing, storytelling and AI-powered creative tools to transform ideas into engaging digital content. My goal is simple — to turn ideas into visuals that capture attention and tell a story.
+      </p>
 
-    const sections = [...document.querySelectorAll("main section[id]")];
-    const navAnchors = [...document.querySelectorAll(".nav-links a")];
+      <div class="mt-12 bg-card border border-line border-l-4 border-l-ember p-8">
+        <p class="font-mono text-[11px] tracking-[.3em] uppercase text-ember mb-6"><i class="fa-solid fa-bolt mr-2"></i>Creative Mindset</p>
+        <ul class="space-y-5">
+          <li class="flex gap-4">
+            <i class="fa-solid fa-film text-ember mt-1"></i>
+            <div><h3 class="font-semibold">Story First</h3><p class="text-mute text-sm mt-1">Every cut, transition and sound choice serves the narrative — never decoration for its own sake.</p></div>
+          </li>
+          <li class="flex gap-4">
+            <i class="fa-solid fa-wand-magic-sparkles text-ember mt-1"></i>
+            <div><h3 class="font-semibold">AI as a Creative Tool</h3><p class="text-mute text-sm mt-1">Exploring modern AI workflows to push visuals further while keeping the human touch at the center.</p></div>
+          </li>
+          <li class="flex gap-4">
+            <i class="fa-solid fa-eye text-ember mt-1"></i>
+            <div><h3 class="font-semibold">Built to Be Watched</h3><p class="text-mute text-sm mt-1">Content crafted to stop the scroll, hold attention and leave a lasting impression.</p></div>
+          </li>
+        </ul>
+      </div>
 
-    const onScroll = () => {
-      nav.classList.toggle("scrolled", window.scrollY > 12);
-      const y = window.scrollY + 120;
-      let current = "home";
-      sections.forEach(sec => {
-        if (y >= sec.offsetTop) current = sec.id;
-      });
-      const map = { youtube: "portfolio", connect: "contact", ai: "ai" };
-      navAnchors.forEach(a => {
-        const href = a.getAttribute("href").slice(1);
-        a.classList.toggle("active", href === current || (current === "youtube" && href === "portfolio") || (current === "connect" && href === "contact"));
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+      <p class="mt-8 font-display text-2xl text-paper/70">— Ganesh <span class="text-ember">✦</span></p>
+    </div>
+  </div>
+</section>
 
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("in"); });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+<!-- ================= SERVICES ================= -->
+<section id="services" class="py-24 md:py-32 bg-coal border-y border-line">
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14" data-reveal>
+      <div>
+        <p class="sec-label mb-6">02 / What I Do</p>
+        <h2 class="h-display text-5xl md:text-7xl">What <span class="text-ember">I Do</span></h2>
+      </div>
+      <p class="max-w-sm text-mute md:text-right">Creative services focused on engaging visuals and meaningful storytelling.</p>
+    </div>
 
-    document.getElementById("contactForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const message = document.getElementById("message").value.trim();
-      const note = document.getElementById("formNote");
-      if (!name || !email || !message) {
-        note.textContent = "Please fill in name, email and message.";
-        note.classList.add("show");
-        return;
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="svc spot" data-reveal>
+        <div class="flex items-start justify-between mb-10"><div class="ico"><i class="fa-solid fa-film text-xl"></i></div><span class="num">01</span></div>
+        <h3 class="font-display text-2xl uppercase mb-3">Video Editing</h3>
+        <p class="text-mute text-sm leading-relaxed">Professional video editing, pacing, transitions, sound design and visual effects.</p>
+      </article>
+      <article class="svc spot" data-reveal>
+        <div class="flex items-start justify-between mb-10"><div class="ico"><i class="fa-solid fa-wand-magic-sparkles text-xl"></i></div><span class="num">02</span></div>
+        <h3 class="font-display text-2xl uppercase mb-3">AI Content Creation</h3>
+        <p class="text-mute text-sm leading-relaxed">Creating innovative visuals and digital content using modern AI tools.</p>
+      </article>
+      <article class="svc spot" data-reveal>
+        <div class="flex items-start justify-between mb-10"><div class="ico"><i class="fa-solid fa-image text-xl"></i></div><span class="num">03</span></div>
+        <h3 class="font-display text-2xl uppercase mb-3">Thumbnail Design</h3>
+        <p class="text-mute text-sm leading-relaxed">Clean, creative and attention-grabbing thumbnails for digital platforms.</p>
+      </article>
+      <article class="svc spot" data-reveal>
+        <div class="flex items-start justify-between mb-10"><div class="ico"><i class="fa-solid fa-clapperboard text-xl"></i></div><span class="num">04</span></div>
+        <h3 class="font-display text-2xl uppercase mb-3">Creative Video Content</h3>
+        <p class="text-mute text-sm leading-relaxed">Creating engaging video concepts and content for YouTube and social media.</p>
+      </article>
+      <article class="svc spot" data-reveal>
+        <div class="flex items-start justify-between mb-10"><div class="ico"><i class="fa-solid fa-book-open text-xl"></i></div><span class="num">05</span></div>
+        <h3 class="font-display text-2xl uppercase mb-3">Storytelling</h3>
+        <p class="text-mute text-sm leading-relaxed">Turning information, ideas and research into engaging visual stories.</p>
+      </article>
+      <article class="svc spot" data-reveal>
+        <div class="flex items-start justify-between mb-10"><div class="ico"><i class="fa-solid fa-share-nodes text-xl"></i></div><span class="num">06</span></div>
+        <h3 class="font-display text-2xl uppercase mb-3">Social Media Content</h3>
+        <p class="text-mute text-sm leading-relaxed">Creating modern visual content optimized for social media platforms.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section id="portfolio" class="py-24 md:py-32">
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14" data-reveal>
+      <div>
+        <p class="sec-label mb-6">03 / Selected Work</p>
+        <h2 class="h-display text-5xl md:text-7xl">Selected <span class="text-ember">Work</span></h2>
+      </div>
+      <p class="max-w-sm text-mute md:text-right">A selection of my recent video projects.</p>
+    </div>
+
+    <div class="space-y-8">
+      <!-- 01 -->
+      <article class="work-card grid lg:grid-cols-5 overflow-hidden" data-reveal>
+        <a href="https://youtu.be/l6Ux6H1hvt0" target="_blank" rel="noopener" class="work-thumb lg:col-span-3 aspect-video block relative" aria-label="Watch Project 01 on YouTube">
+          <img loading="lazy" src="https://img.youtube.com/vi/l6Ux6H1hvt0/maxresdefault.jpg" alt="Project 01 video thumbnail"
+               onerror="this.onerror=null;this.src='https://img.youtube.com/vi/l6Ux6H1hvt0/hqdefault.jpg';">
+          <span class="play-btn"><i class="fa-solid fa-play"></i></span>
+          <span class="work-index absolute top-4 left-5 z-10">01</span>
+          <span class="absolute top-5 right-5 z-10 font-mono text-[10px] tracking-[.2em] bg-ink/70 backdrop-blur px-3 py-1.5 border border-white/15"><i class="fa-brands fa-youtube text-red-500 mr-1"></i> YOUTUBE</span>
+        </a>
+        <div class="lg:col-span-2 p-8 lg:p-10 flex flex-col">
+          <p class="font-mono text-[11px] tracking-[.28em] text-ember uppercase mb-3">Project 01</p>
+          <h3 class="font-display text-3xl uppercase leading-tight mb-4">Featured YouTube Edit</h3>
+          <p class="text-mute text-sm leading-relaxed mb-6">A recent long-form YouTube edit — focused on pacing, clean transitions and sound design that keeps viewers engaged to the final frame.</p>
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="chip">Editing</span><span class="chip">Sound Design</span><span class="chip">YouTube</span>
+          </div>
+          <a href="https://youtu.be/l6Ux6H1hvt0" target="_blank" rel="noopener" class="btn btn-ghost mt-auto self-start"><i class="fa-brands fa-youtube text-red-500"></i> Watch Video</a>
+        </div>
+      </article>
+
+      <!-- 02 -->
+      <article class="work-card grid lg:grid-cols-5 overflow-hidden" data-reveal>
+        <a href="https://youtu.be/_xgDNhRnUdU" target="_blank" rel="noopener" class="work-thumb lg:col-span-3 aspect-video block relative" aria-label="Watch Project 02 on YouTube">
+          <img loading="lazy" src="https://img.youtube.com/vi/_xgDNhRnUdU/maxresdefault.jpg" alt="Project 02 video thumbnail"
+               onerror="this.onerror=null;this.src='https://img.youtube.com/vi/_xgDNhRnUdU/hqdefault.jpg';">
+          <span class="play-btn"><i class="fa-solid fa-play"></i></span>
+          <span class="work-index absolute top-4 left-5 z-10">02</span>
+          <span class="absolute top-5 right-5 z-10 font-mono text-[10px] tracking-[.2em] bg-ink/70 backdrop-blur px-3 py-1.5 border border-white/15"><i class="fa-brands fa-youtube text-red-500 mr-1"></i> YOUTUBE</span>
+        </a>
+        <div class="lg:col-span-2 p-8 lg:p-10 flex flex-col">
+          <p class="font-mono text-[11px] tracking-[.28em] text-ember uppercase mb-3">Project 02</p>
+          <h3 class="font-display text-3xl uppercase leading-tight mb-4">Creative Visual Story</h3>
+          <p class="text-mute text-sm leading-relaxed mb-6">A story-driven piece built around strong visual rhythm — combining footage, graphics and motion to hold attention from start to finish.</p>
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="chip">Storytelling</span><span class="chip">Motion</span><span class="chip">YouTube</span>
+          </div>
+          <a href="https://youtu.be/_xgDNhRnUdU" target="_blank" rel="noopener" class="btn btn-ghost mt-auto self-start"><i class="fa-brands fa-youtube text-red-500"></i> Watch Video</a>
+        </div>
+      </article>
+
+      <!-- 03 -->
+      <article class="work-card grid lg:grid-cols-5 overflow-hidden" data-reveal>
+        <a href="https://youtu.be/LfszcsFkb4E" target="_blank" rel="noopener" class="work-thumb lg:col-span-3 aspect-video block relative" aria-label="Watch Project 03 on YouTube">
+          <img loading="lazy" src="https://img.youtube.com/vi/LfszcsFkb4E/maxresdefault.jpg" alt="Project 03 video thumbnail"
+               onerror="this.onerror=null;this.src='https://img.youtube.com/vi/LfszcsFkb4E/hqdefault.jpg';">
+          <span class="play-btn"><i class="fa-solid fa-play"></i></span>
+          <span class="work-index absolute top-4 left-5 z-10">03</span>
+          <span class="absolute top-5 right-5 z-10 font-mono text-[10px] tracking-[.2em] bg-ink/70 backdrop-blur px-3 py-1.5 border border-white/15"><i class="fa-brands fa-youtube text-red-500 mr-1"></i> YOUTUBE</span>
+        </a>
+        <div class="lg:col-span-2 p-8 lg:p-10 flex flex-col">
+          <p class="font-mono text-[11px] tracking-[.28em] text-ember uppercase mb-3">Project 03</p>
+          <h3 class="font-display text-3xl uppercase leading-tight mb-4">Latest YouTube Release</h3>
+          <p class="text-mute text-sm leading-relaxed mb-6">One of my newest uploads — a look at how ideas, research and creative editing come together into a finished visual story.</p>
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="chip">Concept</span><span class="chip">Editing</span><span class="chip">YouTube</span>
+          </div>
+          <a href="https://youtu.be/LfszcsFkb4E" target="_blank" rel="noopener" class="btn btn-ghost mt-auto self-start"><i class="fa-brands fa-youtube text-red-500"></i> Watch Video</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AI ================= -->
+<section id="ai" class="py-28 md:py-36 border-y border-line">
+  <canvas id="aiCanvas"></canvas>
+  <div class="scan-line"></div>
+
+  <div class="relative max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-14 items-center">
+    <div data-reveal="left">
+      <p class="sec-label mb-6">04 / AI × Creativity</p>
+      <h2 class="h-display text-4xl md:text-6xl">
+        Where Creativity Meets <span class="text-ember">Artificial Intelligence.</span>
+      </h2>
+      <p class="mt-7 text-mute leading-relaxed md:text-lg max-w-lg">
+        I explore the possibilities of AI to create new visual concepts, creative assets and engaging digital experiences.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <span class="ai-chip">Generative Visuals</span>
+        <span class="ai-chip">AI Workflows</span>
+        <span class="ai-chip">Prompt Craft</span>
+        <span class="ai-chip">Digital Experiences</span>
+      </div>
+    </div>
+
+    <div data-reveal="right">
+      <div class="term shadow-2xl shadow-black/60">
+        <div class="flex items-center gap-2 px-5 py-3 border-b border-line">
+          <span class="term-dot bg-red-500"></span><span class="term-dot bg-yellow-500"></span><span class="term-dot bg-green-500"></span>
+          <span class="ml-3 font-mono text-[11px] text-mute tracking-widest">ganesh_ai — studio.sh</span>
+        </div>
+        <div class="p-6 font-mono text-sm leading-7 min-h-[210px]">
+          <p class="text-mute">$ initializing creative engine…</p>
+          <p class="text-paper/90"><span class="text-ember">→</span> <span id="typed"></span><span class="cursor-blink"></span></p>
+          <p class="text-green-400 mt-2">✓ render complete — story.mp4 exported</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" class="py-24 md:py-32">
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div class="mb-14" data-reveal>
+      <p class="sec-label mb-6">05 / My Skills</p>
+      <h2 class="h-display text-5xl md:text-7xl">My <span class="text-ember">Skills</span></h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="skill" style="--w:95%" data-reveal>
+        <div class="flex items-center gap-4"><i class="fa-solid fa-scissors text-ember text-xl"></i><h3 class="font-display text-xl uppercase">Video Editing</h3></div>
+        <p class="text-mute text-sm mt-3">Pacing, cuts, transitions and sound — the core of everything I create.</p>
+        <div class="bar"><i></i></div>
+      </div>
+      <div class="skill" style="--w:90%" data-reveal>
+        <div class="flex items-center gap-4"><i class="fa-solid fa-robot text-ember text-xl"></i><h3 class="font-display text-xl uppercase">AI Content Creation</h3></div>
+        <p class="text-mute text-sm mt-3">Using modern AI tools to generate and enhance creative visuals.</p>
+        <div class="bar"><i></i></div>
+      </div>
+      <div class="skill" style="--w:92%" data-reveal>
+        <div class="flex items-center gap-4"><i class="fa-solid fa-lightbulb text-ember text-xl"></i><h3 class="font-display text-xl uppercase">Visual Storytelling</h3></div>
+        <p class="text-mute text-sm mt-3">Structuring ideas into narratives that capture and hold attention.</p>
+        <div class="bar"><i></i></div>
+      </div>
+      <div class="skill" style="--w:88%" data-reveal>
+        <div class="flex items-center gap-4"><i class="fa-solid fa-crop-simple text-ember text-xl"></i><h3 class="font-display text-xl uppercase">Thumbnail Design</h3></div>
+        <p class="text-mute text-sm mt-3">Bold, clean thumbnails engineered to earn the click.</p>
+        <div class="bar"><i></i></div>
+      </div>
+      <div class="skill" style="--w:86%" data-reveal>
+        <div class="flex items-center gap-4"><i class="fa-solid fa-compass text-ember text-xl"></i><h3 class="font-display text-xl uppercase">Creative Direction</h3></div>
+        <p class="text-mute text-sm mt-3">Shaping concepts, mood and visual identity for every project.</p>
+        <div class="bar"><i></i></div>
+      </div>
+      <div class="skill" style="--w:89%" data-reveal>
+        <div class="flex items-center gap-4"><i class="fa-solid fa-hashtag text-ember text-xl"></i><h3 class="font-display text-xl uppercase">Social Media Content</h3></div>
+        <p class="text-mute text-sm mt-3">Platform-native visuals built for reach and engagement.</p>
+        <div class="bar"><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= YOUTUBE ================= -->
+<section id="youtube" class="py-24 md:py-28 bg-coal border-y border-line relative overflow-hidden">
+  <div class="absolute -right-16 top-1/2 -translate-y-1/2 text-[16rem] md:text-[22rem] text-red-500/5 pointer-events-none"><i class="fa-brands fa-youtube"></i></div>
+  <div class="relative max-w-7xl mx-auto px-5 md:px-8 flex flex-col lg:flex-row items-center gap-10 lg:gap-16" data-reveal>
+    <div class="w-24 h-24 md:w-28 md:h-28 shrink-0 grid place-items-center bg-red-600 text-white text-4xl md:text-5xl shadow-2xl shadow-red-900/40 hover:scale-105 transition-transform">
+      <i class="fa-brands fa-youtube"></i>
+    </div>
+    <div class="flex-1 text-center lg:text-left">
+      <p class="sec-label mb-4 justify-center lg:justify-start">06 / YouTube</p>
+      <h2 class="h-display text-4xl md:text-6xl">Watch My <span class="text-red-500">Work</span></h2>
+      <p class="text-mute mt-4 max-w-xl mx-auto lg:mx-0">Watch my latest videos and creative projects on YouTube.</p>
+      <p class="font-mono text-xs text-mute mt-3 tracking-widest">@ganesh_dc</p>
+    </div>
+    <a href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener" class="btn btn-ghost btn-yt shrink-0">Visit My YouTube Channel <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+  </div>
+</section>
+
+<!-- ================= SOCIAL ================= -->
+<section id="connect" class="py-24 md:py-32">
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <div class="mb-14 text-center" data-reveal>
+      <p class="sec-label mb-6 justify-center">07 / Social</p>
+      <h2 class="h-display text-5xl md:text-7xl">Connect <span class="text-ember">With Me</span></h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+      <a href="https://www.facebook.com/share/1Bskx2YCoJ/" target="_blank" rel="noopener" class="soc" data-reveal>
+        <i class="fa-brands fa-facebook-f brand"></i>
+        <div><p class="font-semibold">Facebook</p><p class="font-mono text-[10px] text-mute tracking-widest uppercase">Follow</p></div>
+        <i class="fa-solid fa-arrow-up-right-from-square go"></i>
+      </a>
+      <a href="https://www.tiktok.com/@ganesh_dangi03" target="_blank" rel="noopener" class="soc" data-reveal>
+        <i class="fa-brands fa-tiktok brand"></i>
+        <div><p class="font-semibold">TikTok</p><p class="font-mono text-[10px] text-mute tracking-widest uppercase">@ganesh_dangi03</p></div>
+        <i class="fa-solid fa-arrow-up-right-from-square go"></i>
+      </a>
+      <a href="https://www.instagram.com/ganesh_dang_official" target="_blank" rel="noopener" class="soc" data-reveal>
+        <i class="fa-brands fa-instagram brand"></i>
+        <div><p class="font-semibold">Instagram</p><p class="font-mono text-[10px] text-mute tracking-widest uppercase">@ganesh_dang_official</p></div>
+        <i class="fa-solid fa-arrow-up-right-from-square go"></i>
+      </a>
+      <a href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener" class="soc" data-reveal>
+        <i class="fa-brands fa-youtube brand"></i>
+        <div><p class="font-semibold">YouTube</p><p class="font-mono text-[10px] text-mute tracking-widest uppercase">@ganesh_dc</p></div>
+        <i class="fa-solid fa-arrow-up-right-from-square go"></i>
+      </a>
+      <a href="https://whatsapp.com/channel/0029VbAr2w44dTnCuum0sy0Y" target="_blank" rel="noopener" class="soc" data-reveal>
+        <i class="fa-brands fa-whatsapp brand"></i>
+        <div><p class="font-semibold">WhatsApp Community</p><p class="font-mono text-[10px] text-mute tracking-widest uppercase">Join Channel</p></div>
+        <i class="fa-solid fa-arrow-up-right-from-square go"></i>
+      </a>
+      <a href="https://www.messenger.com/channel/ganeshdangi02" target="_blank" rel="noopener" class="soc" data-reveal>
+        <i class="fa-brands fa-facebook-messenger brand"></i>
+        <div><p class="font-semibold">Messenger</p><p class="font-mono text-[10px] text-mute tracking-widest uppercase">Broadcast</p></div>
+        <i class="fa-solid fa-arrow-up-right-from-square go"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="py-24 md:py-32 bg-coal border-t border-line relative overflow-hidden">
+  <div class="absolute inset-0 hero-glow opacity-60"></div>
+  <div class="relative max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-14">
+    <div data-reveal="left">
+      <p class="sec-label mb-6">08 / Contact</p>
+      <h2 class="h-display text-5xl md:text-6xl">Let's Work <span class="text-ember">Together</span></h2>
+      <p class="mt-6 text-2xl md:text-3xl font-display uppercase leading-tight">Have an idea? Let's turn it into something <span class="text-ember">powerful.</span></p>
+      <p class="mt-5 text-mute max-w-md">For video editing, AI content creation, creative projects or collaborations, feel free to get in touch.</p>
+
+      <div class="mt-10 space-y-4">
+        <div class="flex items-center gap-4 bg-card border border-line p-5">
+          <span class="w-12 h-12 grid place-items-center bg-ember/10 text-ember border border-ember/30"><i class="fa-solid fa-user"></i></span>
+          <div><p class="font-semibold">Ganesh Dangi</p><p class="font-mono text-[10px] text-mute tracking-[.2em] uppercase">Video Editor | AI Content Creator</p></div>
+        </div>
+        <a href="https://wa.me/9779742251081" target="_blank" rel="noopener" class="flex items-center gap-4 bg-card border border-line p-5 hover:border-ember/60 transition-colors group">
+          <span class="w-12 h-12 grid place-items-center bg-ember/10 text-ember border border-ember/30"><i class="fa-brands fa-whatsapp text-xl"></i></span>
+          <div><p class="font-semibold group-hover:text-ember transition-colors">+977 9742251081</p><p class="font-mono text-[10px] text-mute tracking-[.2em] uppercase">WhatsApp — fast reply</p></div>
+        </a>
+        <a href="mailto:dangiganesh442@gmail.com" class="flex items-center gap-4 bg-card border border-line p-5 hover:border-ember/60 transition-colors group">
+          <span class="w-12 h-12 grid place-items-center bg-ember/10 text-ember border border-ember/30"><i class="fa-solid fa-envelope"></i></span>
+          <div><p class="font-semibold group-hover:text-ember transition-colors break-all">dangiganesh442@gmail.com</p><p class="font-mono text-[10px] text-mute tracking-[.2em] uppercase">Email</p></div>
+        </a>
+      </div>
+
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a href="https://wa.me/9779742251081" target="_blank" rel="noopener" class="btn btn-solid"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+        <a href="mailto:dangiganesh442@gmail.com" class="btn btn-ghost"><i class="fa-solid fa-envelope"></i> Email Me</a>
+      </div>
+    </div>
+
+    <div data-reveal="right">
+      <form id="contactForm" class="bg-card border border-line p-8 md:p-10" novalidate>
+        <p class="font-mono text-[11px] tracking-[.3em] uppercase text-ember mb-8"><i class="fa-solid fa-paper-plane mr-2"></i>Send a Message</p>
+        <div class="space-y-6">
+          <div>
+            <label class="flabel" for="fName">Name</label>
+            <input class="field" id="fName" name="name" type="text" placeholder="Your name" required>
+          </div>
+          <div>
+            <label class="flabel" for="fEmail">Email</label>
+            <input class="field" id="fEmail" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div>
+            <label class="flabel" for="fMsg">Message</label>
+            <textarea class="field" id="fMsg" name="message" rows="5" placeholder="Tell me about your project…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-solid w-full justify-center">Send Message <i class="fa-solid fa-arrow-right"></i></button>
+          <p id="formNote" class="hidden text-sm font-mono text-mute bg-ink border border-line p-4 leading-relaxed"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="pt-20 pb-10 border-t border-line bg-ink">
+  <div class="max-w-7xl mx-auto px-5 md:px-8">
+    <a href="#home" class="footer-name block text-center text-[clamp(3rem,12vw,9rem)] select-none">Ganesh Dangi</a>
+
+    <div class="mt-12 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-line pt-10">
+      <div class="text-center md:text-left">
+        <p class="font-display text-xl uppercase">Ganesh Dangi <span class="text-ember">✦</span> <span class="text-mute text-base">Video Editor | AI Content Creator</span></p>
+        <p class="font-mono text-[11px] tracking-[.3em] uppercase text-mute mt-2">Creating. Editing. Innovating.</p>
+      </div>
+      <div class="flex gap-4">
+        <a href="https://www.facebook.com/share/1Bskx2YCoJ/" target="_blank" rel="noopener" aria-label="Facebook" class="w-11 h-11 grid place-items-center border border-line text-mute hover:text-ember hover:border-ember transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/ganesh_dang_official" target="_blank" rel="noopener" aria-label="Instagram" class="w-11 h-11 grid place-items-center border border-line text-mute hover:text-ember hover:border-ember transition-colors"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@ganesh_dangi03" target="_blank" rel="noopener" aria-label="TikTok" class="w-11 h-11 grid place-items-center border border-line text-mute hover:text-ember hover:border-ember transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener" aria-label="YouTube" class="w-11 h-11 grid place-items-center border border-line text-mute hover:text-ember hover:border-ember transition-colors"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://whatsapp.com/channel/0029VbAr2w44dTnCuum0sy0Y" target="_blank" rel="noopener" aria-label="WhatsApp" class="w-11 h-11 grid place-items-center border border-line text-mute hover:text-ember hover:border-ember transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-mute tracking-widest uppercase">
+      <p>© 2026 Ganesh Dangi. All Rights Reserved.</p>
+      <a href="#home" class="hover:text-ember transition-colors flex items-center gap-2">Back to top <i class="fa-solid fa-arrow-up"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/9779742251081" target="_blank" rel="noopener" class="wa-fab" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- preloader ---------- */
+  var loader = document.getElementById('loader');
+  function hideLoader(){ loader.classList.add('done'); document.body.classList.add('ready'); setTimeout(function(){ loader.remove(); }, 800); }
+  window.addEventListener('load', function(){ setTimeout(hideLoader, 900); });
+  setTimeout(function(){ if(!loader.classList.contains('done')) hideLoader(); }, 2600);
+
+  /* ---------- sticky nav ---------- */
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 30); }
+  window.addEventListener('scroll', onScroll, { passive:true }); onScroll();
+
+  /* ---------- mobile menu ---------- */
+  var menu = document.getElementById('mobileMenu'),
+      mBtn = document.getElementById('menuBtn'),
+      mClose = document.getElementById('menuClose');
+  function openMenu(){ menu.classList.add('open'); mBtn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+  function closeMenu(){ menu.classList.remove('open'); mBtn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  mBtn.addEventListener('click', openMenu);
+  mClose.addEventListener('click', closeMenu);
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+
+  /* ---------- scrollspy ---------- */
+  var links = document.querySelectorAll('.nav-link');
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(l){ l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id); });
       }
-      note.innerHTML = "There’s no message server on this page. Opening your email app to reach <strong>dangiganesh442@gmail.com</strong> — or use WhatsApp for a faster reply.";
-      note.classList.add("show");
-      const subject = encodeURIComponent("Project enquiry from " + name);
-      const body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\n" + message);
-      window.location.href = "mailto:dangiganesh442@gmail.com?subject=" + subject + "&body=" + body;
     });
+  }, { rootMargin:'-45% 0px -50% 0px' });
+  ['home','about','services','portfolio','ai','skills','contact'].forEach(function(id){
+    var el = document.getElementById(id); if(el) spy.observe(el);
+  });
 
-    (function particles() {
-      const canvas = document.getElementById("particles");
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-      let w, h, dots, raf;
-      const resize = () => {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        w = canvas.width = rect.width;
-        h = canvas.height = rect.height;
-        dots = Array.from({ length: Math.min(48, Math.floor(w / 28)) }, () => ({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.35,
-          vy: (Math.random() - 0.5) * 0.35,
-          r: Math.random() * 1.6 + 0.4
-        }));
-      };
-      const draw = () => {
-        ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = "rgba(92,225,214,0.55)";
-        dots.forEach((d, i) => {
-          d.x += d.vx; d.y += d.vy;
-          if (d.x < 0 || d.x > w) d.vx *= -1;
-          if (d.y < 0 || d.y > h) d.vy *= -1;
-          ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
-          for (let j = i + 1; j < dots.length; j++) {
-            const o = dots[j];
-            const dx = d.x - o.x, dy = d.y - o.y;
-            const dist = Math.hypot(dx, dy);
-            if (dist < 130) {
-              ctx.strokeStyle = "rgba(92,225,214," + (0.12 * (1 - dist / 130)) + ")";
-              ctx.lineWidth = 1;
-              ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(o.x, o.y); ctx.stroke();
-            }
-          }
-        });
-        raf = requestAnimationFrame(draw);
-      };
-      resize();
-      draw();
-      window.addEventListener("resize", resize);
-    })();
-  </script>
+  /* ---------- reveal on scroll ---------- */
+  var rev = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); rev.unobserve(e.target); }
+    });
+  }, { threshold:.14 });
+  document.querySelectorAll('[data-reveal]').forEach(function(el){ rev.observe(el); });
+
+  /* ---------- service card spotlight ---------- */
+  document.querySelectorAll('.spot').forEach(function(card){
+    card.addEventListener('mousemove', function(ev){
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (ev.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (ev.clientY - r.top) + 'px');
+    });
+  });
+
+  /* ---------- AI particle canvas ---------- */
+  var canvas = document.getElementById('aiCanvas'),
+      ctx = canvas.getContext('2d'),
+      aiSec = document.getElementById('ai'),
+      pts = [], W=0, H=0, dpr = Math.min(window.devicePixelRatio||1, 2),
+      mouse = { x:-9999, y:-9999 }, running = false, raf = null;
+
+  function sizeCanvas(){
+    W = aiSec.clientWidth; H = aiSec.clientHeight;
+    canvas.width = W*dpr; canvas.height = H*dpr;
+    canvas.style.width = W+'px'; canvas.style.height = H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var count = Math.min(80, Math.floor(W*H/16000));
+    pts = [];
+    for(var i=0;i<count;i++){
+      pts.push({ x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-.5)*.5, vy:(Math.random()-.5)*.5 });
+    }
+  }
+  function step(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<pts.length;i++){
+      var p = pts[i];
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+      var dxm = p.x-mouse.x, dym = p.y-mouse.y, dm = Math.sqrt(dxm*dxm+dym*dym);
+      if(dm<130){ p.x += dxm/dm*.6; p.y += dym/dm*.6; }
+      ctx.beginPath(); ctx.arc(p.x,p.y,1.6,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,107,44,.75)'; ctx.fill();
+      for(var j=i+1;j<pts.length;j++){
+        var q = pts[j], dx=p.x-q.x, dy=p.y-q.y, d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
+          ctx.strokeStyle='rgba(255,107,44,'+(0.16*(1-d/120)).toFixed(3)+')';
+          ctx.lineWidth=1; ctx.stroke();
+        }
+      }
+      if(dm<150){
+        ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(mouse.x,mouse.y);
+        ctx.strokeStyle='rgba(255,180,140,'+(0.25*(1-dm/150)).toFixed(3)+')';
+        ctx.lineWidth=1; ctx.stroke();
+      }
+    }
+    raf = requestAnimationFrame(step);
+  }
+  function start(){ if(!running){ running=true; step(); } }
+  function stop(){ running=false; if(raf) cancelAnimationFrame(raf); }
+  aiSec.addEventListener('mousemove', function(e){ var r=aiSec.getBoundingClientRect(); mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top; });
+  aiSec.addEventListener('mouseleave', function(){ mouse.x=-9999; mouse.y=-9999; });
+  var aiVis = new IntersectionObserver(function(en){ en[0].isIntersecting ? start() : stop(); }, { threshold:.05 });
+  aiVis.observe(aiSec);
+  window.addEventListener('resize', function(){ sizeCanvas(); });
+  sizeCanvas();
+
+  /* ---------- typing effect ---------- */
+  var phrases = [
+    'prompt: "cinematic portrait, golden hour"',
+    'generating visual concepts…',
+    'enhancing frames with AI…',
+    'crafting thumbnails that stop the scroll',
+    'editing rhythm → emotion → story'
+  ];
+  var typed = document.getElementById('typed'), pi=0, ci=0, deleting=false;
+  function typeLoop(){
+    var cur = phrases[pi];
+    typed.textContent = cur.slice(0, ci);
+    if(!deleting){
+      if(ci < cur.length){ ci++; setTimeout(typeLoop, 45); }
+      else { deleting = true; setTimeout(typeLoop, 2000); }
+    } else {
+      if(ci > 0){ ci--; setTimeout(typeLoop, 22); }
+      else { deleting=false; pi=(pi+1)%phrases.length; setTimeout(typeLoop, 400); }
+    }
+  }
+  typeLoop();
+
+  /* ---------- contact form (no backend — honest feedback) ---------- */
+  var form = document.getElementById('contactForm'),
+      note = document.getElementById('formNote');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('fName').value.trim(),
+        email = document.getElementById('fEmail').value.trim(),
+        msg = document.getElementById('fMsg').value.trim();
+    if(!name || !email || !msg || !/^\S+@\S+\.\S+$/.test(email)){
+      note.classList.remove('hidden');
+      note.style.color = '#ff844e';
+      note.textContent = '⚠ Please fill in your name, a valid email and a message.';
+      return;
+    }
+    var waText = encodeURIComponent('Hello Ganesh! I\'m ' + name + ' (' + email + '). ' + msg);
+    var mailBody = encodeURIComponent('From: ' + name + ' <' + email + '>\n\n' + msg);
+    note.classList.remove('hidden');
+    note.style.color = '#9b988f';
+    note.innerHTML = '✓ Your message is ready. This site has no mail server, so send it directly via ' +
+      '<a class="text-ember underline" target="_blank" rel="noopener" href="https://wa.me/9779742251081?text=' + waText + '">WhatsApp</a> or ' +
+      '<a class="text-ember underline" href="mailto:dangiganesh442@gmail.com?subject=Project%20Inquiry&body=' + mailBody + '">Email</a>.';
+    form.reset();
+  });
+})();
+</script>
 </body>
 </html>
