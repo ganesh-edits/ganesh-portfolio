@@ -1,1671 +1,1195 @@
-<html lang="en" class="scroll-smooth">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Ganesh Dangi — Professional Video Editor & AI Content Creator specializing in cinematic videos, documentaries, YouTube content, social media edits, motion graphics and AI-powered visual experiences." />
-  <meta name="theme-color" content="#07070A" />
-  <title>Ganesh Dangi | Professional Video Editor & AI Content Creator</title>
-
+  <title>Ganesh Dangi | Video Editor &amp; AI Content Creator</title>
+  <meta name="description" content="Ganesh Dangi — Video Editor and AI Content Creator creating engaging videos, AI-powered content and creative visual stories." />
+  <meta name="author" content="Ganesh Dangi" />
+  <meta name="keywords" content="Ganesh Dangi, Video Editor, AI Content Creator, Visual Storyteller, Video Editing, Thumbnail Design" />
+  <meta property="og:title" content="Ganesh Dangi | Video Editor &amp; AI Content Creator" />
+  <meta property="og:description" content="Ganesh Dangi — Video Editor and AI Content Creator creating engaging videos, AI-powered content and creative visual stories." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#07080a" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              orange: '#FF5E1E',
-              accent: '#FF7A00',
-              glow: 'rgba(255, 94, 30, 0.15)',
-              dark: '#07070A',
-              surface: '#101014',
-              card: '#16161C',
-              border: '#25252F'
-            }
-          },
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            display: ['"Space Grotesk"', 'sans-serif']
-          },
-          boxShadow: {
-            glow: '0 20px 80px rgba(255, 94, 30, 0.18)'
-          },
-          animation: {
-            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-          }
-        }
-      }
-    };
-  </script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <style>
     :root {
-      --brand-orange: #FF5E1E;
-      --brand-accent: #FF7A00;
-      --brand-dark: #07070A;
-      --brand-surface: #101014;
-      --brand-card: #16161C;
-      --brand-border: #25252F;
-      --white-soft: rgba(255, 255, 255, 0.86);
+      --bg: #07080a;
+      --bg-2: #0c0e12;
+      --bg-elev: #101318;
+      --card: #13161c;
+      --card-hover: #181c24;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --dim: #6b7280;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.14);
+      --accent: #5ce1d6;
+      --accent-2: #3ecfc3;
+      --accent-dim: rgba(92, 225, 214, 0.12);
+      --accent-glow: rgba(92, 225, 214, 0.28);
+      --radius: 18px;
+      --nav-h: 78px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    html, body { background: var(--bg); color: var(--text); }
     body {
-      margin: 0;
-      min-height: 100vh;
+      font-family: "Outfit", system-ui, sans-serif;
+      line-height: 1.6;
       overflow-x: hidden;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(255, 94, 30, 0.12), transparent 34%),
-        radial-gradient(circle at 10% 80%, rgba(255, 94, 30, 0.06), transparent 30%),
-        linear-gradient(180deg, #07070A 0%, #0A0A0E 52%, #07070A 100%);
+      -webkit-font-smoothing: antialiased;
     }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font-family: inherit; }
+    ::selection { background: var(--accent); color: #06110f; }
 
-    body::before {
-      content: "";
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #0a0b0e; }
+    ::-webkit-scrollbar-thumb { background: #2a3038; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #3a424c; }
+
+    .grain {
+      pointer-events: none;
       position: fixed;
       inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-      background-size: 28px 28px;
-      opacity: 0.2;
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 78%);
-      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 78%);
+      z-index: 80;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    body.modal-open {
+    .container { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+
+    /* LOADER */
+    #loader {
+      position: fixed; inset: 0; z-index: 200;
+      background: #050607;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 22px;
+      transition: opacity 0.7s var(--ease), visibility 0.7s;
+    }
+    #loader.hide { opacity: 0; visibility: hidden; }
+    .loader-mark {
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: 42px;
+      letter-spacing: 0.18em;
+      color: var(--text);
+    }
+    .loader-bar { width: 140px; height: 2px; background: #1c2128; overflow: hidden; border-radius: 2px; }
+    .loader-bar span {
+      display: block; height: 100%; width: 0; background: var(--accent);
+      animation: load 1.15s var(--ease) forwards;
+    }
+    @keyframes load { to { width: 100%; } }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center;
+      transition: background 0.35s, border-color 0.35s, backdrop-filter 0.35s;
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      background: rgba(7, 8, 10, 0.78);
+      backdrop-filter: blur(18px) saturate(140%);
+      border-bottom-color: var(--line);
+    }
+    .nav-inner {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .logo {
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      font-size: 15px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-box {
+      width: 34px; height: 34px;
+      border: 1px solid var(--accent);
+      display: grid; place-items: center;
+      font-size: 11px; color: var(--accent);
+      border-radius: 7px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-links a {
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      padding: 8px 12px; border-radius: 999px;
+      transition: color 0.25s, background 0.25s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      border: none; cursor: pointer;
+      font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; font-size: 12px;
+      transition: transform 0.25s var(--ease), background 0.25s, color 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn-accent {
+      background: var(--accent); color: #06221f;
+      padding: 12px 20px; border-radius: 999px;
+      box-shadow: 0 8px 28px var(--accent-glow);
+    }
+    .btn-accent:hover { background: #79ebe1; box-shadow: 0 12px 32px var(--accent-glow); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      padding: 12px 20px; border-radius: 999px;
+      border: 1px solid var(--line-strong);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-cta { padding: 11px 18px; }
+    .hamburger {
+      display: none; width: 42px; height: 42px;
+      border: 1px solid var(--line-strong); background: transparent; color: var(--text);
+      border-radius: 10px; cursor: pointer; align-items: center; justify-content: center;
+    }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 99;
+      background: rgba(7,8,10,0.96);
+      backdrop-filter: blur(18px);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 90px 32px 40px;
+      transform: translateX(100%);
+      transition: transform 0.5s var(--ease);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(28px, 7vw, 40px);
+      font-weight: 700;
+      padding: 10px 0;
+      color: var(--text);
+      border-bottom: 1px solid var(--line);
+    }
+    .mobile-menu .btn { margin-top: 28px; width: fit-content; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      padding: calc(var(--nav-h) + 28px) 0 40px;
+      position: relative;
+      display: flex; align-items: center;
       overflow: hidden;
     }
-
-    img {
-      display: block;
-      max-width: 100%;
+    .hero::before {
+      content: "";
+      position: absolute; width: 620px; height: 620px;
+      right: -80px; top: 10%;
+      background: radial-gradient(circle, rgba(92,225,214,0.12), transparent 68%);
+      filter: blur(10px);
+      pointer-events: none;
     }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
-    ::selection {
-      background: var(--brand-orange);
-      color: #fff;
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #07070A;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #25252F;
-      border-radius: 999px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--brand-orange);
-    }
-
-    :focus-visible {
-      outline: 2px solid rgba(255, 94, 30, 0.85);
-      outline-offset: 3px;
-    }
-
-    .site-header {
-      background: rgba(7, 7, 10, 0.62);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .site-header.scrolled {
-      background: rgba(7, 7, 10, 0.92);
-      border-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
-    }
-
-    .cinematic-glow {
-      background: radial-gradient(circle at 50% 50%, rgba(255, 94, 30, 0.12) 0%, rgba(255, 94, 30, 0.035) 34%, rgba(7, 7, 10, 0) 72%);
-    }
-
-    .gradient-text {
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 38%, #FF7A00 72%, #ffc09a 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
+    .hero-bg-word {
+      position: absolute;
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: clamp(80px, 16vw, 210px);
+      letter-spacing: -0.04em;
       color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.035);
+      top: 18%; left: -2%;
+      pointer-events: none; user-select: none; white-space: nowrap;
     }
-
-    .glass-panel {
-      background: linear-gradient(180deg, rgba(22, 22, 28, 0.78), rgba(13, 13, 18, 0.74));
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
-    }
-
-    .glass-panel:hover {
-      border-color: rgba(255, 94, 30, 0.28);
-    }
-
-    .eyebrow {
-      display: inline-flex;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 48px;
       align-items: center;
-      gap: 0.55rem;
-      color: var(--brand-orange);
-      font-size: 0.75rem;
+      position: relative; z-index: 2;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); font-weight: 600; margin-bottom: 18px;
+    }
+    .eyebrow::before {
+      content: ""; width: 28px; height: 1px; background: var(--accent);
+    }
+    .hero h1 {
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: clamp(36px, 5.2vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .name-block {
+      font-family: "Syne", sans-serif;
       font-weight: 800;
       letter-spacing: 0.18em;
-      text-transform: uppercase;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .roles {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px;
+    }
+    .role-tag {
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 7px 12px; border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      color: var(--muted); font-weight: 600;
+    }
+    .hero-desc {
+      color: var(--muted); font-size: 17px; max-width: 520px;
+      margin-bottom: 30px; font-weight: 300;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .badge {
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 8px 14px; border-radius: 8px;
+      background: var(--accent-dim); color: var(--accent); font-weight: 600;
+      border: 1px solid rgba(92,225,214,0.2);
     }
 
-    .eyebrow::before {
-      content: "";
-      width: 0.5rem;
-      height: 0.5rem;
-      border-radius: 999px;
-      background: var(--brand-orange);
-      box-shadow: 0 0 18px rgba(255, 94, 30, 0.72);
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(26px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .delay-100 {
-      transition-delay: 0.1s;
-    }
-
-    .delay-150 {
-      transition-delay: 0.15s;
-    }
-
-    .delay-200 {
-      transition-delay: 0.2s;
-    }
-
-    .hero-visual {
+    .portrait-wrap {
       position: relative;
-      isolation: isolate;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 94, 30, 0.06);
+      display: flex; justify-content: center;
+      animation: floaty 7s ease-in-out infinite;
     }
-
-    .hero-visual::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      z-index: 1;
-      pointer-events: none;
-      border-radius: inherit;
-      background:
-        radial-gradient(circle at 78% 16%, rgba(255, 94, 30, 0.24), transparent 32%),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 42%);
-      mix-blend-mode: screen;
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
     }
-
-    .hero-visual img {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      width: 100%;
-      height: 100%;
+    .portrait {
+      width: min(440px, 100%);
+      aspect-ratio: 4 / 5;
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      background: #0b0d11;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08),
+        0 30px 80px rgba(0,0,0,0.55),
+        0 0 80px rgba(92,225,214,0.08);
+    }
+    .portrait img {
+      width: 168%;
+      height: 168%;
       object-fit: cover;
-    }
-
-    .editor-panel {
+      object-position: 51% 12%;
       position: absolute;
-      z-index: 2;
+      left: 50%; top: 38%;
+      transform: translate(-50%, -50%) scale(1.08);
+      filter: contrast(1.06) saturate(0.92) brightness(1.02);
     }
-
-    .float-card {
-      position: absolute;
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      animation: floatCard 6s ease-in-out infinite;
-    }
-
-    .float-card:nth-child(2) {
-      animation-delay: -1.8s;
-    }
-
-    @keyframes floatCard {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-12px);
-      }
-    }
-
-    .timeline-strip {
-      position: relative;
-    }
-
-    .playhead {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 8%;
-      width: 2px;
-      background: var(--brand-orange);
-      box-shadow: 0 0 18px rgba(255, 94, 30, 0.95);
-      animation: playheadMove 4s linear infinite;
-    }
-
-    @keyframes playheadMove {
-      0% {
-        left: 8%;
-      }
-      100% {
-        left: 92%;
-      }
-    }
-
-    .filter-btn {
-      transition: all 0.25s ease;
-    }
-
-    .filter-btn.active,
-    .filter-btn[aria-pressed="true"] {
-      background: var(--brand-orange);
-      border-color: var(--brand-orange);
-      color: #fff;
-      box-shadow: 0 12px 30px rgba(255, 94, 30, 0.22);
-      transform: translateY(-1px);
-    }
-
-    [data-nav-link].active {
-      color: var(--brand-orange) !important;
-    }
-
-    .portfolio-card[hidden] {
-      display: none;
-    }
-
-    .portfolio-card {
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-
-    .portfolio-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .portfolio-card img {
-      transition: transform 0.6s ease;
-    }
-
-    .portfolio-card:hover img {
-      transform: scale(1.06);
-    }
-
-    .thumbnail-overlay {
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .portfolio-card:hover .thumbnail-overlay {
-      opacity: 1;
-      transform: scale(1.02);
-    }
-
-    .skill-card,
-    .service-card,
-    .testimonial-card {
-      transition: transform 0.28s ease, border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
-    }
-
-    .skill-card:hover,
-    .service-card:hover,
-    .testimonial-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255, 94, 30, 0.3);
-      background: rgba(255, 94, 30, 0.055);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
-    }
-
-    .timeline {
-      position: relative;
-    }
-
-    .timeline::before {
+    .portrait::after {
       content: "";
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, transparent 52%, rgba(7,8,10,0.55) 100%),
+        radial-gradient(ellipse at 50% 38%, transparent 42%, rgba(7,8,10,0.55) 78%);
+      pointer-events: none;
+    }
+    .portrait-ring {
       position: absolute;
-      left: 1rem;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, transparent, rgba(255, 94, 30, 0.48), transparent);
+      inset: -14px;
+      border-radius: 36px;
+      border: 1px solid rgba(92,225,214,0.22);
+      pointer-events: none;
+    }
+    .portrait-caption {
+      position: absolute; left: 18px; bottom: 18px; z-index: 3;
+      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: #fff; background: rgba(7,8,10,0.55);
+      backdrop-filter: blur(10px);
+      padding: 8px 12px; border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+    .scroll-hint {
+      position: absolute; bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--dim); font-size: 10px; letter-spacing: 0.24em;
+      z-index: 3;
+    }
+    .scroll-line {
+      width: 1px; height: 42px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: drip 1.8s ease-in-out infinite;
+    }
+    @keyframes drip {
+      0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+      40% { transform: scaleY(1); opacity: 1; }
+      100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
     }
 
-    .timeline-item {
-      position: relative;
-      padding-left: 2.85rem;
-      padding-bottom: 1.5rem;
+    .marquee-wrap {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+      padding: 16px 0;
+      background: #090b0e;
     }
-
-    .timeline-item:last-child {
-      padding-bottom: 0;
-    }
-
-    .timeline-dot {
-      position: absolute;
-      left: 0.62rem;
-      top: 1.45rem;
-      width: 0.85rem;
-      height: 0.85rem;
-      border-radius: 999px;
-      background: var(--brand-orange);
-      box-shadow: 0 0 0 8px rgba(255, 94, 30, 0.1), 0 0 30px rgba(255, 94, 30, 0.55);
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      min-height: 3rem;
-      padding: 0 1.15rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 850;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border: 1px solid transparent;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--brand-orange), #ffb000);
-      color: #0b0b0d;
-      box-shadow: 0 18px 45px rgba(255, 94, 30, 0.28);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 24px 60px rgba(255, 94, 30, 0.38);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 94, 30, 0.1);
-      border-color: rgba(255, 94, 30, 0.45);
-      transform: translateY(-2px);
-    }
-
-    .view-project {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 94, 30, 0.35);
-      background: rgba(255, 94, 30, 0.1);
-      color: #fff;
-      padding: 0.55rem 0.82rem;
-      font-size: 0.75rem;
-      font-weight: 850;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .marquee {
+      display: flex; gap: 0; width: max-content;
+      animation: slide 28s linear infinite;
       white-space: nowrap;
-      transition: all 0.25s ease;
     }
-
-    .view-project:hover {
-      background: var(--brand-orange);
-      border-color: var(--brand-orange);
-      transform: translateY(-2px);
+    .marquee span {
+      font-family: "Syne", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      font-size: 13px;
+      color: var(--dim);
+      padding: 0 28px;
     }
+    .marquee span i { color: var(--accent); margin: 0 8px; font-size: 8px; }
+    @keyframes slide { to { transform: translateX(-50%); } }
 
-    .social-btn {
-      width: 44px;
-      height: 44px;
-      display: inline-flex;
+    /* SECTIONS */
+    section { padding: 108px 0; position: relative; }
+    .sec-label {
+      font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--accent); font-weight: 600; margin-bottom: 12px;
+    }
+    .sec-title {
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: clamp(32px, 4.6vw, 52px);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .sec-sub { color: var(--muted); max-width: 560px; font-size: 17px; font-weight: 300; }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 56px;
       align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.04);
-      color: #fff;
-      transition: all 0.25s ease;
     }
-
-    .social-btn:hover {
-      background: rgba(255, 94, 30, 0.16);
-      border-color: rgba(255, 94, 30, 0.45);
-      color: #fff;
-      transform: translateY(-2px);
+    .about-copy p {
+      color: var(--muted); font-size: 17px; font-weight: 300;
+      margin-bottom: 16px; max-width: 620px;
     }
+    .mindset {
+      background: linear-gradient(180deg, #151920, #101318);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 36px 28px;
+      position: relative;
+      overflow: hidden;
+      min-height: 280px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .mindset::before {
+      content: "";
+      position: absolute; right: -40px; top: -40px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+    }
+    .mindset-kicker {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+    }
+    .mindset h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 34px; font-weight: 800; line-height: 1.1; margin: 14px 0;
+    }
+    .mindset p { color: var(--muted); font-size: 14px; }
 
-    .contact-shell {
+    /* SERVICES */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 48px;
+    }
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 24px 26px;
+      min-height: 230px;
+      transition: transform 0.35s var(--ease), border-color 0.35s, background 0.35s;
+      position: relative;
       overflow: hidden;
     }
-
-    .contact-shell::before {
+    .service-card::after {
       content: "";
-      position: absolute;
-      inset: -1px;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 80% 15%, rgba(255, 94, 30, 0.16), transparent 35%),
-        radial-gradient(circle at 15% 85%, rgba(255, 255, 255, 0.05), transparent 30%);
+      position: absolute; inset: auto -20% -40% auto;
+      width: 140px; height: 140px;
+      background: radial-gradient(circle, var(--accent-dim), transparent 70%);
+      opacity: 0; transition: opacity 0.4s;
     }
-
-    .contact-shell > * {
-      position: relative;
-      z-index: 1;
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(92,225,214,0.28);
+      background: var(--card-hover);
     }
+    .service-card:hover::after { opacity: 1; }
+    .svc-num {
+      font-family: "Syne", sans-serif;
+      color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: 0.16em;
+      margin-bottom: 28px; display: block;
+    }
+    .service-card h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 20px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em;
+    }
+    .service-card p { color: var(--muted); font-size: 14.5px; font-weight: 300; }
 
-    #modal-details ul {
-      list-style: none;
-      padding: 0;
-      margin: 1.25rem 0;
+    /* PORTFOLIO */
+    .portfolio-grid {
       display: grid;
-      gap: 0.7rem;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      margin-top: 48px;
+    }
+    .project {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      transition: transform 0.4s var(--ease), border-color 0.4s, box-shadow 0.4s;
+    }
+    .project:hover {
+      transform: translateY(-4px);
+      border-color: rgba(92,225,214,0.25);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    }
+    .project-thumb {
+      position: relative; min-height: 280px; overflow: hidden; background: #0b0d11;
+    }
+    .project-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      position: absolute; inset: 0;
+      transition: transform 0.7s var(--ease);
+    }
+    .project:hover .project-thumb img { transform: scale(1.06); }
+    .play-overlay {
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.45));
+    }
+    .play-btn {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.28);
+      backdrop-filter: blur(8px);
+      display: grid; place-items: center;
+      color: #fff; font-size: 22px;
+      transition: transform 0.3s, background 0.3s;
+    }
+    .project:hover .play-btn { transform: scale(1.08); background: var(--accent); color: #06221f; }
+    .project-body { padding: 36px 32px; display: flex; flex-direction: column; justify-content: center; }
+    .proj-num { color: var(--accent); font-size: 12px; letter-spacing: 0.2em; font-weight: 700; margin-bottom: 10px; }
+    .project-body h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 28px; font-weight: 800; margin-bottom: 10px;
+    }
+    .project-body p { color: var(--muted); font-size: 15px; margin-bottom: 22px; font-weight: 300; }
+
+    /* AI */
+    .ai-section {
+      background:
+        radial-gradient(800px 400px at 80% 20%, rgba(92,225,214,0.08), transparent 50%),
+        radial-gradient(600px 300px at 10% 80%, rgba(92,225,214,0.05), transparent 50%),
+        var(--bg-2);
+      overflow: hidden;
+    }
+    .ai-inner { position: relative; z-index: 2; text-align: center; max-width: 760px; margin: 0 auto; }
+    .ai-inner .sec-title { margin-left: auto; margin-right: auto; }
+    .ai-inner .sec-sub { margin: 0 auto 40px; }
+    #particles {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 1; pointer-events: none;
+    }
+    .ai-pills {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+    }
+    .ai-pill {
+      padding: 10px 16px; border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.03);
+      font-size: 13px; color: var(--muted);
     }
 
-    #modal-details li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-      color: #cbd5e1;
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .skill {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 16px;
+      padding: 26px 22px;
+      display: flex; gap: 16px; align-items: flex-start;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .skill:hover { border-color: rgba(92,225,214,0.3); transform: translateY(-3px); }
+    .skill-ico {
+      width: 44px; height: 44px; flex-shrink: 0;
+      border-radius: 12px;
+      background: var(--accent-dim); color: var(--accent);
+      display: grid; place-items: center; font-size: 16px;
+    }
+    .skill h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .skill p { color: var(--muted); font-size: 13px; font-weight: 300; }
+
+    /* YT */
+    .yt-box {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: center;
+      background: linear-gradient(90deg, #161a22, #101318);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 48px;
+      margin-top: 20px;
+    }
+    .yt-icon-lg {
+      width: 86px; height: 86px; border-radius: 22px;
+      background: #ff0000; display: grid; place-items: center;
+      font-size: 36px; color: #fff;
+      box-shadow: 0 16px 40px rgba(255,0,0,0.28);
+      margin-bottom: 8px;
     }
 
-    #modal-details li::before {
-      content: "";
-      width: 0.45rem;
-      height: 0.45rem;
-      margin-top: 0.45rem;
-      border-radius: 999px;
-      flex: 0 0 auto;
-      background: var(--brand-orange);
-      box-shadow: 0 0 16px rgba(255, 94, 30, 0.75);
+    /* SOCIAL */
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 40px;
     }
-
-    @media (max-width: 640px) {
-      .float-card {
-        display: none;
-      }
-
-      .hero-visual {
-        min-height: 520px;
-      }
+    .social-card {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      transition: transform 0.3s, border-color 0.3s, background 0.3s;
     }
+    .social-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(92,225,214,0.3);
+      background: var(--card-hover);
+    }
+    .social-card i {
+      width: 42px; height: 42px; border-radius: 10px;
+      display: grid; place-items: center;
+      background: var(--accent-dim); color: var(--accent); font-size: 16px;
+    }
+    .social-card strong { display: block; font-size: 14px; }
+    .social-card span { font-size: 12px; color: var(--dim); }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 40px;
+      margin-top: 40px;
+    }
+    .contact-info h3 {
+      font-family: "Syne", sans-serif;
+      font-size: 22px; margin: 8px 0 4px;
+    }
+    .contact-meta { color: var(--muted); margin-bottom: 22px; font-size: 14px; }
+    .contact-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted); font-size: 15px;
+    }
+    .contact-row i { color: var(--accent); width: 18px; }
+    .contact-row a:hover { color: var(--accent); }
+    .contact-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+
+    .form {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 28px;
+    }
+    .form-note {
+      display: none;
+      background: var(--accent-dim);
+      border: 1px solid rgba(92,225,214,0.25);
+      color: var(--text);
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .form-note.show { display: block; }
+    .field { margin-bottom: 14px; }
+    .field label {
+      display: block; font-size: 12px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--dim); margin-bottom: 7px;
+    }
+    .field input, .field textarea {
+      width: 100%;
+      background: #0c0e12;
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 13px 14px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      resize: vertical;
+    }
+    .field input:focus, .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+    .form .btn { width: 100%; padding: 14px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 40px 0 28px;
+      background: #08090c;
+    }
+    .foot-top {
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;
+      flex-wrap: wrap; margin-bottom: 28px;
+    }
+    .foot-brand { font-family: "Syne", sans-serif; font-weight: 800; letter-spacing: 0.12em; }
+    .foot-brand small { display: block; font-family: "Outfit", sans-serif; font-weight: 400; letter-spacing: 0; color: var(--muted); margin-top: 6px; }
+    .foot-tag { color: var(--dim); font-style: italic; }
+    .foot-social { display: flex; gap: 10px; }
+    .foot-social a {
+      width: 40px; height: 40px; border-radius: 10px;
+      border: 1px solid var(--line-strong);
+      display: grid; place-items: center; color: var(--muted);
+      transition: color 0.25s, border-color 0.25s, background 0.25s;
+    }
+    .foot-social a:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+    .copy { color: var(--dim); font-size: 13px; border-top: 1px solid var(--line); padding-top: 18px; }
+
+    /* FLOAT WHATSAPP */
+    .wa-float {
+      position: fixed; right: 22px; bottom: 22px; z-index: 90;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25d366; color: #fff;
+      display: grid; place-items: center; font-size: 26px;
+      box-shadow: 0 12px 30px rgba(37,211,102,0.35);
+      transition: transform 0.25s;
+    }
+    .wa-float:hover { transform: scale(1.08); }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      animation: none;
+    }
+    .reveal.in {
+      animation: rise 0.9s var(--ease) forwards;
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.35s; }
+    .delay-4 { animation-delay: 0.5s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-copy .reveal { opacity: 0; }
+    .hero-copy .reveal.in { animation: rise 0.95s var(--ease) forwards; }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-      }
+      * { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
 
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
+    @media (max-width: 980px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: inline-flex; }
+      .hero-grid, .about-grid, .contact-grid, .yt-box { grid-template-columns: 1fr; }
+      .hero-grid { gap: 36px; }
+      .portrait-wrap { order: -1; }
+      .portrait { width: min(340px, 78vw); margin: 0 auto; }
+      .services-grid, .skills-grid, .social-grid { grid-template-columns: 1fr 1fr; }
+      .project { grid-template-columns: 1fr; }
+      .project-thumb { min-height: 220px; aspect-ratio: 16/9; }
+      section { padding: 80px 0; }
+      .yt-box { padding: 28px; }
+    }
+    @media (max-width: 640px) {
+      .container { width: min(1180px, calc(100% - 32px)); }
+      .services-grid, .skills-grid, .social-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: calc(var(--nav-h) + 16px); min-height: auto; }
+      .hero-actions .btn { width: 100%; }
+      .scroll-hint { display: none; }
+      .hero-desc { font-size: 15px; }
+      .form { padding: 20px; }
+      .project-body { padding: 24px 20px; }
+      .wa-float { right: 16px; bottom: 16px; }
     }
   </style>
 </head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
 
-<body class="bg-brand-dark text-neutral-300 font-sans selection:bg-brand-orange selection:text-white antialiased overflow-x-hidden">
-  <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
-    <div class="absolute inset-0 opacity-[0.035]" style="background-image: radial-gradient(rgba(255, 255, 255, 0.55) 1px, transparent 1px); background-size: 24px 24px;"></div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[34rem] cinematic-glow"></div>
-    <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-brand-orange/10 blur-3xl"></div>
-    <div class="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-orange-950/30 blur-3xl"></div>
+  <div id="loader" role="status" aria-live="polite">
+    <div class="loader-mark">GD</div>
+    <div class="loader-bar"><span></span></div>
   </div>
 
-  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-full focus:bg-brand-orange focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white">
-    Skip to content
-  </a>
-
-  <header class="site-header fixed inset-x-0 top-0 z-50">
-    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <a href="#home" class="flex items-center gap-3 group" aria-label="Ganesh Dangi home">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-orange to-amber-400 flex items-center justify-center font-display font-black text-white shadow-glow transition-transform duration-300 group-hover:scale-105">
-          GD
-        </div>
-        <div class="flex flex-col">
-          <span class="font-display font-bold text-white tracking-tight leading-none">GANESH DANGI</span>
-          <span class="text-[10px] uppercase tracking-[0.22em] text-neutral-500 font-semibold mt-1">Editor & AI Director</span>
-        </div>
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="logo" href="#home">
+        <span class="logo-box">GD</span>
+        GANESH DANGI
       </a>
-
-      <nav class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide" aria-label="Primary navigation">
-        <a data-nav-link href="#work" class="text-neutral-400 hover:text-white transition-colors">Work</a>
-        <a data-nav-link href="#skills" class="text-neutral-400 hover:text-white transition-colors">Skills</a>
-        <a data-nav-link href="#about" class="text-neutral-400 hover:text-white transition-colors">About</a>
-        <a data-nav-link href="#experience" class="text-neutral-400 hover:text-white transition-colors">Experience</a>
-        <a data-nav-link href="#services" class="text-neutral-400 hover:text-white transition-colors">Services</a>
-        <a data-nav-link href="#testimonials" class="text-neutral-400 hover:text-white transition-colors">Reviews</a>
-      </nav>
-
-      <div class="flex items-center gap-4">
-        <a href="#contact" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-wider bg-white/5 hover:bg-brand-orange text-white border border-white/10 hover:border-brand-orange transition-all duration-300">
-          Let's Connect
-          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-        </a>
-
-        <button id="mobile-menu-btn" type="button" class="md:hidden text-neutral-300 hover:text-white focus:outline-none p-2 rounded-xl" aria-label="Toggle menu" aria-controls="mobile-menu" aria-expanded="false">
-          <i data-lucide="menu" class="w-6 h-6"></i>
-        </button>
-      </div>
-    </div>
-
-    <div id="mobile-menu" class="hidden md:hidden bg-brand-surface/95 border-b border-brand-border px-5 py-4 flex flex-col gap-3">
-      <a data-nav-link href="#work" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">Work</a>
-      <a data-nav-link href="#skills" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">Skills</a>
-      <a data-nav-link href="#about" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">About</a>
-      <a data-nav-link href="#experience" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">Experience</a>
-      <a data-nav-link href="#services" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">Services</a>
-      <a data-nav-link href="#testimonials" class="text-neutral-300 hover:text-brand-orange transition-colors font-semibold">Reviews</a>
-      <a data-nav-link href="#contact" class="text-brand-orange font-bold">Contact Me</a>
+      <ul class="nav-links">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#ai">AI Content</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a class="btn btn-accent nav-cta" href="#contact">Contact Me</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
   </header>
 
-  <main id="main" class="relative z-10">
-    <section id="home" class="relative min-h-screen flex items-center pt-28 pb-20 lg:pt-32 overflow-hidden">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          <div class="lg:col-span-6 flex flex-col items-start space-y-7 reveal">
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-brand-orange/30 bg-brand-orange/5 text-brand-orange text-xs font-black tracking-wider uppercase">
-              <span class="w-2 h-2 rounded-full bg-brand-orange animate-pulse"></span>
-              Available for Select Projects
-            </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#ai">AI Content</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-accent" href="https://wa.me/9779742251081" target="_blank" rel="noopener">Contact Me</a>
+  </nav>
 
-            <h1 class="font-display font-black text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] tracking-[-0.07em] text-white">
-              VIDEO EDITOR
-              <span class="block">&</span>
-              AI CONTENT CREATOR
-            </h1>
-
-            <p class="gradient-text text-2xl sm:text-3xl font-display font-semibold tracking-tight">
-              Transforming Ideas Into Cinematic Visual Stories
-            </p>
-
-            <p class="max-w-2xl text-lg text-neutral-400 leading-8">
-              I create engaging documentaries, cinematic videos, social media content and AI-powered visual experiences.
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-4 pt-2">
-              <a href="#work" class="btn-primary">
-                VIEW MY WORK
-                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-              </a>
-              <a href="#contact" class="btn-secondary">
-                CONTACT ME
-                <i data-lucide="mail" class="w-4 h-4"></i>
-              </a>
-            </div>
-
-            <div class="grid grid-cols-3 gap-3 max-w-xl w-full pt-4">
-              <div class="glass-panel rounded-2xl p-4">
-                <p class="text-2xl font-display font-bold text-white">120+</p>
-                <p class="text-[11px] uppercase tracking-widest text-neutral-500 mt-1">Projects</p>
-              </div>
-              <div class="glass-panel rounded-2xl p-4">
-                <p class="text-2xl font-display font-bold text-white">4K/8K</p>
-                <p class="text-[11px] uppercase tracking-widest text-neutral-500 mt-1">Workflow</p>
-              </div>
-              <div class="glass-panel rounded-2xl p-4">
-                <p class="text-2xl font-display font-bold text-white">48h</p>
-                <p class="text-[11px] uppercase tracking-widest text-neutral-500 mt-1">Delivery</p>
-              </div>
-            </div>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-bg-word" aria-hidden="true">EDITOR</div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="name-block reveal">GANESH DANGI</p>
+          <p class="eyebrow reveal delay-1">Video Editor · AI Content Creator</p>
+          <h1 class="reveal delay-2">Turning Ideas Into <span>Powerful Visual Stories.</span></h1>
+          <div class="roles reveal delay-2">
+            <span class="role-tag">Video Editor</span>
+            <span class="role-tag">AI Content Creator</span>
+            <span class="role-tag">Visual Storyteller</span>
           </div>
-
-          <div class="lg:col-span-6 reveal delay-150">
-            <div class="relative mx-auto max-w-2xl">
-              <div class="hero-visual rounded-[2rem] overflow-hidden h-[560px] lg:h-[620px]">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=85" alt="Professional video editor working on a cinematic editing workstation" decoding="async" />
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-
-                <div class="absolute top-6 right-6 z-20 flex items-center gap-2 rounded-full bg-black/45 border border-white/10 px-4 py-2 backdrop-blur-xl">
-                  <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                  <span class="text-[11px] uppercase tracking-widest text-neutral-300 font-bold">REC / EDIT MODE</span>
-                </div>
-
-                <div class="editor-panel left-5 right-5 bottom-5 glass-panel rounded-[1.5rem] p-5">
-                  <div class="flex items-center justify-between gap-4">
-                    <div>
-                      <p class="text-[10px] uppercase tracking-[0.25em] text-brand-orange font-black">Editing Suite</p>
-                      <h3 class="text-white font-display font-bold text-xl tracking-tight mt-1">Cinematic Storytelling Workflow</h3>
-                    </div>
-                    <span class="rounded-full bg-brand-orange/15 text-brand-orange border border-brand-orange/25 px-3 py-1 text-xs font-black uppercase tracking-wider">
-                      4K Ready
-                    </span>
-                  </div>
-
-                  <div class="mt-5 space-y-2.5">
-                    <div class="flex items-center justify-between text-xs text-neutral-400">
-                      <span>Narrative Cut</span>
-                      <span>82%</span>
-                    </div>
-                    <div class="h-2 rounded-full bg-white/10 overflow-hidden">
-                      <div class="h-full w-[82%] rounded-full bg-gradient-to-r from-brand-orange to-amber-400"></div>
-                    </div>
-                    <div class="flex items-center justify-between text-xs text-neutral-400">
-                      <span>Color & Sound</span>
-                      <span>91%</span>
-                    </div>
-                    <div class="h-2 rounded-full bg-white/10 overflow-hidden">
-                      <div class="h-full w-[91%] rounded-full bg-gradient-to-r from-brand-orange to-amber-400"></div>
-                    </div>
-                  </div>
-
-                  <div class="timeline-strip mt-5 h-14 rounded-xl bg-black/50 border border-white/10 overflow-hidden flex items-center gap-2 px-3">
-                    <div class="w-10 h-10 rounded-lg bg-brand-orange/20 border border-brand-orange/30"></div>
-                    <div class="w-16 h-8 rounded-md bg-white/10"></div>
-                    <div class="w-24 h-8 rounded-md bg-white/10"></div>
-                    <div class="w-14 h-8 rounded-md bg-brand-orange/20"></div>
-                    <div class="w-20 h-8 rounded-md bg-white/10"></div>
-                    <div class="playhead"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="float-card left-5 top-8 glass-panel rounded-2xl px-4 py-3">
-                <div class="w-10 h-10 rounded-xl bg-brand-orange/15 flex items-center justify-center text-brand-orange">
-                  <i data-lucide="sparkles" class="w-5 h-5"></i>
-                </div>
-                <div>
-                  <p class="text-[11px] uppercase tracking-widest text-neutral-500 font-bold">AI Visuals</p>
-                  <p class="text-sm font-bold text-white">Concept → Edit</p>
-                </div>
-              </div>
-
-              <div class="float-card right-5 bottom-24 glass-panel rounded-2xl px-4 py-3">
-                <div class="w-10 h-10 rounded-xl bg-brand-orange/15 flex items-center justify-center text-brand-orange">
-                  <i data-lucide="clapperboard" class="w-5 h-5"></i>
-                </div>
-                <div>
-                  <p class="text-[11px] uppercase tracking-widest text-neutral-500 font-bold">Color Grade</p>
-                  <p class="text-sm font-bold text-white">Cinematic Look</p>
-                </div>
-              </div>
-            </div>
+          <p class="hero-desc reveal delay-3">I’m a Video Editor and AI Content Creator passionate about transforming ideas into engaging videos, creative visuals and powerful digital stories.</p>
+          <div class="hero-actions reveal delay-3">
+            <a class="btn btn-accent" href="#portfolio"><i class="fa-solid fa-play"></i> View My Work</a>
+            <a class="btn btn-ghost" href="https://wa.me/9779742251081" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Contact Me</a>
           </div>
+          <div class="badges reveal delay-4">
+            <span class="badge">Video Editor</span>
+            <span class="badge">AI Content Creator</span>
+            <span class="badge">Visual Storyteller</span>
+          </div>
+        </div>
+        <div class="portrait-wrap reveal delay-2">
+          <div class="portrait-ring"></div>
+          <div class="portrait">
+            <img
+              src="https://dvxrhkgloakisnvqoxgl.supabase.co/storage/v1/object/sign/images/inputs/1788701534299_8nb8vfh49.jpeg?token=eyJraWQiOiI0NWE1YWU1ZS0xNzg4LTRiMWYtYWM5OC1hMjgwNmQ2OTM4ZWMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW5wdXRzLzE3ODg3MDE1MzQyOTlfOG5iOHZmaDQ5LmpwZWciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg4NzAxNTU3LCJleHAiOjE4MjAyMzc1NTd9.wWn5vyXtMbeV3Sk5VCyBGb0lfYdJI4I4br4RM889dc4"
+              alt="Ganesh Dangi - Video Editor and AI Content Creator"
+              width="800" height="1000"
+            />
+            <div class="portrait-caption">Ganesh Dangi</div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        SCROLL
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="marquee">
+        <span>VIDEO EDITING <i class="fa-solid fa-circle"></i> AI CONTENT CREATION <i class="fa-solid fa-circle"></i> VISUAL STORYTELLING <i class="fa-solid fa-circle"></i> THUMBNAIL DESIGN <i class="fa-solid fa-circle"></i> CREATIVE DIRECTION <i class="fa-solid fa-circle"></i> SOCIAL MEDIA CONTENT <i class="fa-solid fa-circle"></i></span>
+        <span>VIDEO EDITING <i class="fa-solid fa-circle"></i> AI CONTENT CREATION <i class="fa-solid fa-circle"></i> VISUAL STORYTELLING <i class="fa-solid fa-circle"></i> THUMBNAIL DESIGN <i class="fa-solid fa-circle"></i> CREATIVE DIRECTION <i class="fa-solid fa-circle"></i> SOCIAL MEDIA CONTENT <i class="fa-solid fa-circle"></i></span>
+      </div>
+    </div>
+
+    <section id="about">
+      <div class="container about-grid">
+        <div class="about-copy reveal">
+          <p class="sec-label">About Me</p>
+          <h2 class="sec-title">Crafting stories that stay with people.</h2>
+          <p>Hi, I'm Ganesh Dangi, a Video Editor and AI Content Creator passionate about visual storytelling, creative editing and emerging AI technologies.</p>
+          <p>I combine video editing, storytelling and AI-powered creative tools to transform ideas into engaging digital content. My goal is simple — to turn ideas into visuals that capture attention and tell a story.</p>
+        </div>
+        <aside class="mindset reveal delay-2">
+          <div>
+            <p class="mindset-kicker">Creative Mindset</p>
+            <h3>Let’s Create.</h3>
+            <p>Every frame is a chance to say something clearer, bolder and more human.</p>
+          </div>
+          <p style="color:var(--accent);font-size:12px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;">Editing · Story · Intelligence</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="services" style="background:var(--bg-2);">
+      <div class="container">
+        <p class="sec-label reveal">What I Do</p>
+        <h2 class="sec-title reveal">Services built for visuals that matter.</h2>
+        <p class="sec-sub reveal">Creative services focused on engaging visuals and meaningful storytelling.</p>
+        <div class="services-grid">
+          <article class="service-card reveal">
+            <span class="svc-num">01</span>
+            <h3>Video Editing</h3>
+            <p>Professional video editing, pacing, transitions, sound design and visual effects.</p>
+          </article>
+          <article class="service-card reveal delay-1">
+            <span class="svc-num">02</span>
+            <h3>AI Content Creation</h3>
+            <p>Creating innovative visuals and digital content using modern AI tools.</p>
+          </article>
+          <article class="service-card reveal delay-2">
+            <span class="svc-num">03</span>
+            <h3>Thumbnail Design</h3>
+            <p>Clean, creative and attention-grabbing thumbnails for digital platforms.</p>
+          </article>
+          <article class="service-card reveal">
+            <span class="svc-num">04</span>
+            <h3>Creative Video Content</h3>
+            <p>Creating engaging video concepts and content for YouTube and social media.</p>
+          </article>
+          <article class="service-card reveal delay-1">
+            <span class="svc-num">05</span>
+            <h3>Storytelling</h3>
+            <p>Turning information, ideas and research into engaging visual stories.</p>
+          </article>
+          <article class="service-card reveal delay-2">
+            <span class="svc-num">06</span>
+            <h3>Social Media Content</h3>
+            <p>Creating modern visual content optimized for social media platforms.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="work" class="relative py-24 lg:py-32">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-12 gap-8 items-end mb-10">
-          <div class="lg:col-span-7 reveal">
-            <p class="eyebrow">Portfolio</p>
-            <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl lg:text-6xl tracking-[-0.05em] text-white">
-              Selected Projects Built for Impact
-            </h2>
-          </div>
-          <p class="lg:col-span-5 text-neutral-400 leading-7 reveal delay-100">
-            Explore cinematic edits across documentary storytelling, creator content, social-first reels, AI-generated concepts and motion design.
-          </p>
-        </div>
-
-        <div class="flex flex-wrap gap-3 mb-10 reveal delay-150" aria-label="Portfolio filters">
-          <button type="button" class="filter-btn active rounded-full border border-white/10 bg-brand-orange px-4 py-2 text-sm font-black text-white" data-filter="all" aria-pressed="true">All</button>
-          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="Documentary" aria-pressed="false">Documentary</button>
-          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="YouTube Videos" aria-pressed="false">YouTube Videos</button>
-          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="Social Media" aria-pressed="false">Social Media</button>
-          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="Cinematic Videos" aria-pressed="false">Cinematic Videos</button>
-          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="AI Generated Content" aria-pressed="false">AI Generated Content</button>
-          <button type="button" class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-neutral-300 hover:text-white" data-filter="Motion Graphics" aria-pressed="false">Motion Graphics</button>
-        </div>
-
-        <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          <article class="portfolio-card reveal" data-portfolio-card data-category="Documentary" data-project-index="0">
-            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
-              <div class="relative aspect-video overflow-hidden">
-                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1000&q=85" alt="Documentary video editing thumbnail" loading="lazy" decoding="async" />
-                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
-                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">Documentary</span>
-              </div>
-              <div class="p-5">
-                <h3 class="font-display font-bold text-2xl text-white tracking-tight">Desert Voices</h3>
-                <p class="mt-2 text-sm text-neutral-400 leading-6">A documentary-style edit focused on intimate interviews, atmospheric b-roll and emotional pacing.</p>
-                <div class="mt-5 flex items-center justify-between gap-4">
-                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">Cinematic Storytelling</span>
-                  <button type="button" data-project-index="0" class="view-project">
-                    View Project
-                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-                  </button>
-                </div>
-              </div>
+    <section id="portfolio">
+      <div class="container">
+        <p class="sec-label reveal">Selected Work</p>
+        <h2 class="sec-title reveal">A selection of my recent video projects.</h2>
+        <p class="sec-sub reveal">Watch the work — each project opens on YouTube.</p>
+        <div class="portfolio-grid">
+          <article class="project reveal">
+            <a class="project-thumb" href="https://youtu.be/l6Ux6H1hvt0" target="_blank" rel="noopener" aria-label="Watch Project 01 on YouTube">
+              <img src="https://img.youtube.com/vi/l6Ux6H1hvt0/maxresdefault.jpg" alt="Project 01 video thumbnail" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/l6Ux6H1hvt0/hqdefault.jpg';" />
+              <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
+            </a>
+            <div class="project-body">
+              <p class="proj-num">PROJECT 01</p>
+              <h3>Visual Story</h3>
+              <p>A selected video project focused on editing, pacing and visual storytelling.</p>
+              <a class="btn btn-accent" href="https://youtu.be/l6Ux6H1hvt0" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> Watch Video</a>
             </div>
           </article>
-
-          <article class="portfolio-card reveal delay-100" data-portfolio-card data-category="YouTube Videos" data-project-index="1">
-            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
-              <div class="relative aspect-video overflow-hidden">
-                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=85" alt="YouTube video editing thumbnail" loading="lazy" decoding="async" />
-                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
-                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">YouTube Videos</span>
-              </div>
-              <div class="p-5">
-                <h3 class="font-display font-bold text-2xl text-white tracking-tight">Creator Growth System</h3>
-                <p class="mt-2 text-sm text-neutral-400 leading-6">Retention-focused YouTube editing with hooks, pattern interrupts, captions and clean sound design.</p>
-                <div class="mt-5 flex items-center justify-between gap-4">
-                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">Retention Editing</span>
-                  <button type="button" data-project-index="1" class="view-project">
-                    View Project
-                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-                  </button>
-                </div>
-              </div>
+          <article class="project reveal">
+            <a class="project-thumb" href="https://youtu.be/_xgDNhRnUdU" target="_blank" rel="noopener" aria-label="Watch Project 02 on YouTube">
+              <img src="https://img.youtube.com/vi/_xgDNhRnUdU/maxresdefault.jpg" alt="Project 02 video thumbnail" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/_xgDNhRnUdU/hqdefault.jpg';" />
+              <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
+            </a>
+            <div class="project-body">
+              <p class="proj-num">PROJECT 02</p>
+              <h3>Creative Edit</h3>
+              <p>A recent video piece exploring rhythm, atmosphere and narrative flow.</p>
+              <a class="btn btn-accent" href="https://youtu.be/_xgDNhRnUdU" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> Watch Video</a>
             </div>
           </article>
-
-          <article class="portfolio-card reveal delay-200" data-portfolio-card data-category="Social Media" data-project-index="2">
-            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
-              <div class="relative aspect-video overflow-hidden">
-                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1000&q=85" alt="Social media reels editing thumbnail" loading="lazy" decoding="async" />
-                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
-                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">Social Media</span>
-              </div>
-              <div class="p-5">
-                <h3 class="font-display font-bold text-2xl text-white tracking-tight">30-Second Launch Reels</h3>
-                <p class="mt-2 text-sm text-neutral-400 leading-6">Fast-paced vertical edits designed for Reels, Shorts and TikTok with bold captions and strong hooks.</p>
-                <div class="mt-5 flex items-center justify-between gap-4">
-                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">Short-Form Ready</span>
-                  <button type="button" data-project-index="2" class="view-project">
-                    View Project
-                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="portfolio-card reveal" data-portfolio-card data-category="Cinematic Videos" data-project-index="3">
-            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
-              <div class="relative aspect-video overflow-hidden">
-                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1000&q=85" alt="Cinematic video production thumbnail" loading="lazy" decoding="async" />
-                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
-                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">Cinematic Videos</span>
-              </div>
-              <div class="p-5">
-                <h3 class="font-display font-bold text-2xl text-white tracking-tight">Midnight Run</h3>
-                <p class="mt-2 text-sm text-neutral-400 leading-6">A cinematic brand film with dramatic pacing, color grading, slow motion and immersive sound.</p>
-                <div class="mt-5 flex items-center justify-between gap-4">
-                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">Premium Grade</span>
-                  <button type="button" data-project-index="3" class="view-project">
-                    View Project
-                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="portfolio-card reveal delay-100" data-portfolio-card data-category="AI Generated Content" data-project-index="4">
-            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
-              <div class="relative aspect-video overflow-hidden">
-                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=85" alt="AI generated visual content thumbnail" loading="lazy" decoding="async" />
-                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
-                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">AI Generated Content</span>
-              </div>
-              <div class="p-5">
-                <h3 class="font-display font-bold text-2xl text-white tracking-tight">Neon Future Brand Film</h3>
-                <p class="mt-2 text-sm text-neutral-400 leading-6">AI-assisted concept development, generated b-roll, voiceover and polished motion finishing.</p>
-                <div class="mt-5 flex items-center justify-between gap-4">
-                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">AI Workflow</span>
-                  <button type="button" data-project-index="4" class="view-project">
-                    View Project
-                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="portfolio-card reveal delay-200" data-portfolio-card data-category="Motion Graphics" data-project-index="5">
-            <div class="group rounded-[1.75rem] overflow-hidden bg-brand-card border border-white/10 shadow-2xl shadow-black/30">
-              <div class="relative aspect-video overflow-hidden">
-                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1000&q=85" alt="Motion graphics editing thumbnail" loading="lazy" decoding="async" />
-                <div class="thumbnail-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-90"></div>
-                <span class="absolute top-4 left-4 rounded-full bg-brand-orange/90 text-white px-3 py-1 text-[11px] font-black uppercase tracking-widest shadow-lg shadow-brand-orange/20">Motion Graphics</span>
-              </div>
-              <div class="p-5">
-                <h3 class="font-display font-bold text-2xl text-white tracking-tight">Kinetic Brand Motion Kit</h3>
-                <p class="mt-2 text-sm text-neutral-400 leading-6">Animated typography, lower thirds, logo motion and transition systems for modern content.</p>
-                <div class="mt-5 flex items-center justify-between gap-4">
-                  <span class="text-xs font-black uppercase tracking-widest text-brand-orange">Motion System</span>
-                  <button type="button" data-project-index="5" class="view-project">
-                    View Project
-                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-                  </button>
-                </div>
-              </div>
+          <article class="project reveal">
+            <a class="project-thumb" href="https://youtu.be/LfszcsFkb4E" target="_blank" rel="noopener" aria-label="Watch Project 03 on YouTube">
+              <img src="https://img.youtube.com/vi/LfszcsFkb4E/maxresdefault.jpg" alt="Project 03 video thumbnail" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/LfszcsFkb4E/hqdefault.jpg';" />
+              <div class="play-overlay"><div class="play-btn"><i class="fa-solid fa-play"></i></div></div>
+            </a>
+            <div class="project-body">
+              <p class="proj-num">PROJECT 03</p>
+              <h3>Digital Narrative</h3>
+              <p>A selected YouTube project built around clear visuals and story-driven editing.</p>
+              <a class="btn btn-accent" href="https://youtu.be/LfszcsFkb4E" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> Watch Video</a>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="skills" class="relative py-24 lg:py-32">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-12 gap-8">
-          <div class="lg:col-span-5 glass-panel rounded-[2rem] p-6 sm:p-8 reveal">
-            <p class="eyebrow">Skills</p>
-            <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl tracking-[-0.05em] text-white">
-              Professional Editing Stack
-            </h2>
-            <p class="mt-5 text-neutral-400 leading-7">
-              A polished workflow built around storytelling, pacing, clean audio, cinematic color and platform-specific delivery.
-            </p>
+    <section class="ai-section" id="ai">
+      <canvas id="particles"></canvas>
+      <div class="container ai-inner">
+        <p class="sec-label reveal">AI × Creativity</p>
+        <h2 class="sec-title reveal">Where Creativity Meets Artificial Intelligence.</h2>
+        <p class="sec-sub reveal">I explore the possibilities of AI to create new visual concepts, creative assets and engaging digital experiences.</p>
+        <div class="ai-pills reveal">
+          <span class="ai-pill">Generative visuals</span>
+          <span class="ai-pill">Concept development</span>
+          <span class="ai-pill">Creative assets</span>
+          <span class="ai-pill">Digital storytelling</span>
+          <span class="ai-pill">Modern AI tools</span>
+        </div>
+      </div>
+    </section>
 
-            <div class="mt-8 grid grid-cols-2 gap-3">
-              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
-                <p class="text-2xl font-display font-bold text-white">4K/8K</p>
-                <p class="text-[11px] uppercase tracking-widest text-neutral-500 mt-1 font-bold">Media Handling</p>
-              </div>
-              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
-                <p class="text-2xl font-display font-bold text-white">AI</p>
-                <p class="text-[11px] uppercase tracking-widest text-neutral-500 mt-1 font-bold">Creative Workflow</p>
-              </div>
-            </div>
+    <section id="skills">
+      <div class="container">
+        <p class="sec-label reveal">My Skills</p>
+        <h2 class="sec-title reveal">Tools of the craft.</h2>
+        <p class="sec-sub reveal">A focused set of creative capabilities I bring to every project.</p>
+        <div class="skills-grid">
+          <article class="skill reveal"><div class="skill-ico"><i class="fa-solid fa-clapperboard"></i></div><div><h3>Video Editing</h3><p>Pacing, structure, transitions and finishing.</p></div></article>
+          <article class="skill reveal delay-1"><div class="skill-ico"><i class="fa-solid fa-microchip"></i></div><div><h3>AI Content Creation</h3><p>AI-assisted visuals, concepts and production.</p></div></article>
+          <article class="skill reveal delay-2"><div class="skill-ico"><i class="fa-solid fa-book-open"></i></div><div><h3>Visual Storytelling</h3><p>Turning ideas into sequences that hold attention.</p></div></article>
+          <article class="skill reveal"><div class="skill-ico"><i class="fa-solid fa-image"></i></div><div><h3>Thumbnail Design</h3><p>Clear, click-worthy frames for digital platforms.</p></div></article>
+          <article class="skill reveal delay-1"><div class="skill-ico"><i class="fa-solid fa-compass"></i></div><div><h3>Creative Direction</h3><p>Tone, look and narrative decisions that stay consistent.</p></div></article>
+          <article class="skill reveal delay-2"><div class="skill-ico"><i class="fa-solid fa-share-nodes"></i></div><div><h3>Social Media Content</h3><p>Short-form visuals shaped for modern feeds.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="youtube" style="background:var(--bg-2);">
+      <div class="container">
+        <div class="yt-box reveal">
+          <div>
+            <p class="sec-label">Watch My Work</p>
+            <h2 class="sec-title">Latest videos, on YouTube.</h2>
+            <p class="sec-sub">Watch my latest videos and creative projects on YouTube.</p>
+            <a class="btn btn-accent" style="margin-top:28px;" href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener">
+              <i class="fa-brands fa-youtube"></i> Visit My YouTube Channel
+            </a>
           </div>
-
-          <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal">
-              <div class="flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-                    <i data-lucide="film" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-display font-bold text-lg text-white">Adobe Premiere Pro</h3>
-                    <p class="text-sm text-neutral-500">Timeline, multicam, exports</p>
-                  </div>
-                </div>
-                <span class="text-sm font-black text-white">95%</span>
-              </div>
-              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 95%;"></div>
-              </div>
-            </div>
-
-            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal delay-100">
-              <div class="flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-                    <i data-lucide="palette" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-display font-bold text-lg text-white">DaVinci Resolve</h3>
-                    <p class="text-sm text-neutral-500">Color correction & grade</p>
-                  </div>
-                </div>
-                <span class="text-sm font-black text-white">88%</span>
-              </div>
-              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 88%;"></div>
-              </div>
-            </div>
-
-            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal delay-200">
-              <div class="flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-                    <i data-lucide="smartphone" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-display font-bold text-lg text-white">CapCut</h3>
-                    <p class="text-sm text-neutral-500">Short-form social edits</p>
-                  </div>
-                </div>
-                <span class="text-sm font-black text-white">92%</span>
-              </div>
-              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 92%;"></div>
-              </div>
-            </div>
-
-            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal">
-              <div class="flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-                    <i data-lucide="bot" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-display font-bold text-lg text-white">AI Scriptwriting</h3>
-                    <p class="text-sm text-neutral-500">Hooks, outlines, VO</p>
-                  </div>
-                </div>
-                <span class="text-sm font-black text-white">90%</span>
-              </div>
-              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 90%;"></div>
-              </div>
-            </div>
-
-            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal delay-100">
-              <div class="flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-                    <i data-lucide="image" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-display font-bold text-lg text-white">Thumbnail Design</h3>
-                    <p class="text-sm text-neutral-500">CTR-focused visuals</p>
-                  </div>
-                </div>
-                <span class="text-sm font-black text-white">86%</span>
-              </div>
-              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 86%;"></div>
-              </div>
-            </div>
-
-            <div class="skill-card rounded-[1.35rem] p-5 border border-white/10 bg-white/[0.035] reveal delay-200">
-              <div class="flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-                    <i data-lucide="wand-sparkles" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-display font-bold text-lg text-white">Motion Graphics</h3>
-                    <p class="text-sm text-neutral-500">Titles, transitions, FX</p>
-                  </div>
-                </div>
-                <span class="text-sm font-black text-white">78%</span>
-              </div>
-              <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-brand-orange to-amber-400" style="width: 78%;"></div>
-              </div>
-            </div>
+          <div style="display:flex;justify-content:center;">
+            <a href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener" aria-label="YouTube channel">
+              <div class="yt-icon-lg"><i class="fa-brands fa-youtube"></i></div>
+            </a>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="about" class="relative py-24 lg:py-32">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-12 gap-10 items-center">
-          <div class="lg:col-span-5 reveal">
-            <div class="relative rounded-[2rem] overflow-hidden glass-panel p-3">
-              <div class="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
-                <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=85" alt="Portrait of Ganesh Dangi" loading="lazy" decoding="async" />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"></div>
-              </div>
-              <div class="absolute left-6 right-6 bottom-6 glass-panel rounded-2xl p-4">
-                <p class="text-[11px] uppercase tracking-widest text-brand-orange font-black">Ganesh Dangi</p>
-                <p class="text-white font-display font-bold text-xl mt-1">Professional Video Editor</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-7 reveal delay-150">
-            <p class="eyebrow">About Me</p>
-            <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl lg:text-6xl tracking-[-0.05em] text-white">
-              Editorial Precision Meets Modern AI Creativity
-            </h2>
-            <p class="mt-6 text-neutral-400 leading-8 text-lg">
-              Hi, I'm Ganesh Dangi, a professional video editor and AI content creator helping creators, brands and documentary storytellers turn raw footage into polished visual narratives.
-            </p>
-            <p class="mt-4 text-neutral-400 leading-8 text-lg">
-              My workflow combines pacing, storytelling, sound design, color correction and AI-assisted ideation to produce content that feels premium, emotionally engaging and platform-ready.
-            </p>
-
-            <ul class="grid sm:grid-cols-2 gap-3 mt-8">
-              <li class="glass-panel rounded-2xl p-4 flex gap-3 items-start">
-                <i data-lucide="check" class="w-5 h-5 text-brand-orange mt-0.5 flex-shrink-0"></i>
-                <div>
-                  <h3 class="text-white font-bold">Story-First Editing</h3>
-                  <p class="text-sm text-neutral-500 mt-1">Every cut supports emotion, clarity and viewer retention.</p>
-                </div>
-              </li>
-              <li class="glass-panel rounded-2xl p-4 flex gap-3 items-start">
-                <i data-lucide="check" class="w-5 h-5 text-brand-orange mt-0.5 flex-shrink-0"></i>
-                <div>
-                  <h3 class="text-white font-bold">Cinematic Polish</h3>
-                  <p class="text-sm text-neutral-500 mt-1">Color, sound, transitions and pacing refined for a premium finish.</p>
-                </div>
-              </li>
-              <li class="glass-panel rounded-2xl p-4 flex gap-3 items-start">
-                <i data-lucide="check" class="w-5 h-5 text-brand-orange mt-0.5 flex-shrink-0"></i>
-                <div>
-                  <h3 class="text-white font-bold">AI-Powered Workflow</h3>
-                  <p class="text-sm text-neutral-500 mt-1">Ideation, scripting, concepts and visual direction accelerated with AI.</p>
-                </div>
-              </li>
-              <li class="glass-panel rounded-2xl p-4 flex gap-3 items-start">
-                <i data-lucide="check" class="w-5 h-5 text-brand-orange mt-0.5 flex-shrink-0"></i>
-                <div>
-                  <h3 class="text-white font-bold">Platform Delivery</h3>
-                  <p class="text-sm text-neutral-500 mt-1">Exports optimized for YouTube, Instagram, reels, ads and web.</p>
-                </div>
-              </li>
-            </ul>
-          </div>
+    <section id="connect">
+      <div class="container">
+        <p class="sec-label reveal">Connect With Me</p>
+        <h2 class="sec-title reveal">Find me online.</h2>
+        <div class="social-grid">
+          <a class="social-card reveal" href="https://www.facebook.com/share/1Bskx2YCoJ/" target="_blank" rel="noopener">
+            <i class="fa-brands fa-facebook-f"></i>
+            <div><strong>Facebook</strong><span>Profile</span></div>
+          </a>
+          <a class="social-card reveal delay-1" href="https://www.instagram.com/ganesh_dang_official" target="_blank" rel="noopener">
+            <i class="fa-brands fa-instagram"></i>
+            <div><strong>Instagram</strong><span>@ganesh_dang_official</span></div>
+          </a>
+          <a class="social-card reveal delay-2" href="https://www.tiktok.com/@ganesh_dangi03" target="_blank" rel="noopener">
+            <i class="fa-brands fa-tiktok"></i>
+            <div><strong>TikTok</strong><span>@ganesh_dangi03</span></div>
+          </a>
+          <a class="social-card reveal" href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener">
+            <i class="fa-brands fa-youtube"></i>
+            <div><strong>YouTube</strong><span>@ganesh_dc</span></div>
+          </a>
+          <a class="social-card reveal delay-1" href="https://whatsapp.com/channel/0029VbAr2w44dTnCuum0sy0Y" target="_blank" rel="noopener">
+            <i class="fa-brands fa-whatsapp"></i>
+            <div><strong>WhatsApp Community</strong><span>Channel</span></div>
+          </a>
+          <a class="social-card reveal delay-2" href="https://www.messenger.com/channel/ganeshdangi02" target="_blank" rel="noopener">
+            <i class="fa-brands fa-facebook-messenger"></i>
+            <div><strong>Messenger Broadcast</strong><span>Channel</span></div>
+          </a>
         </div>
       </div>
     </section>
 
-    <section id="experience" class="relative py-24 lg:py-32">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mx-auto text-center mb-12 reveal">
-          <p class="eyebrow">Experience</p>
-          <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl lg:text-6xl tracking-[-0.05em] text-white">
-            Professional Timeline
-          </h2>
-          <p class="mt-5 text-neutral-400 leading-7">
-            A clean progression through documentary, creator, brand and AI-assisted content production.
-          </p>
-        </div>
-
-        <div class="relative max-w-4xl mx-auto timeline reveal delay-100">
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="glass-panel rounded-[1.5rem] p-6">
-              <p class="text-brand-orange text-xs font-black uppercase tracking-widest">2024 — Present</p>
-              <h3 class="mt-3 font-display font-bold text-2xl text-white">Freelance Video Editor & AI Content Creator</h3>
-              <p class="mt-3 text-neutral-400 leading-7">
-                Delivering cinematic edits, AI-assisted concepts, YouTube packages and short-form content for creators, startups and brands.
-              </p>
+    <section id="contact" style="background:var(--bg-2);">
+      <div class="container">
+        <p class="sec-label reveal">Let’s Work Together</p>
+        <h2 class="sec-title reveal">Have an idea? Let’s turn it into something powerful.</h2>
+        <p class="sec-sub reveal">For video editing, AI content creation, creative projects or collaborations, feel free to get in touch.</p>
+        <div class="contact-grid">
+          <div class="reveal">
+            <h3>Ganesh Dangi</h3>
+            <p class="contact-meta">Video Editor | AI Content Creator</p>
+            <div class="contact-row"><i class="fa-brands fa-whatsapp"></i><a href="https://wa.me/9779742251081" target="_blank" rel="noopener">+977 9742251081</a></div>
+            <div class="contact-row"><i class="fa-regular fa-envelope"></i><a href="mailto:dangiganesh442@gmail.com">dangiganesh442@gmail.com</a></div>
+            <div class="contact-actions">
+              <a class="btn btn-accent" href="https://wa.me/9779742251081" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+              <a class="btn btn-ghost" href="mailto:dangiganesh442@gmail.com"><i class="fa-regular fa-envelope"></i> Email Me</a>
             </div>
           </div>
-
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="glass-panel rounded-[1.5rem] p-6">
-              <p class="text-brand-orange text-xs font-black uppercase tracking-widest">2022 — 2024</p>
-              <h3 class="mt-3 font-display font-bold text-2xl text-white">YouTube & Creator Content Specialist</h3>
-              <p class="mt-3 text-neutral-400 leading-7">
-                Built retention-focused editing systems for long-form videos, Shorts, Reels, thumbnails and creator branding.
-              </p>
+          <form class="form reveal delay-2" id="contactForm" novalidate>
+            <div class="form-note" id="formNote">This page doesn’t send messages to a server. Use WhatsApp or email — or the button below will open your mail app with this note drafted.</div>
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required placeholder="Your name" />
             </div>
-          </div>
-
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="glass-panel rounded-[1.5rem] p-6">
-              <p class="text-brand-orange text-xs font-black uppercase tracking-widest">2020 — 2022</p>
-              <h3 class="mt-3 font-display font-bold text-2xl text-white">Documentary & Brand Storytelling Editor</h3>
-              <p class="mt-3 text-neutral-400 leading-7">
-                Worked on interview-led edits, brand films, travel content, social campaigns and polished post-production workflows.
-              </p>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@email.com" />
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="services" class="relative py-24 lg:py-32">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mb-12 reveal">
-          <p class="eyebrow">Services</p>
-          <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl lg:text-6xl tracking-[-0.05em] text-white">
-            Premium Editing Services
-          </h2>
-          <p class="mt-5 text-neutral-400 leading-7">
-            From raw footage to finished cinematic content, every service is designed for clarity, retention and visual impact.
-          </p>
-        </div>
-
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal">
-            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-              <i data-lucide="film" class="w-6 h-6"></i>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project"></textarea>
             </div>
-            <h3 class="mt-5 font-display font-bold text-xl text-white">Video Editing</h3>
-            <p class="mt-3 text-sm text-neutral-400 leading-6">Clean cuts, narrative pacing, sound design and color polish for premium final videos.</p>
-          </article>
-
-          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal delay-100">
-            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-              <i data-lucide="monitor-play" class="w-6 h-6"></i>
-            </div>
-            <h3 class="mt-5 font-display font-bold text-xl text-white">YouTube Editing</h3>
-            <p class="mt-3 text-sm text-neutral-400 leading-6">Retention-focused edits with hooks, captions, B-roll, sound effects and strong pacing.</p>
-          </article>
-
-          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal delay-200">
-            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-              <i data-lucide="clapperboard" class="w-6 h-6"></i>
-            </div>
-            <h3 class="mt-5 font-display font-bold text-xl text-white">Documentary Editing</h3>
-            <p class="mt-3 text-sm text-neutral-400 leading-6">Interview-led storytelling, atmosphere, structure and emotional narrative flow.</p>
-          </article>
-
-          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal">
-            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-              <i data-lucide="smartphone" class="w-6 h-6"></i>
-            </div>
-            <h3 class="mt-5 font-display font-bold text-xl text-white">Short-form/Reels Editing</h3>
-            <p class="mt-3 text-sm text-neutral-400 leading-6">Vertical edits for Instagram, YouTube Shorts and TikTok with captions and hooks.</p>
-          </article>
-
-          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal delay-100">
-            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-              <i data-lucide="layers" class="w-6 h-6"></i>
-            </div>
-            <h3 class="mt-5 font-display font-bold text-xl text-white">Motion Graphics</h3>
-            <p class="mt-3 text-sm text-neutral-400 leading-6">Animated titles, lower thirds, transitions, logo motion and visual effects.</p>
-          </article>
-
-          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal delay-200">
-            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-              <i data-lucide="bot" class="w-6 h-6"></i>
-            </div>
-            <h3 class="mt-5 font-display font-bold text-xl text-white">AI Video Production</h3>
-            <p class="mt-3 text-sm text-neutral-400 leading-6">AI scripts, visual concepts, generated assets, voiceover direction and final polish.</p>
-          </article>
-
-          <article class="service-card glass-panel rounded-[1.5rem] p-6 reveal">
-            <div class="w-12 h-12 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
-              <i data-lucide="image" class="w-6 h-6"></i>
-            </div>
-            <h3 class="mt-5 font-display font-bold text-xl text-white">Thumbnail Design</h3>
-            <p class="mt-3 text-sm text-neutral-400 leading-6">High-CTR thumbnails with bold composition, contrast, typography and branding.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="testimonials" class="relative py-24 lg:py-32">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div class="max-w-3xl mb-12 reveal">
-          <p class="eyebrow">Testimonials</p>
-          <h2 class="mt-4 font-display font-black text-4xl sm:text-5xl lg:text-6xl tracking-[-0.05em] text-white">
-            Trusted by Creators & Brands
-          </h2>
-          <p class="mt-5 text-neutral-400 leading-7">
-            Modern clients value fast communication, cinematic polish and edits that perform across platforms.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
-          <article class="testimonial-card glass-panel rounded-[1.5rem] p-6 reveal">
-            <div class="flex items-center gap-1 text-amber-400" aria-label="5 out of 5 rating">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              <span class="ml-2 text-sm text-neutral-300 font-bold">5.0</span>
-            </div>
-            <p class="mt-5 text-neutral-300 leading-7">
-              “Ganesh transformed our raw travel footage into a cinematic story that felt premium, emotional and perfectly paced.”
-            </p>
-            <div class="mt-6 flex items-center gap-4">
-              <img class="w-12 h-12 rounded-full object-cover border border-white/10" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=85" alt="Client profile image" loading="lazy" decoding="async" />
-              <div>
-                <h3 class="text-white font-bold">Rohan Mehta</h3>
-                <p class="text-sm text-neutral-500">Travel Creator</p>
-              </div>
-            </div>
-          </article>
-
-          <article class="testimonial-card glass-panel rounded-[1.5rem] p-6 reveal delay-100">
-            <div class="flex items-center gap-1 text-amber-400" aria-label="5 out of 5 rating">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              <span class="ml-2 text-sm text-neutral-300 font-bold">5.0</span>
-            </div>
-            <p class="mt-5 text-neutral-300 leading-7">
-              “The YouTube edits were sharp, engaging and retention-focused. Ganesh understood pacing, hooks and brand tone immediately.”
-            </p>
-            <div class="mt-6 flex items-center gap-4">
-              <img class="w-12 h-12 rounded-full object-cover border border-white/10" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=85" alt="Client profile image" loading="lazy" decoding="async" />
-              <div>
-                <h3 class="text-white font-bold">Neha Kapoor</h3>
-                <p class="text-sm text-neutral-500">Brand Manager</p>
-              </div>
-            </div>
-          </article>
-
-          <article class="testimonial-card glass-panel rounded-[1.5rem] p-6 reveal delay-200">
-            <div class="flex items-center gap-1 text-amber-400" aria-label="5 out of 5 rating">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              <span class="ml-2 text-sm text-neutral-300 font-bold">5.0</span>
-            </div>
-            <p class="mt-5 text-neutral-300 leading-7">
-              “Our AI concept video looked incredibly polished. The scripting, visuals and final edit felt like a professional studio production.”
-            </p>
-            <div class="mt-6 flex items-center gap-4">
-              <img class="w-12 h-12 rounded-full object-cover border border-white/10" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=85" alt="Client profile image" loading="lazy" decoding="async" />
-              <div>
-                <h3 class="text-white font-bold">Aarav Shah</h3>
-                <p class="text-sm text-neutral-500">Startup Founder</p>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="relative py-24 lg:py-32">
-      <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div class="contact-shell glass-panel rounded-[2rem] p-6 sm:p-8 lg:p-10">
-          <div class="grid lg:grid-cols-5 gap-10">
-            <div class="lg:col-span-2 space-y-6">
-              <p class="eyebrow">Contact</p>
-              <h2 class="font-display font-black text-4xl sm:text-5xl tracking-[-0.04em] text-white">
-                Let’s Create Something Amazing
-              </h2>
-              <p class="text-neutral-400 leading-7">
-                Share your footage, concept or content goal — I’ll help shape it into a polished, cinematic final piece.
-              </p>
-
-              <div class="space-y-4">
-                <div class="flex items-start gap-3 rounded-2xl bg-white/5 border border-white/10 p-4">
-                  <div class="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="mail" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <p class="text-[11px] uppercase tracking-widest text-neutral-500 font-black">Email</p>
-                    <a id="contact-email" href="mailto:ganeshdangi.video@gmail.com" data-mailto class="text-white font-semibold hover:text-brand-orange transition-colors">ganeshdangi.video@gmail.com</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="flex gap-3">
-                <a class="social-btn" href="https://www.instagram.com/ganeshdangi.video" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                  <i data-lucide="instagram" class="w-5 h-5"></i>
-                </a>
-                <a class="social-btn" href="https://www.youtube.com/@ganeshdangi.video" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                  <i data-lucide="youtube" class="w-5 h-5"></i>
-                </a>
-                <a class="social-btn" href="https://www.linkedin.com/in/ganeshdangi-video" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                  <i data-lucide="linkedin" class="w-5 h-5"></i>
-                </a>
-                <a class="social-btn" href="https://www.behance.net/ganeshdangi" target="_blank" rel="noopener noreferrer" aria-label="Behance">
-                  <i data-lucide="share-2" class="w-5 h-5"></i>
-                </a>
-              </div>
-
-              <div class="flex flex-col sm:flex-row gap-3 pt-2">
-                <button id="copy-email" type="button" class="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-black uppercase tracking-wider text-white hover:bg-brand-orange hover:border-brand-orange transition-all">
-                  Copy Email
-                  <i data-lucide="copy" class="w-4 h-4"></i>
-                </button>
-                <a href="mailto:ganeshdangi.video@gmail.com" data-mailto class="btn-primary">
-                  Start a Project
-                  <i data-lucide="send" class="w-4 h-4"></i>
-                </a>
-              </div>
-            </div>
-
-            <div class="lg:col-span-3">
-              <form id="contact-form" class="glass-panel rounded-[1.5rem] p-5 sm:p-6 space-y-4">
-                <div class="grid sm:grid-cols-2 gap-4">
-                  <label class="block">
-                    <span class="block text-sm font-bold text-white">Name</span>
-                    <input id="name" name="name" type="text" autocomplete="name" required placeholder="Your name" class="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-neutral-600 outline-none transition-all focus:border-brand-orange/60 focus:ring-4 focus:ring-brand-orange/10" />
-                  </label>
-
-                  <label class="block">
-                    <span class="block text-sm font-bold text-white">Email</span>
-                    <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" class="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-neutral-600 outline-none transition-all focus:border-brand-orange/60 focus:ring-4 focus:ring-brand-orange/10" />
-                  </label>
-                </div>
-
-                <label class="block">
-                  <span class="block text-sm font-bold text-white">Project Type</span>
-                  <select id="project-type" name="project-type" class="mt-2 w-full rounded-2xl border border-white/10 bg-brand-surface px-4 py-3 text-white outline-none transition-all focus:border-brand-orange/60 focus:ring-4 focus:ring-brand-orange/10">
-                    <option value="">Select a service</option>
-                    <option value="Video Editing">Video Editing</option>
-                    <option value="YouTube Editing">YouTube Editing</option>
-                    <option value="Documentary Editing">Documentary Editing</option>
-                    <option value="Short-form/Reels Editing">Short-form/Reels Editing</option>
-                    <option value="Motion Graphics">Motion Graphics</option>
-                    <option value="AI Video Production">AI Video Production</option>
-                    <option value="Thumbnail Design">Thumbnail Design</option>
-                  </select>
-                </label>
-
-                <label class="block">
-                  <span class="block text-sm font-bold text-white">Message</span>
-                  <textarea id="message" name="message" required rows="5" placeholder="Tell me about your footage, timeline, goals and preferred style..." class="mt-2 w-full resize-y rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-neutral-600 outline-none transition-all focus:border-brand-orange/60 focus:ring-4 focus:ring-brand-orange/10"></textarea>
-                </label>
-
-                <button type="submit" class="btn-primary w-full">
-                  Send Project Brief
-                  <i data-lucide="send" class="w-4 h-4"></i>
-                </button>
-              </form>
-            </div>
-          </div>
+            <button class="btn btn-accent" type="submit">Send Message</button>
+          </form>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="relative z-10 border-t border-white/10 bg-black/40">
-    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-sm text-neutral-500">
-        © <span id="year"></span> Ganesh Dangi. Professional Video Editor & AI Content Creator.
-      </p>
-      <a href="#home" class="inline-flex items-center gap-2 text-sm font-bold text-neutral-400 hover:text-brand-orange transition-colors">
-        Back to top
-        <i data-lucide="arrow-up" class="w-4 h-4"></i>
-      </a>
+  <footer>
+    <div class="container">
+      <div class="foot-top">
+        <div>
+          <div class="foot-brand">GANESH DANGI<small>Video Editor | AI Content Creator</small></div>
+          <p class="foot-tag" style="margin-top:10px;">Creating. Editing. Innovating.</p>
+        </div>
+        <div class="foot-social">
+          <a href="https://www.facebook.com/share/1Bskx2YCoJ/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/ganesh_dang_official" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@ganesh_dangi03" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://youtube.com/@ganesh_dc" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="https://wa.me/9779742251081" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <p class="copy">© 2026 Ganesh Dangi. All Rights Reserved.</p>
     </div>
   </footer>
 
-  <div id="project-modal" class="fixed inset-0 z-[80] hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" data-modal-close></div>
-    <div class="relative min-h-full flex items-center justify-center p-4 sm:p-6">
-      <div class="glass-panel max-w-5xl w-full max-h-[90vh] overflow-y-auto rounded-[2rem] p-4 sm:p-6">
-        <button id="modal-close" type="button" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-brand-orange text-white transition-colors" aria-label="Close project details">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-
-        <div class="grid lg:grid-cols-2 gap-6">
-          <div class="rounded-[1.5rem] overflow-hidden bg-black border border-white/10 aspect-video lg:aspect-auto">
-            <img id="modal-image" class="w-full h-full object-cover" src="" alt="Selected project preview" />
-          </div>
-
-          <div class="flex flex-col justify-center p-2 sm:p-4">
-            <p id="modal-category" class="text-xs font-black uppercase tracking-widest text-brand-orange"></p>
-            <h3 id="modal-title" class="mt-3 font-display font-black text-3xl sm:text-4xl text-white tracking-tight"></h3>
-            <p id="modal-description" class="mt-4 text-neutral-400 leading-7"></p>
-            <div id="modal-details"></div>
-            <a id="modal-contact" href="#contact" class="btn-primary mt-6">
-              Discuss Similar Project
-              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="toast" class="fixed left-1/2 bottom-6 z-[90] -translate-x-1/2 translate-y-4 opacity-0 pointer-events-none transition-all duration-300 glass-panel rounded-full px-5 py-3 text-sm font-bold text-white shadow-2xl" role="status" aria-live="polite"></div>
+  <a class="wa-float" href="https://wa.me/9779742251081" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.lucide) {
-        lucide.createIcons();
-      }
-
-      const EMAIL = 'ganeshdangi.video@gmail.com';
-
-      document.querySelectorAll('[data-mailto]').forEach((link) => {
-        link.href = `mailto:${EMAIL}`;
-      });
-
-      const header = document.querySelector('.site-header');
-      const updateHeader = () => {
-        if (header) header.classList.toggle('scrolled', window.scrollY > 12);
-      };
-      updateHeader();
-      window.addEventListener('scroll', updateHeader, { passive: true });
-
-      const menuBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-
-      menuBtn?.addEventListener('click', () => {
-        const willOpen = mobileMenu.classList.toggle('hidden') === false;
-        menuBtn.setAttribute('aria-expanded', String(willOpen));
-      });
-
-      mobileMenu?.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.add('hidden');
-          menuBtn?.setAttribute('aria-expanded', 'false');
-        });
-      });
-
-      const revealItems = document.querySelectorAll('.reveal');
-      if ('IntersectionObserver' in window) {
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        }, {
-          threshold: 0.12,
-          rootMargin: '0px 0px -60px 0px'
-        });
-
-        revealItems.forEach((item) => revealObserver.observe(item));
-      } else {
-        revealItems.forEach((item) => item.classList.add('is-visible'));
-      }
-
-      const navLinks = Array.from(document.querySelectorAll('[data-nav-link]'));
-      const sections = navLinks
-        .map((link) => ({
-          link,
-          section: document.querySelector(link.getAttribute('href'))
-        }))
-        .filter((item) => item.section);
-
-      if ('IntersectionObserver' in window) {
-        const navObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.id;
-              navLinks.forEach((link) => {
-                link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-              });
-            }
-          });
-        }, {
-          rootMargin: '-45% 0px -45% 0px',
-          threshold: 0
-        });
-
-        sections.forEach((item) => navObserver.observe(item.section));
-      }
-
-      const filterButtons = document.querySelectorAll('[data-filter]');
-      const portfolioCards = document.querySelectorAll('[data-portfolio-card]');
-
-      filterButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          const filter = button.dataset.filter;
-
-          filterButtons.forEach((btn) => {
-            const isActive = btn === button;
-            btn.classList.toggle('active', isActive);
-            btn.setAttribute('aria-pressed', String(isActive));
-          });
-
-          portfolioCards.forEach((card) => {
-            const isMatch = filter === 'all' || card.dataset.category === filter;
-            card.hidden = !isMatch;
-
-            if (isMatch) {
-              card.classList.remove('is-visible');
-              requestAnimationFrame(() => card.classList.add('is-visible'));
-            } else {
-              card.classList.remove('is-visible');
-            }
-          });
-        });
-      });
-
-      const projects = [
-        {
-          title: 'Desert Voices',
-          category: 'Documentary',
-          image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=85',
-          description: 'A documentary-style edit focused on intimate interviews, atmospheric b-roll, emotional pacing and immersive sound design.',
-          details: ['Interview-led narrative structure', 'Atmospheric b-roll sequencing', 'Color correction and clean audio mix']
-        },
-        {
-          title: 'Creator Growth System',
-          category: 'YouTube Videos',
-          image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=85',
-          description: 'A retention-focused YouTube package built with strong hooks, pattern interrupts, captions, B-roll and dynamic pacing.',
-          details: ['Hook-first opening sequence', 'Retention-based pacing', 'Captions, SFX and clean export delivery']
-        },
-        {
-          title: '30-Second Launch Reels',
-          category: 'Social Media',
-          image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1200&q=85',
-          description: 'A short-form campaign designed for Reels, Shorts and TikTok with bold captions, fast cuts and platform-first formatting.',
-          details: ['Vertical 9:16 formatting', 'Trend-aware pacing and hooks', 'Caption systems for mobile viewing']
-        },
-        {
-          title: 'Midnight Run',
-          category: 'Cinematic Videos',
-          image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=85',
-          description: 'A cinematic brand film with dramatic pacing, slow motion, sound design, color grading and premium transitions.',
-          details: ['Cinematic color grade', 'Music-synced pacing', 'Slow motion and polished transitions']
-        },
-        {
-          title: 'Neon Future Brand Film',
-          category: 'AI Generated Content',
-          image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=85',
-          description: 'An AI-assisted visual concept combining generated assets, voiceover direction, motion polish and futuristic storytelling.',
-          details: ['AI concept and script development', 'Generated visual asset direction', 'Voiceover, motion and final polish']
-        },
-        {
-          title: 'Kinetic Brand Motion Kit',
-          category: 'Motion Graphics',
-          image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=85',
-          description: 'A motion system with animated typography, lower thirds, logo animation and transitions for modern content packages.',
-          details: ['Kinetic typography system', 'Animated lower thirds and titles', 'Reusable transition and logo motion kit']
-        }
-      ];
-
-      const modal = document.getElementById('project-modal');
-      const modalImage = document.getElementById('modal-image');
-      const modalCategory = document.getElementById('modal-category');
-      const modalTitle = document.getElementById('modal-title');
-      const modalDescription = document.getElementById('modal-description');
-      const modalDetails = document.getElementById('modal-details');
-      const modalCloseButton = document.getElementById('modal-close');
-      const modalContact = document.getElementById('modal-contact');
-
-      const openModal = (project) => {
-        if (!project || !modal) return;
-
-        modalImage.src = project.image;
-        modalImage.alt = `${project.title} project preview`;
-        modalCategory.textContent = project.category;
-        modalTitle.textContent = project.title;
-        modalDescription.textContent = project.description;
-        modalDetails.innerHTML = `<ul>${project.details.map((detail) => `<li>${detail}</li>`).join('')}</ul>`;
-
-        modal.classList.remove('hidden');
-        document.body.classList.add('modal-open');
-        setTimeout(() => modalCloseButton?.focus(), 50);
-      };
-
-      const closeModal = () => {
-        if (!modal) return;
-        modal.classList.add('hidden');
-        document.body.classList.remove('modal-open');
-      };
-
-      document.querySelectorAll('[data-project-index]').forEach((button) => {
-        button.addEventListener('click', () => {
-          const project = projects[Number(button.dataset.projectIndex)];
-          openModal(project);
-        });
-      });
-
-      modalCloseButton?.addEventListener('click', closeModal);
-
-      modal?.querySelectorAll('[data-modal-close]').forEach((element) => {
-        element.addEventListener('click', closeModal);
-      });
-
-      modalContact?.addEventListener('click', closeModal);
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
-          closeModal();
-        }
-      });
-
-      const toast = document.getElementById('toast');
-      let toastTimer;
-
-      const showToast = (message) => {
-        if (!toast) return;
-
-        toast.textContent = message;
-        toast.classList.remove('opacity-0', 'translate-y-4');
-        toast.classList.add('opacity-100', 'translate-y-0');
-
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => {
-          toast.classList.remove('opacity-100', 'translate-y-0');
-          toast.classList.add('opacity-0', 'translate-y-4');
-        }, 3000);
-      };
-
-      document.getElementById('copy-email')?.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(EMAIL);
-          showToast('Email copied to clipboard');
-        } catch {
-          showToast(`Email: ${EMAIL}`);
-        }
-      });
-
-      const form = document.getElementById('contact-form');
-
-      form?.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          showToast('Please complete the required fields.');
-          return;
-        }
-
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-        const projectType = document.getElementById('project-type').value || 'General Project Inquiry';
-
-        const subject = encodeURIComponent(`Project Inquiry: ${projectType}`);
-        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nProject Type: ${projectType}\n\n${message}`);
-
-        window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-        showToast('Opening your email client...');
-        form.reset();
-      });
-
-      const year = document.getElementById('year');
-      if (year) year.textContent = new Date().getFullYear();
+    const loader = document.getElementById("loader");
+    window.addEventListener("load", () => {
+      setTimeout(() => loader.classList.add("hide"), 900);
+      document.querySelectorAll(".hero-copy .reveal, .portrait-wrap").forEach(el => el.classList.add("in"));
     });
+
+    const nav = document.getElementById("nav");
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    hamburger.addEventListener("click", () => {
+      const open = mobileMenu.classList.toggle("open");
+      hamburger.setAttribute("aria-expanded", open);
+      hamburger.innerHTML = open ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+      document.body.style.overflow = open ? "hidden" : "";
+    });
+    mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+      mobileMenu.classList.remove("open");
+      hamburger.setAttribute("aria-expanded", "false");
+      hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      document.body.style.overflow = "";
+    }));
+
+    const sections = [...document.querySelectorAll("main section[id]")];
+    const navAnchors = [...document.querySelectorAll(".nav-links a")];
+
+    const onScroll = () => {
+      nav.classList.toggle("scrolled", window.scrollY > 12);
+      const y = window.scrollY + 120;
+      let current = "home";
+      sections.forEach(sec => {
+        if (y >= sec.offsetTop) current = sec.id;
+      });
+      const map = { youtube: "portfolio", connect: "contact", ai: "ai" };
+      navAnchors.forEach(a => {
+        const href = a.getAttribute("href").slice(1);
+        a.classList.toggle("active", href === current || (current === "youtube" && href === "portfolio") || (current === "connect" && href === "contact"));
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("in"); });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+    document.getElementById("contactForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const note = document.getElementById("formNote");
+      if (!name || !email || !message) {
+        note.textContent = "Please fill in name, email and message.";
+        note.classList.add("show");
+        return;
+      }
+      note.innerHTML = "There’s no message server on this page. Opening your email app to reach <strong>dangiganesh442@gmail.com</strong> — or use WhatsApp for a faster reply.";
+      note.classList.add("show");
+      const subject = encodeURIComponent("Project enquiry from " + name);
+      const body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\n" + message);
+      window.location.href = "mailto:dangiganesh442@gmail.com?subject=" + subject + "&body=" + body;
+    });
+
+    (function particles() {
+      const canvas = document.getElementById("particles");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      let w, h, dots, raf;
+      const resize = () => {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        w = canvas.width = rect.width;
+        h = canvas.height = rect.height;
+        dots = Array.from({ length: Math.min(48, Math.floor(w / 28)) }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.35,
+          vy: (Math.random() - 0.5) * 0.35,
+          r: Math.random() * 1.6 + 0.4
+        }));
+      };
+      const draw = () => {
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = "rgba(92,225,214,0.55)";
+        dots.forEach((d, i) => {
+          d.x += d.vx; d.y += d.vy;
+          if (d.x < 0 || d.x > w) d.vx *= -1;
+          if (d.y < 0 || d.y > h) d.vy *= -1;
+          ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
+          for (let j = i + 1; j < dots.length; j++) {
+            const o = dots[j];
+            const dx = d.x - o.x, dy = d.y - o.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 130) {
+              ctx.strokeStyle = "rgba(92,225,214," + (0.12 * (1 - dist / 130)) + ")";
+              ctx.lineWidth = 1;
+              ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(o.x, o.y); ctx.stroke();
+            }
+          }
+        });
+        raf = requestAnimationFrame(draw);
+      };
+      resize();
+      draw();
+      window.addEventListener("resize", resize);
+    })();
   </script>
 </body>
 </html>
